@@ -7,7 +7,7 @@ Restful API for MLB data
 https://github.com/WebucatorTraining/lahman-baseball-mysql
 
 
-
+## Tables
 
 
 <details><summary>allstarfull</summary><br>
