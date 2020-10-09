@@ -10,21 +10,23 @@ https://github.com/WebucatorTraining/lahman-baseball-mysql
 ## Tables
 
 
+
+
 <details><summary>allstarfull</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>gameNum</b></td><td>smallint(6)</td></tr>
+<tr><td><b>gameID</b></td><td>varchar(12)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>GP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>startingPos</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-yearID                         | smallint(6)                                       
-gameNum                        | smallint(6)                                       
-gameID                         | varchar(12)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-GP                             | smallint(6)                                       
-startingPos                    | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -34,32 +36,32 @@ startingPos                    | smallint(6)
 
 <details><summary>appearances</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>G_all</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_batting</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_defense</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_p</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_c</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_1b</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_2b</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_3b</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_ss</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_lf</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_cf</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_rf</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_of</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_dh</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_ph</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_pr</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-yearID                         | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-playerID                       | varchar(9)                                        
-G_all                          | smallint(6)                                       
-GS                             | smallint(6)                                       
-G_batting                      | smallint(6)                                       
-G_defense                      | smallint(6)                                       
-G_p                            | smallint(6)                                       
-G_c                            | smallint(6)                                       
-G_1b                           | smallint(6)                                       
-G_2b                           | smallint(6)                                       
-G_3b                           | smallint(6)                                       
-G_ss                           | smallint(6)                                       
-G_lf                           | smallint(6)                                       
-G_cf                           | smallint(6)                                       
-G_rf                           | smallint(6)                                       
-G_of                           | smallint(6)                                       
-G_dh                           | smallint(6)                                       
-G_ph                           | smallint(6)                                       
-G_pr                           | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -69,16 +71,16 @@ G_pr                           | smallint(6)
 
 <details><summary>awardsmanagers</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(10)</td></tr>
+<tr><td><b>awardID</b></td><td>varchar(75)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>tie</b></td><td>varchar(1)</td></tr>
+<tr><td><b>notes</b></td><td>varchar(100)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(10)                                       
-awardID                        | varchar(75)                                       
-yearID                         | smallint(6)                                       
-lgID                           | char(2)                                           
-tie                            | varchar(1)                                        
-notes                          | varchar(100)                                      
+</tbody></table>
 
 
 
@@ -88,16 +90,16 @@ notes                          | varchar(100)
 
 <details><summary>awardsplayers</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>awardID</b></td><td>varchar(255)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>tie</b></td><td>varchar(1)</td></tr>
+<tr><td><b>notes</b></td><td>varchar(100)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-awardID                        | varchar(255)                                      
-yearID                         | smallint(6)                                       
-lgID                           | char(2)                                           
-tie                            | varchar(1)                                        
-notes                          | varchar(100)                                      
+</tbody></table>
 
 
 
@@ -107,17 +109,17 @@ notes                          | varchar(100)
 
 <details><summary>awardssharemanagers</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>awardID</b></td><td>varchar(25)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(10)</td></tr>
+<tr><td><b>pointsWon</b></td><td>smallint(6)</td></tr>
+<tr><td><b>pointsMax</b></td><td>smallint(6)</td></tr>
+<tr><td><b>votesFirst</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-awardID                        | varchar(25)                                       
-yearID                         | smallint(6)                                       
-lgID                           | char(2)                                           
-playerID                       | varchar(10)                                       
-pointsWon                      | smallint(6)                                       
-pointsMax                      | smallint(6)                                       
-votesFirst                     | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -127,17 +129,17 @@ votesFirst                     | smallint(6)
 
 <details><summary>awardsshareplayers</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>awardID</b></td><td>varchar(25)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>pointsWon</b></td><td>double</td></tr>
+<tr><td><b>pointsMax</b></td><td>smallint(6)</td></tr>
+<tr><td><b>votesFirst</b></td><td>double</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-awardID                        | varchar(25)                                       
-yearID                         | smallint(6)                                       
-lgID                           | char(2)                                           
-playerID                       | varchar(9)                                        
-pointsWon                      | double                                            
-pointsMax                      | smallint(6)                                       
-votesFirst                     | double                                            
+</tbody></table>
 
 
 
@@ -147,34 +149,34 @@ votesFirst                     | double
 
 <details><summary>batting</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>stint</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G_batting</b></td><td>smallint(6)</td></tr>
+<tr><td><b>AB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>R</b></td><td>smallint(6)</td></tr>
+<tr><td><b>H</b></td><td>smallint(6)</td></tr>
+<tr><td><b>2B</b></td><td>smallint(6)</td></tr>
+<tr><td><b>3B</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HR</b></td><td>smallint(6)</td></tr>
+<tr><td><b>RBI</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>CS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>IBB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HBP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SH</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SF</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GIDP</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-yearID                         | smallint(6)                                       
-stint                          | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-G                              | smallint(6)                                       
-G_batting                      | smallint(6)                                       
-AB                             | smallint(6)                                       
-R                              | smallint(6)                                       
-H                              | smallint(6)                                       
-2B                             | smallint(6)                                       
-3B                             | smallint(6)                                       
-HR                             | smallint(6)                                       
-RBI                            | smallint(6)                                       
-SB                             | smallint(6)                                       
-CS                             | smallint(6)                                       
-BB                             | smallint(6)                                       
-SO                             | smallint(6)                                       
-IBB                            | smallint(6)                                       
-HBP                            | smallint(6)                                       
-SH                             | smallint(6)                                       
-SF                             | smallint(6)                                       
-GIDP                           | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -184,33 +186,33 @@ GIDP                           | smallint(6)
 
 <details><summary>battingpost</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>round</b></td><td>varchar(10)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>AB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>R</b></td><td>smallint(6)</td></tr>
+<tr><td><b>H</b></td><td>smallint(6)</td></tr>
+<tr><td><b>2B</b></td><td>smallint(6)</td></tr>
+<tr><td><b>3B</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HR</b></td><td>smallint(6)</td></tr>
+<tr><td><b>RBI</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>CS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>IBB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HBP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SH</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SF</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GIDP</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-yearID                         | smallint(6)                                       
-round                          | varchar(10)                                       
-playerID                       | varchar(9)                                        
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-G                              | smallint(6)                                       
-AB                             | smallint(6)                                       
-R                              | smallint(6)                                       
-H                              | smallint(6)                                       
-2B                             | smallint(6)                                       
-3B                             | smallint(6)                                       
-HR                             | smallint(6)                                       
-RBI                            | smallint(6)                                       
-SB                             | smallint(6)                                       
-CS                             | smallint(6)                                       
-BB                             | smallint(6)                                       
-SO                             | smallint(6)                                       
-IBB                            | smallint(6)                                       
-HBP                            | smallint(6)                                       
-SH                             | smallint(6)                                       
-SF                             | smallint(6)                                       
-GIDP                           | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -220,13 +222,13 @@ GIDP                           | smallint(6)
 
 <details><summary>collegeplaying</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>schoolID</b></td><td>varchar(15)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-schoolID                       | varchar(15)                                       
-yearID                         | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -236,14 +238,14 @@ yearID                         | smallint(6)
 
 <details><summary>divisions</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>divID</b></td><td>char(2)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>division</b></td><td>varchar(50)</td></tr>
+<tr><td><b>active</b></td><td>char(1)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-divID                          | char(2)                                           
-lgID                           | char(2)                                           
-division                       | varchar(50)                                       
-active                         | char(1)                                           
+</tbody></table>
 
 
 
@@ -253,29 +255,29 @@ active                         | char(1)
 
 <details><summary>fielding</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>stint</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>POS</b></td><td>varchar(2)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>InnOuts</b></td><td>smallint(6)</td></tr>
+<tr><td><b>PO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>A</b></td><td>smallint(6)</td></tr>
+<tr><td><b>E</b></td><td>smallint(6)</td></tr>
+<tr><td><b>DP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>PB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>WP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>CS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>ZR</b></td><td>double</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-yearID                         | smallint(6)                                       
-stint                          | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-POS                            | varchar(2)                                        
-G                              | smallint(6)                                       
-GS                             | smallint(6)                                       
-InnOuts                        | smallint(6)                                       
-PO                             | smallint(6)                                       
-A                              | smallint(6)                                       
-E                              | smallint(6)                                       
-DP                             | smallint(6)                                       
-PB                             | smallint(6)                                       
-WP                             | smallint(6)                                       
-SB                             | smallint(6)                                       
-CS                             | smallint(6)                                       
-ZR                             | double                                            
+</tbody></table>
 
 
 
@@ -285,16 +287,16 @@ ZR                             | double
 
 <details><summary>fieldingof</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>stint</b></td><td>smallint(6)</td></tr>
+<tr><td><b>Glf</b></td><td>smallint(6)</td></tr>
+<tr><td><b>Gcf</b></td><td>smallint(6)</td></tr>
+<tr><td><b>Grf</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-yearID                         | smallint(6)                                       
-stint                          | smallint(6)                                       
-Glf                            | smallint(6)                                       
-Gcf                            | smallint(6)                                       
-Grf                            | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -304,29 +306,29 @@ Grf                            | smallint(6)
 
 <details><summary>fieldingofsplit</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>stint</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>POS</b></td><td>varchar(2)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>InnOuts</b></td><td>smallint(6)</td></tr>
+<tr><td><b>PO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>A</b></td><td>smallint(6)</td></tr>
+<tr><td><b>E</b></td><td>smallint(6)</td></tr>
+<tr><td><b>DP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>PB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>WP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>CS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>ZR</b></td><td>double</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-yearID                         | smallint(6)                                       
-stint                          | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-POS                            | varchar(2)                                        
-G                              | smallint(6)                                       
-GS                             | smallint(6)                                       
-InnOuts                        | smallint(6)                                       
-PO                             | smallint(6)                                       
-A                              | smallint(6)                                       
-E                              | smallint(6)                                       
-DP                             | smallint(6)                                       
-PB                             | smallint(6)                                       
-WP                             | smallint(6)                                       
-SB                             | smallint(6)                                       
-CS                             | smallint(6)                                       
-ZR                             | double                                            
+</tbody></table>
 
 
 
@@ -336,28 +338,28 @@ ZR                             | double
 
 <details><summary>fieldingpost</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>round</b></td><td>varchar(10)</td></tr>
+<tr><td><b>POS</b></td><td>varchar(2)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>InnOuts</b></td><td>smallint(6)</td></tr>
+<tr><td><b>PO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>A</b></td><td>smallint(6)</td></tr>
+<tr><td><b>E</b></td><td>smallint(6)</td></tr>
+<tr><td><b>DP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>TP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>PB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>CS</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-yearID                         | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-round                          | varchar(10)                                       
-POS                            | varchar(2)                                        
-G                              | smallint(6)                                       
-GS                             | smallint(6)                                       
-InnOuts                        | smallint(6)                                       
-PO                             | smallint(6)                                       
-A                              | smallint(6)                                       
-E                              | smallint(6)                                       
-DP                             | smallint(6)                                       
-TP                             | smallint(6)                                       
-PB                             | smallint(6)                                       
-SB                             | smallint(6)                                       
-CS                             | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -367,19 +369,19 @@ CS                             | smallint(6)
 
 <details><summary>halloffame</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(10)</td></tr>
+<tr><td><b>yearid</b></td><td>smallint(6)</td></tr>
+<tr><td><b>votedBy</b></td><td>varchar(64)</td></tr>
+<tr><td><b>ballots</b></td><td>smallint(6)</td></tr>
+<tr><td><b>needed</b></td><td>smallint(6)</td></tr>
+<tr><td><b>votes</b></td><td>smallint(6)</td></tr>
+<tr><td><b>inducted</b></td><td>varchar(1)</td></tr>
+<tr><td><b>category</b></td><td>varchar(20)</td></tr>
+<tr><td><b>needed_note</b></td><td>varchar(25)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(10)                                       
-yearid                         | smallint(6)                                       
-votedBy                        | varchar(64)                                       
-ballots                        | smallint(6)                                       
-needed                         | smallint(6)                                       
-votes                          | smallint(6)                                       
-inducted                       | varchar(1)                                        
-category                       | varchar(20)                                       
-needed_note                    | varchar(25)                                       
+</tbody></table>
 
 
 
@@ -389,23 +391,23 @@ needed_note                    | varchar(25)
 
 <details><summary>homegames</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>yearkey</b></td><td>int(11)</td></tr>
+<tr><td><b>leaguekey</b></td><td>char(2)</td></tr>
+<tr><td><b>teamkey</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>parkkey</b></td><td>varchar(255)</td></tr>
+<tr><td><b>park_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>spanfirst</b></td><td>varchar(255)</td></tr>
+<tr><td><b>spanlast</b></td><td>varchar(255)</td></tr>
+<tr><td><b>games</b></td><td>int(11)</td></tr>
+<tr><td><b>openings</b></td><td>int(11)</td></tr>
+<tr><td><b>attendance</b></td><td>int(11)</td></tr>
+<tr><td><b>spanfirst_date</b></td><td>date</td></tr>
+<tr><td><b>spanlast_date</b></td><td>date</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-yearkey                        | int(11)                                           
-leaguekey                      | char(2)                                           
-teamkey                        | char(3)                                           
-team_ID                        | int(11)                                           
-parkkey                        | varchar(255)                                      
-park_ID                        | int(11)                                           
-spanfirst                      | varchar(255)                                      
-spanlast                       | varchar(255)                                      
-games                          | int(11)                                           
-openings                       | int(11)                                           
-attendance                     | int(11)                                           
-spanfirst_date                 | date                                              
-spanlast_date                  | date                                              
+</tbody></table>
 
 
 
@@ -415,12 +417,12 @@ spanlast_date                  | date
 
 <details><summary>leagues</summary><br>
 
+<table><tbody>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>league</b></td><td>varchar(50)</td></tr>
+<tr><td><b>active</b></td><td>char(1)</td></tr>
 
-Field | Type
-:--- | :---
-lgID                           | char(2)                                           
-league                         | varchar(50)                                       
-active                         | char(1)                                           
+</tbody></table>
 
 
 
@@ -430,21 +432,21 @@ active                         | char(1)
 
 <details><summary>managers</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(10)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>inseason</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>W</b></td><td>smallint(6)</td></tr>
+<tr><td><b>L</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamRank</b></td><td>smallint(6)</td></tr>
+<tr><td><b>plyrMgr</b></td><td>varchar(1)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(10)                                       
-yearID                         | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-inseason                       | smallint(6)                                       
-G                              | smallint(6)                                       
-W                              | smallint(6)                                       
-L                              | smallint(6)                                       
-teamRank                       | smallint(6)                                       
-plyrMgr                        | varchar(1)                                        
+</tbody></table>
 
 
 
@@ -454,21 +456,21 @@ plyrMgr                        | varchar(1)
 
 <details><summary>managershalf</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(10)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>inseason</b></td><td>smallint(6)</td></tr>
+<tr><td><b>half</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>W</b></td><td>smallint(6)</td></tr>
+<tr><td><b>L</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamRank</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(10)                                       
-yearID                         | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-inseason                       | smallint(6)                                       
-half                           | smallint(6)                                       
-G                              | smallint(6)                                       
-W                              | smallint(6)                                       
-L                              | smallint(6)                                       
-teamRank                       | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -478,16 +480,16 @@ teamRank                       | smallint(6)
 
 <details><summary>parks</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>parkalias</b></td><td>varchar(255)</td></tr>
+<tr><td><b>parkkey</b></td><td>varchar(255)</td></tr>
+<tr><td><b>parkname</b></td><td>varchar(255)</td></tr>
+<tr><td><b>city</b></td><td>varchar(255)</td></tr>
+<tr><td><b>state</b></td><td>varchar(255)</td></tr>
+<tr><td><b>country</b></td><td>varchar(255)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-parkalias                      | varchar(255)                                      
-parkkey                        | varchar(255)                                      
-parkname                       | varchar(255)                                      
-city                           | varchar(255)                                      
-state                          | varchar(255)                                      
-country                        | varchar(255)                                      
+</tbody></table>
 
 
 
@@ -497,37 +499,37 @@ country                        | varchar(255)
 
 <details><summary>people</summary><br>
 
+<table><tbody>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>birthYear</b></td><td>int(11)</td></tr>
+<tr><td><b>birthMonth</b></td><td>int(11)</td></tr>
+<tr><td><b>birthDay</b></td><td>int(11)</td></tr>
+<tr><td><b>birthCountry</b></td><td>varchar(255)</td></tr>
+<tr><td><b>birthState</b></td><td>varchar(255)</td></tr>
+<tr><td><b>birthCity</b></td><td>varchar(255)</td></tr>
+<tr><td><b>deathYear</b></td><td>int(11)</td></tr>
+<tr><td><b>deathMonth</b></td><td>int(11)</td></tr>
+<tr><td><b>deathDay</b></td><td>int(11)</td></tr>
+<tr><td><b>deathCountry</b></td><td>varchar(255)</td></tr>
+<tr><td><b>deathState</b></td><td>varchar(255)</td></tr>
+<tr><td><b>deathCity</b></td><td>varchar(255)</td></tr>
+<tr><td><b>nameFirst</b></td><td>varchar(255)</td></tr>
+<tr><td><b>nameLast</b></td><td>varchar(255)</td></tr>
+<tr><td><b>nameGiven</b></td><td>varchar(255)</td></tr>
+<tr><td><b>weight</b></td><td>int(11)</td></tr>
+<tr><td><b>height</b></td><td>int(11)</td></tr>
+<tr><td><b>bats</b></td><td>varchar(255)</td></tr>
+<tr><td><b>throws</b></td><td>varchar(255)</td></tr>
+<tr><td><b>debut</b></td><td>varchar(255)</td></tr>
+<tr><td><b>finalGame</b></td><td>varchar(255)</td></tr>
+<tr><td><b>retroID</b></td><td>varchar(255)</td></tr>
+<tr><td><b>bbrefID</b></td><td>varchar(255)</td></tr>
+<tr><td><b>birth_date</b></td><td>date</td></tr>
+<tr><td><b>debut_date</b></td><td>date</td></tr>
+<tr><td><b>finalgame_date</b></td><td>date</td></tr>
+<tr><td><b>death_date</b></td><td>date</td></tr>
 
-Field | Type
-:--- | :---
-playerID                       | varchar(9)                                        
-birthYear                      | int(11)                                           
-birthMonth                     | int(11)                                           
-birthDay                       | int(11)                                           
-birthCountry                   | varchar(255)                                      
-birthState                     | varchar(255)                                      
-birthCity                      | varchar(255)                                      
-deathYear                      | int(11)                                           
-deathMonth                     | int(11)                                           
-deathDay                       | int(11)                                           
-deathCountry                   | varchar(255)                                      
-deathState                     | varchar(255)                                      
-deathCity                      | varchar(255)                                      
-nameFirst                      | varchar(255)                                      
-nameLast                       | varchar(255)                                      
-nameGiven                      | varchar(255)                                      
-weight                         | int(11)                                           
-height                         | int(11)                                           
-bats                           | varchar(255)                                      
-throws                         | varchar(255)                                      
-debut                          | varchar(255)                                      
-finalGame                      | varchar(255)                                      
-retroID                        | varchar(255)                                      
-bbrefID                        | varchar(255)                                      
-birth_date                     | date                                              
-debut_date                     | date                                              
-finalgame_date                 | date                                              
-death_date                     | date                                              
+</tbody></table>
 
 
 
@@ -537,41 +539,41 @@ death_date                     | date
 
 <details><summary>pitching</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>stint</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>W</b></td><td>smallint(6)</td></tr>
+<tr><td><b>L</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>CG</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SHO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SV</b></td><td>smallint(6)</td></tr>
+<tr><td><b>IPouts</b></td><td>int(11)</td></tr>
+<tr><td><b>H</b></td><td>smallint(6)</td></tr>
+<tr><td><b>ER</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HR</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BAOpp</b></td><td>double</td></tr>
+<tr><td><b>ERA</b></td><td>double</td></tr>
+<tr><td><b>IBB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>WP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HBP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BK</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BFP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GF</b></td><td>smallint(6)</td></tr>
+<tr><td><b>R</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SH</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SF</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GIDP</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-yearID                         | smallint(6)                                       
-stint                          | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-W                              | smallint(6)                                       
-L                              | smallint(6)                                       
-G                              | smallint(6)                                       
-GS                             | smallint(6)                                       
-CG                             | smallint(6)                                       
-SHO                            | smallint(6)                                       
-SV                             | smallint(6)                                       
-IPouts                         | int(11)                                           
-H                              | smallint(6)                                       
-ER                             | smallint(6)                                       
-HR                             | smallint(6)                                       
-BB                             | smallint(6)                                       
-SO                             | smallint(6)                                       
-BAOpp                          | double                                            
-ERA                            | double                                            
-IBB                            | smallint(6)                                       
-WP                             | smallint(6)                                       
-HBP                            | smallint(6)                                       
-BK                             | smallint(6)                                       
-BFP                            | smallint(6)                                       
-GF                             | smallint(6)                                       
-R                              | smallint(6)                                       
-SH                             | smallint(6)                                       
-SF                             | smallint(6)                                       
-GIDP                           | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -581,41 +583,41 @@ GIDP                           | smallint(6)
 
 <details><summary>pitchingpost</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>round</b></td><td>varchar(10)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>W</b></td><td>smallint(6)</td></tr>
+<tr><td><b>L</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>CG</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SHO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SV</b></td><td>smallint(6)</td></tr>
+<tr><td><b>IPouts</b></td><td>int(11)</td></tr>
+<tr><td><b>H</b></td><td>smallint(6)</td></tr>
+<tr><td><b>ER</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HR</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BAOpp</b></td><td>double</td></tr>
+<tr><td><b>ERA</b></td><td>double</td></tr>
+<tr><td><b>IBB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>WP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HBP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BK</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BFP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GF</b></td><td>smallint(6)</td></tr>
+<tr><td><b>R</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SH</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SF</b></td><td>smallint(6)</td></tr>
+<tr><td><b>GIDP</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-playerID                       | varchar(9)                                        
-yearID                         | smallint(6)                                       
-round                          | varchar(10)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-W                              | smallint(6)                                       
-L                              | smallint(6)                                       
-G                              | smallint(6)                                       
-GS                             | smallint(6)                                       
-CG                             | smallint(6)                                       
-SHO                            | smallint(6)                                       
-SV                             | smallint(6)                                       
-IPouts                         | int(11)                                           
-H                              | smallint(6)                                       
-ER                             | smallint(6)                                       
-HR                             | smallint(6)                                       
-BB                             | smallint(6)                                       
-SO                             | smallint(6)                                       
-BAOpp                          | double                                            
-ERA                            | double                                            
-IBB                            | smallint(6)                                       
-WP                             | smallint(6)                                       
-HBP                            | smallint(6)                                       
-BK                             | smallint(6)                                       
-BFP                            | smallint(6)                                       
-GF                             | smallint(6)                                       
-R                              | smallint(6)                                       
-SH                             | smallint(6)                                       
-SF                             | smallint(6)                                       
-GIDP                           | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -625,16 +627,16 @@ GIDP                           | smallint(6)
 
 <details><summary>salaries</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>playerID</b></td><td>varchar(9)</td></tr>
+<tr><td><b>salary</b></td><td>double</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-yearID                         | smallint(6)                                       
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-lgID                           | char(2)                                           
-playerID                       | varchar(9)                                        
-salary                         | double                                            
+</tbody></table>
 
 
 
@@ -644,14 +646,14 @@ salary                         | double
 
 <details><summary>schools</summary><br>
 
+<table><tbody>
+<tr><td><b>schoolID</b></td><td>varchar(15)</td></tr>
+<tr><td><b>name_full</b></td><td>varchar(255)</td></tr>
+<tr><td><b>city</b></td><td>varchar(55)</td></tr>
+<tr><td><b>state</b></td><td>varchar(55)</td></tr>
+<tr><td><b>country</b></td><td>varchar(55)</td></tr>
 
-Field | Type
-:--- | :---
-schoolID                       | varchar(15)                                       
-name_full                      | varchar(255)                                      
-city                           | varchar(55)                                       
-state                          | varchar(55)                                       
-country                        | varchar(55)                                       
+</tbody></table>
 
 
 
@@ -661,21 +663,21 @@ country                        | varchar(55)
 
 <details><summary>seriespost</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>round</b></td><td>varchar(5)</td></tr>
+<tr><td><b>teamIDwinner</b></td><td>varchar(3)</td></tr>
+<tr><td><b>lgIDwinner</b></td><td>varchar(2)</td></tr>
+<tr><td><b>team_IDwinner</b></td><td>int(11)</td></tr>
+<tr><td><b>teamIDloser</b></td><td>varchar(3)</td></tr>
+<tr><td><b>team_IDloser</b></td><td>int(11)</td></tr>
+<tr><td><b>lgIDloser</b></td><td>varchar(2)</td></tr>
+<tr><td><b>wins</b></td><td>smallint(6)</td></tr>
+<tr><td><b>losses</b></td><td>smallint(6)</td></tr>
+<tr><td><b>ties</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-yearID                         | smallint(6)                                       
-round                          | varchar(5)                                        
-teamIDwinner                   | varchar(3)                                        
-lgIDwinner                     | varchar(2)                                        
-team_IDwinner                  | int(11)                                           
-teamIDloser                    | varchar(3)                                        
-team_IDloser                   | int(11)                                           
-lgIDloser                      | varchar(2)                                        
-wins                           | smallint(6)                                       
-losses                         | smallint(6)                                       
-ties                           | smallint(6)                                       
+</tbody></table>
 
 
 
@@ -685,59 +687,59 @@ ties                           | smallint(6)
 
 <details><summary>teams</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>franchID</b></td><td>varchar(3)</td></tr>
+<tr><td><b>divID</b></td><td>char(1)</td></tr>
+<tr><td><b>div_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>teamRank</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>Ghome</b></td><td>smallint(6)</td></tr>
+<tr><td><b>W</b></td><td>smallint(6)</td></tr>
+<tr><td><b>L</b></td><td>smallint(6)</td></tr>
+<tr><td><b>DivWin</b></td><td>varchar(1)</td></tr>
+<tr><td><b>WCWin</b></td><td>varchar(1)</td></tr>
+<tr><td><b>LgWin</b></td><td>varchar(1)</td></tr>
+<tr><td><b>WSWin</b></td><td>varchar(1)</td></tr>
+<tr><td><b>R</b></td><td>smallint(6)</td></tr>
+<tr><td><b>AB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>H</b></td><td>smallint(6)</td></tr>
+<tr><td><b>2B</b></td><td>smallint(6)</td></tr>
+<tr><td><b>3B</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HR</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SB</b></td><td>smallint(6)</td></tr>
+<tr><td><b>CS</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HBP</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SF</b></td><td>smallint(6)</td></tr>
+<tr><td><b>RA</b></td><td>smallint(6)</td></tr>
+<tr><td><b>ER</b></td><td>smallint(6)</td></tr>
+<tr><td><b>ERA</b></td><td>double</td></tr>
+<tr><td><b>CG</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SHO</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SV</b></td><td>smallint(6)</td></tr>
+<tr><td><b>IPouts</b></td><td>int(11)</td></tr>
+<tr><td><b>HA</b></td><td>smallint(6)</td></tr>
+<tr><td><b>HRA</b></td><td>smallint(6)</td></tr>
+<tr><td><b>BBA</b></td><td>smallint(6)</td></tr>
+<tr><td><b>SOA</b></td><td>smallint(6)</td></tr>
+<tr><td><b>E</b></td><td>int(11)</td></tr>
+<tr><td><b>DP</b></td><td>int(11)</td></tr>
+<tr><td><b>FP</b></td><td>double</td></tr>
+<tr><td><b>name</b></td><td>varchar(50)</td></tr>
+<tr><td><b>park</b></td><td>varchar(255)</td></tr>
+<tr><td><b>attendance</b></td><td>int(11)</td></tr>
+<tr><td><b>BPF</b></td><td>int(11)</td></tr>
+<tr><td><b>PPF</b></td><td>int(11)</td></tr>
+<tr><td><b>teamIDBR</b></td><td>varchar(3)</td></tr>
+<tr><td><b>teamIDlahman45</b></td><td>varchar(3)</td></tr>
+<tr><td><b>teamIDretro</b></td><td>varchar(3)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-yearID                         | smallint(6)                                       
-lgID                           | char(2)                                           
-teamID                         | char(3)                                           
-franchID                       | varchar(3)                                        
-divID                          | char(1)                                           
-div_ID                         | int(11)                                           
-teamRank                       | smallint(6)                                       
-G                              | smallint(6)                                       
-Ghome                          | smallint(6)                                       
-W                              | smallint(6)                                       
-L                              | smallint(6)                                       
-DivWin                         | varchar(1)                                        
-WCWin                          | varchar(1)                                        
-LgWin                          | varchar(1)                                        
-WSWin                          | varchar(1)                                        
-R                              | smallint(6)                                       
-AB                             | smallint(6)                                       
-H                              | smallint(6)                                       
-2B                             | smallint(6)                                       
-3B                             | smallint(6)                                       
-HR                             | smallint(6)                                       
-BB                             | smallint(6)                                       
-SO                             | smallint(6)                                       
-SB                             | smallint(6)                                       
-CS                             | smallint(6)                                       
-HBP                            | smallint(6)                                       
-SF                             | smallint(6)                                       
-RA                             | smallint(6)                                       
-ER                             | smallint(6)                                       
-ERA                            | double                                            
-CG                             | smallint(6)                                       
-SHO                            | smallint(6)                                       
-SV                             | smallint(6)                                       
-IPouts                         | int(11)                                           
-HA                             | smallint(6)                                       
-HRA                            | smallint(6)                                       
-BBA                            | smallint(6)                                       
-SOA                            | smallint(6)                                       
-E                              | int(11)                                           
-DP                             | int(11)                                           
-FP                             | double                                            
-name                           | varchar(50)                                       
-park                           | varchar(255)                                      
-attendance                     | int(11)                                           
-BPF                            | int(11)                                           
-PPF                            | int(11)                                           
-teamIDBR                       | varchar(3)                                        
-teamIDlahman45                 | varchar(3)                                        
-teamIDretro                    | varchar(3)                                        
+</tbody></table>
 
 
 
@@ -747,13 +749,13 @@ teamIDretro                    | varchar(3)
 
 <details><summary>teamsfranchises</summary><br>
 
+<table><tbody>
+<tr><td><b>franchID</b></td><td>varchar(3)</td></tr>
+<tr><td><b>franchName</b></td><td>varchar(50)</td></tr>
+<tr><td><b>active</b></td><td>char(1)</td></tr>
+<tr><td><b>NAassoc</b></td><td>varchar(3)</td></tr>
 
-Field | Type
-:--- | :---
-franchID                       | varchar(3)                                        
-franchName                     | varchar(50)                                       
-active                         | char(1)                                           
-NAassoc                        | varchar(3)                                        
+</tbody></table>
 
 
 
@@ -763,22 +765,22 @@ NAassoc                        | varchar(3)
 
 <details><summary>teamshalf</summary><br>
 
+<table><tbody>
+<tr><td><b>ID</b></td><td>int(11)</td></tr>
+<tr><td><b>yearID</b></td><td>smallint(6)</td></tr>
+<tr><td><b>lgID</b></td><td>char(2)</td></tr>
+<tr><td><b>teamID</b></td><td>char(3)</td></tr>
+<tr><td><b>team_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>Half</b></td><td>varchar(1)</td></tr>
+<tr><td><b>divID</b></td><td>char(1)</td></tr>
+<tr><td><b>div_ID</b></td><td>int(11)</td></tr>
+<tr><td><b>DivWin</b></td><td>varchar(1)</td></tr>
+<tr><td><b>teamRank</b></td><td>smallint(6)</td></tr>
+<tr><td><b>G</b></td><td>smallint(6)</td></tr>
+<tr><td><b>W</b></td><td>smallint(6)</td></tr>
+<tr><td><b>L</b></td><td>smallint(6)</td></tr>
 
-Field | Type
-:--- | :---
-ID                             | int(11)                                           
-yearID                         | smallint(6)                                       
-lgID                           | char(2)                                           
-teamID                         | char(3)                                           
-team_ID                        | int(11)                                           
-Half                           | varchar(1)                                        
-divID                          | char(1)                                           
-div_ID                         | int(11)                                           
-DivWin                         | varchar(1)                                        
-teamRank                       | smallint(6)                                       
-G                              | smallint(6)                                       
-W                              | smallint(6)                                       
-L                              | smallint(6)                                       
+</tbody></table>
 
 
 
