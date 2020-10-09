@@ -4,7 +4,9 @@ Restful API for MLB data
 
 ## Resources
 
-https://github.com/WebucatorTraining/lahman-baseball-mysql
+* https://github.com/WebucatorTraining/lahman-baseball-mysql
+* [Database field descriptions](https://github.com/chadwickbureau/baseballdatabank/blob/master/core/readme2014.txt)
+
 
 
 ## Tables
