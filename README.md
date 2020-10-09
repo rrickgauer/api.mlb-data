@@ -10,10 +10,9 @@ https://github.com/WebucatorTraining/lahman-baseball-mysql
 
 
 
-<details><summary>allstarfull</summary>
+<details><summary>allstarfull</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -33,10 +32,9 @@ startingPos                    | smallint(6)
 
 
 
-<details><summary>appearances</summary>
+<details><summary>appearances</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -69,10 +67,9 @@ G_pr                           | smallint(6)
 
 
 
-<details><summary>awardsmanagers</summary>
+<details><summary>awardsmanagers</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -89,10 +86,9 @@ notes                          | varchar(100)
 
 
 
-<details><summary>awardsplayers</summary>
+<details><summary>awardsplayers</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -109,10 +105,9 @@ notes                          | varchar(100)
 
 
 
-<details><summary>awardssharemanagers</summary>
+<details><summary>awardssharemanagers</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -130,10 +125,9 @@ votesFirst                     | smallint(6)
 
 
 
-<details><summary>awardsshareplayers</summary>
+<details><summary>awardsshareplayers</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -151,10 +145,9 @@ votesFirst                     | double
 
 
 
-<details><summary>batting</summary>
+<details><summary>batting</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -189,10 +182,9 @@ GIDP                           | smallint(6)
 
 
 
-<details><summary>battingpost</summary>
+<details><summary>battingpost</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -226,10 +218,9 @@ GIDP                           | smallint(6)
 
 
 
-<details><summary>collegeplaying</summary>
+<details><summary>collegeplaying</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -243,10 +234,9 @@ yearID                         | smallint(6)
 
 
 
-<details><summary>divisions</summary>
+<details><summary>divisions</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -261,10 +251,9 @@ active                         | char(1)
 
 
 
-<details><summary>fielding</summary>
+<details><summary>fielding</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -294,10 +283,9 @@ ZR                             | double
 
 
 
-<details><summary>fieldingof</summary>
+<details><summary>fieldingof</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -314,10 +302,9 @@ Grf                            | smallint(6)
 
 
 
-<details><summary>fieldingofsplit</summary>
+<details><summary>fieldingofsplit</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -347,10 +334,9 @@ ZR                             | double
 
 
 
-<details><summary>fieldingpost</summary>
+<details><summary>fieldingpost</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -379,10 +365,9 @@ CS                             | smallint(6)
 
 
 
-<details><summary>halloffame</summary>
+<details><summary>halloffame</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -402,10 +387,9 @@ needed_note                    | varchar(25)
 
 
 
-<details><summary>homegames</summary>
+<details><summary>homegames</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -429,10 +413,9 @@ spanlast_date                  | date
 
 
 
-<details><summary>leagues</summary>
+<details><summary>leagues</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 lgID                           | char(2)                                           
@@ -445,10 +428,9 @@ active                         | char(1)
 
 
 
-<details><summary>managers</summary>
+<details><summary>managers</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -470,10 +452,9 @@ plyrMgr                        | varchar(1)
 
 
 
-<details><summary>managershalf</summary>
+<details><summary>managershalf</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -495,10 +476,9 @@ teamRank                       | smallint(6)
 
 
 
-<details><summary>parks</summary>
+<details><summary>parks</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -515,10 +495,9 @@ country                        | varchar(255)
 
 
 
-<details><summary>people</summary>
+<details><summary>people</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 playerID                       | varchar(9)                                        
@@ -556,10 +535,9 @@ death_date                     | date
 
 
 
-<details><summary>pitching</summary>
+<details><summary>pitching</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -601,10 +579,9 @@ GIDP                           | smallint(6)
 
 
 
-<details><summary>pitchingpost</summary>
+<details><summary>pitchingpost</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -646,10 +623,9 @@ GIDP                           | smallint(6)
 
 
 
-<details><summary>salaries</summary>
+<details><summary>salaries</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -666,10 +642,9 @@ salary                         | double
 
 
 
-<details><summary>schools</summary>
+<details><summary>schools</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 schoolID                       | varchar(15)                                       
@@ -684,10 +659,9 @@ country                        | varchar(55)
 
 
 
-<details><summary>seriespost</summary>
+<details><summary>seriespost</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -709,10 +683,9 @@ ties                           | smallint(6)
 
 
 
-<details><summary>teams</summary>
+<details><summary>teams</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -772,10 +745,9 @@ teamIDretro                    | varchar(3)
 
 
 
-<details><summary>teamsfranchises</summary>
+<details><summary>teamsfranchises</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 franchID                       | varchar(3)                                        
@@ -789,10 +761,9 @@ NAassoc                        | varchar(3)
 
 
 
-<details><summary>teamshalf</summary>
+<details><summary>teamshalf</summary><br>
 
 
-<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
