@@ -9,14 +9,11 @@ https://github.com/WebucatorTraining/lahman-baseball-mysql
 
 
 
-## Tables
-
-
 
 <details><summary>allstarfull</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -39,7 +36,7 @@ startingPos                    | smallint(6)
 <details><summary>appearances</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -75,7 +72,7 @@ G_pr                           | smallint(6)
 <details><summary>awardsmanagers</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -95,7 +92,7 @@ notes                          | varchar(100)
 <details><summary>awardsplayers</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -115,7 +112,7 @@ notes                          | varchar(100)
 <details><summary>awardssharemanagers</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -136,7 +133,7 @@ votesFirst                     | smallint(6)
 <details><summary>awardsshareplayers</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -157,7 +154,7 @@ votesFirst                     | double
 <details><summary>batting</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -195,7 +192,7 @@ GIDP                           | smallint(6)
 <details><summary>battingpost</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -232,7 +229,7 @@ GIDP                           | smallint(6)
 <details><summary>collegeplaying</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -249,7 +246,7 @@ yearID                         | smallint(6)
 <details><summary>divisions</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -267,7 +264,7 @@ active                         | char(1)
 <details><summary>fielding</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -300,7 +297,7 @@ ZR                             | double
 <details><summary>fieldingof</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -320,7 +317,7 @@ Grf                            | smallint(6)
 <details><summary>fieldingofsplit</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -353,7 +350,7 @@ ZR                             | double
 <details><summary>fieldingpost</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -385,7 +382,7 @@ CS                             | smallint(6)
 <details><summary>halloffame</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -408,7 +405,7 @@ needed_note                    | varchar(25)
 <details><summary>homegames</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -435,7 +432,7 @@ spanlast_date                  | date
 <details><summary>leagues</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 lgID                           | char(2)                                           
@@ -451,7 +448,7 @@ active                         | char(1)
 <details><summary>managers</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -476,7 +473,7 @@ plyrMgr                        | varchar(1)
 <details><summary>managershalf</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -501,7 +498,7 @@ teamRank                       | smallint(6)
 <details><summary>parks</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -521,7 +518,7 @@ country                        | varchar(255)
 <details><summary>people</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 playerID                       | varchar(9)                                        
@@ -562,7 +559,7 @@ death_date                     | date
 <details><summary>pitching</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -607,7 +604,7 @@ GIDP                           | smallint(6)
 <details><summary>pitchingpost</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -652,7 +649,7 @@ GIDP                           | smallint(6)
 <details><summary>salaries</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -672,7 +669,7 @@ salary                         | double
 <details><summary>schools</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 schoolID                       | varchar(15)                                       
@@ -690,7 +687,7 @@ country                        | varchar(55)
 <details><summary>seriespost</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -715,7 +712,7 @@ ties                           | smallint(6)
 <details><summary>teams</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
@@ -778,7 +775,7 @@ teamIDretro                    | varchar(3)
 <details><summary>teamsfranchises</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 franchID                       | varchar(3)                                        
@@ -795,7 +792,7 @@ NAassoc                        | varchar(3)
 <details><summary>teamshalf</summary>
 
 
-
+<br>
 Field | Type
 :--- | :---
 ID                             | int(11)                                           
