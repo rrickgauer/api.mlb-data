@@ -88,7 +88,25 @@ function getPlayerPitching($playerID) {
 
   $sql->execute();
   return $sql;
+}
 
+
+function doesPlayerExist($playerID) {
+  $stmt = 'SELECT playerID from people where playerID = :playerID limit 1';
+
+  $sql = dbConnect()->prepare($stmt);
+  
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+  if (count($result) == 1)
+    return true;
+  else
+    return false;
 }
 
 
