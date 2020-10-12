@@ -12,9 +12,11 @@ $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 
 if ($request[0] == 'people') {
 
+
   $playerID = $request[1];
-  returnPerson($playerID);
+  // returnPerson($playerID);
   // returnPersonBatting($playerID);
+  returnPersonPitching($playerID);
 }
 
 

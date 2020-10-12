@@ -36,13 +36,7 @@ function returnPeople($pageNumber = 1) {
 }
 
 function returnPerson($playerID) {
-  $resultsPerson = getPlayer($playerID)->fetch(PDO::FETCH_ASSOC);
-  $resultsBatting = getPlayerBatting($playerID)->fetchAll(PDO::FETCH_ASSOC);
-
-  $results = [];
-  $results['person_info'] = $resultsPerson;
-  $results['batting'] = $resultsBatting;
-
+  $results = getPlayer($playerID)->fetch(PDO::FETCH_ASSOC);
   echo json_encode($results, JSON_PRETTY_PRINT);
   http_response_code(200);
   exit;
@@ -51,6 +45,13 @@ function returnPerson($playerID) {
 
 function returnPersonBatting($playerID) {
   $results = getPlayerBatting($playerID)->fetchAll(PDO::FETCH_ASSOC);
+  echo json_encode($results, JSON_PRETTY_PRINT);
+  http_response_code(200);
+  exit;
+}
+
+function returnPersonPitching($playerID) {
+  $results = getPlayerPitching($playerID)->fetchAll(PDO::FETCH_ASSOC);
   echo json_encode($results, JSON_PRETTY_PRINT);
   http_response_code(200);
   exit;

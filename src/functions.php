@@ -79,7 +79,16 @@ function getPlayerBatting($playerID) {
 
 
 function getPlayerPitching($playerID) {
-  
+  $stmt = 'SELECT * from pitching where playerID = :playerID order by yearID asc';
+  $sql = dbConnect()->prepare($stmt);
+
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+
+  $sql->execute();
+  return $sql;
+
 }
 
 
