@@ -2,6 +2,8 @@
 
 Restful API for MLB data
 
+`api.mlb-data.php/`
+
 ## Resources
 
 * https://github.com/WebucatorTraining/lahman-baseball-mysql
