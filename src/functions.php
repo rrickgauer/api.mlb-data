@@ -42,6 +42,30 @@ function getAllPlayers() {
 }
 
 
+function searchPlayers($query = '') {
+
+  // Projects.name like :name
+  // $name = "%$query%";
+
+  $stmt = 'SELECT p.playerID, p.nameFirst, p.nameLast from people p where p.nameFirst like :nameFirst or p.nameLast like :nameLast limit 100';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  $nameFirst = "%$query%";
+  $nameFirst = filter_var($nameFirst, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':nameFirst', $nameFirst, PDO::PARAM_STR);
+
+  $nameLast = "%$query%";
+  $nameLast = filter_var($nameLast, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':nameLast', $nameLast, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+
+
+
+}
+
 
 
 

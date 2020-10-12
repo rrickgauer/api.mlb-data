@@ -1,6 +1,6 @@
 <?php
 
-include('functions.php');
+include_once('functions.php');
 
 function returnPeople($pageNumber = 1) {
   header('Content-Type: application/json');
