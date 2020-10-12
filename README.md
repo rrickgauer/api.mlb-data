@@ -8,6 +8,8 @@ Restful API for MLB data
 * [Database field descriptions](https://github.com/chadwickbureau/baseballdatabank/blob/master/core/readme2014.txt)
 
 
+http://www.seanlahman.com/files/database/readme2017.txt
+
 
 ## Tables
 
