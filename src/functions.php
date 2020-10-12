@@ -21,7 +21,7 @@ function dbConnect() {
 
 function getPlayer($playerID) {
 
-  $stmt = 'SELECT yearID, W, L, G, H, HR from pitching where playerID = :playerID';
+  $stmt = 'SELECT * from people p where p.playerID = :playerID';
 
   $sql = dbConnect()->prepare($stmt);
 
@@ -62,11 +62,25 @@ function searchPlayers($query = '') {
   $sql->execute();
   return $sql;
 
-
-
 }
 
 
+function getPlayerBatting($playerID) {
+  $stmt = 'SELECT * from batting where playerID = :playerID order by yearID asc';
+  $sql = dbConnect()->prepare($stmt);
+
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+
+  $sql->execute();
+  return $sql;
+}
+
+
+function getPlayerPitching($playerID) {
+  
+}
 
 
 

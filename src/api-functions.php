@@ -31,11 +31,30 @@ function returnPeople($pageNumber = 1) {
 
   echo json_encode($peopleSub, JSON_PRETTY_PRINT);
 
+  
+  exit;
+}
+
+function returnPerson($playerID) {
+  $resultsPerson = getPlayer($playerID)->fetch(PDO::FETCH_ASSOC);
+  $resultsBatting = getPlayerBatting($playerID)->fetchAll(PDO::FETCH_ASSOC);
+
+  $results = [];
+  $results['person_info'] = $resultsPerson;
+  $results['batting'] = $resultsBatting;
+
+  echo json_encode($results, JSON_PRETTY_PRINT);
   http_response_code(200);
   exit;
 }
 
 
+function returnPersonBatting($playerID) {
+  $results = getPlayerBatting($playerID)->fetchAll(PDO::FETCH_ASSOC);
+  echo json_encode($results, JSON_PRETTY_PRINT);
+  http_response_code(200);
+  exit;
+}
 
 
 
