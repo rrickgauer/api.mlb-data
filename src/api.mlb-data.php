@@ -61,10 +61,10 @@ if (isset($request[2])) {
       returnPersonPitching($playerID);
       break;
     case 'appearances':
-      echo "Your favorite color is green!";
+      returnPersonAppearances($playerID);
       break;
     case 'schools':
-      echo "Your favorite color is green!";
+      returnPersonSchools($playerID);
       break;
     default:
       echo "Your favorite color is neither red, blue, nor green!";

@@ -175,6 +175,50 @@ function getPersonSalaries($playerID) {
   return $sql;
 }
 
+function getPersonAppearances($playerID) {
+  $stmt = '
+  SELECT *
+  FROM   appearances
+  WHERE  playerID = :playerID
+  ORDER  BY yearID DESC';
+
+  $sql = dbConnect()->prepare($stmt);
+  
+  // filter and bind playerID
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+}
+
+function getPersonSchools($playerID) {
+  $stmt = '
+  SELECT c.ID        AS id,
+         c.yearID    AS year,
+         s.name_full AS schoolName,
+         s.city,
+         s.state,
+         s.country
+  FROM   collegeplaying c
+         LEFT JOIN schools s
+                ON c.schoolID = s.schoolID
+  WHERE c.playerID = :playerid
+  GROUP  BY id
+  ORDER  BY year ASC';
+
+  $sql = dbConnect()->prepare($stmt);
+  
+  // filter and bind playerID
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+
+}
 
 
 
