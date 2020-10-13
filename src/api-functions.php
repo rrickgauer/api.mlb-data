@@ -110,7 +110,7 @@ class ApiFunctions {
     $people['pitching']     = '/people/{playerID}/pitching';
     $people['salaries']     = '/people/{playerID}/salaries';
     $people['schools']      = '/people/{playerID}/schools';
-    $results['modules']['people'] = $people;
+    $results['modules']['/people'] = $people;
 
 
     header('Content-Type: application/json; charset=utf-8');
