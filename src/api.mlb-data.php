@@ -47,12 +47,12 @@ if (!doesPlayerExist($playerID)) {
 // people/playerID/appearances - appearances
 // people/playerID/schools - schools attended
 
-if (isset($response[2])) {
-  $module = $response[2];
+if (isset($request[2])) {
+  $module = $request[2];
 
   switch ($module) {
     case 'salaries':
-      echo "Your favorite color is red!";
+      returnPersonSalaries($playerID);
       break;
     case 'batting':
       echo "Your favorite color is blue!";
@@ -70,7 +70,6 @@ if (isset($response[2])) {
       echo "Your favorite color is neither red, blue, nor green!";
   }
 } else {
-
   // biographical
   returnPerson($playerID);
 }

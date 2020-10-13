@@ -60,6 +60,14 @@ function returnPersonPitching($playerID) {
   exit;
 }
 
+function returnPersonSalaries($playerID) {
+  header('Content-Type: application/json');
+  $results = getPersonSalaries($playerID)->fetchAll(PDO::FETCH_ASSOC);
+  echo json_encode($results, JSON_PRETTY_PRINT);
+  http_response_code(200);
+  exit;
+}
+
 
 
 

@@ -150,6 +150,31 @@ function doesPlayerExist($playerID) {
     return false;
 }
 
+/******************************************************************************
+ *  Returns persons salaries
+ *
+ *  year
+ *  salary
+******************************************************************************/
+function getPersonSalaries($playerID) {
+  $stmt = '
+  SELECT   s.yearid AS year,
+           s.salary
+  from     salaries s
+  WHERE    s.playerid = :playerID
+  ORDER BY year ASC';
+
+  $sql = dbConnect()->prepare($stmt);
+  
+  // filter and bind playerID
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+}
+
 
 
 
