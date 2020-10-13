@@ -79,14 +79,28 @@ class DB {
 
 
   public static function getAllPlayers() {
-    $stmt = 'SELECT * from people order by nameLast, nameFirst, playerID';
+    $stmt = '
+    SELECT *
+    FROM   people
+    ORDER  BY nameLast,
+              nameFirst,
+              playerID';
+
     $sql = DB::dbConnect()->prepare($stmt);
     $sql->execute();
     return $sql;
   }
 
   public static function getPlayers($limit, $offset) {
-    $stmt = 'SELECT * from people order by nameLast, nameFirst, playerID limit :limit offset :offset';
+    $stmt = '
+    SELECT *
+    FROM   people
+    ORDER  BY nameLast,
+              nameFirst,
+              playerID
+    LIMIT  :limit OFFSET :offset';
+
+
     $sql = DB::dbConnect()->prepare($stmt);
 
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
@@ -101,7 +115,14 @@ class DB {
 
 
   public static function searchPlayers($query = '') {
-    $stmt = 'SELECT p.playerID, p.nameFirst, p.nameLast from people p where p.nameFirst like :nameFirst or p.nameLast like :nameLast limit 100';
+    $stmt = '
+    SELECT p.playerID,
+           p.nameFirst,
+           p.nameLast
+    FROM   people p
+    WHERE  p.nameFirst LIKE :nameFirst
+            OR p.nameLast LIKE :nameLast
+    LIMIT  100';
 
     $sql = DB::dbConnect()->prepare($stmt);
 
@@ -120,7 +141,12 @@ class DB {
 
 
   public static function getPlayerBatting($playerID) {
-    $stmt = 'SELECT * from batting where playerID = :playerID order by yearID asc';
+    $stmt = '
+    SELECT *
+    FROM   batting
+    WHERE  playerID = :playerID
+    ORDER  BY yearID ASC';
+
     $sql = DB::dbConnect()->prepare($stmt);
 
     $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
@@ -133,7 +159,12 @@ class DB {
 
 
   public static function getPlayerPitching($playerID) {
-    $stmt = 'SELECT * from pitching where playerID = :playerID order by yearID asc';
+    $stmt = '
+    SELECT *
+    FROM   pitching
+    WHERE  playerID = :playerID
+    ORDER  BY yearID ASC';
+
     $sql = DB::dbConnect()->prepare($stmt);
 
     $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
@@ -146,7 +177,11 @@ class DB {
 
 
   public static function doesPlayerExist($playerID) {
-    $stmt = 'SELECT playerID from people where playerID = :playerID limit 1';
+    $stmt = '
+    SELECT playerID
+    FROM   people
+    WHERE  playerID = :playerID
+    LIMIT  1';
 
     $sql = DB::dbConnect()->prepare($stmt);
     
