@@ -20,26 +20,11 @@ $module = $request[0];
 
 // return all people
 if (!isset($request[1])) {
-  $result = [];
-  $peopleAll = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
-
-  // determine current page
   $currentPage = 0;
   if (isset($_GET['page']))
     $currentPage = $_GET['page'];
 
-  // get pagination
-  $result['pagination'] = ApiFunctions::getPaginationResults($peopleAll, $MAX_PAGE_ITEMS, $currentPage);
-
-
-  $offset = $currentPage * $MAX_PAGE_ITEMS;
-  $people = DB::getPlayers($MAX_PAGE_ITEMS, $offset)->fetchAll(PDO::FETCH_ASSOC);
-  $result['results'] = $people;
-
-  // return response
-  header('Content-Type: application/json');
-  echo json_encode($result, JSON_PRETTY_PRINT);
-  exit;
+  ApiFunctions::returnPeople($currentPage);
 
 } else {
   $playerID = $request[1];
