@@ -4,12 +4,14 @@
 include_once('functions.php');
 include_once('api-functions.php');
 
+$MAX_PAGE_ITEMS = 1000;
+
 // header('Content-Type: application/json');
 
 
 // check if user specified a path in the url
 if (!isset($_SERVER['PATH_INFO'])) {
-  echo http_response_code(404);
+  http_response_code(404);
   exit;
 }
 
@@ -19,11 +21,59 @@ $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 
 $module = $request[0];
 
-// ensure that a player id was provided in the url
+
+// return all people
 if (!isset($request[1])) {
-  http_response_code(404);
-  echo 'Please provide a player ID';
+
+
+  $result = [];
+
+
+
+  $people = getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
+  $numPages =  floor(count($people) / $MAX_PAGE_ITEMS);
+
+  // set the current page
+  // default is 1 if it is not specified
+  $currentPage = 1;
+  if (isset($_GET['page'])) {
+    $currentPage = $_GET['page'];
+  }
+
+  // ensure the current page does not exceed the last available page
+  if ($currentPage > $numPages) {
+    http_response_code(404);
+    echo 'Page does not exist';
+    exit;
+  }
+
+
+  $pages = [];
+  $pages['first'] = 'people?page=1';
+  $pages['last'] = 'people?page=' . $numPages;
+
+  // next page is null if user is on the last page
+  $pages['next'] = null;
+  if ($currentPage < $numPages) {
+    $nextPage = $currentPage + 1;
+    $pages['next'] = 'people?page=' . $nextPage;
+  }
+
+
+  $result['pagination'] = $pages;
+
+
+  header('Content-Type: application/json');
+  echo json_encode($result, JSON_PRETTY_PRINT);
+
+
+
   exit;
+
+
+
+
+
 } else {
   $playerID = $request[1];
 }
@@ -36,6 +86,7 @@ if (!doesPlayerExist($playerID)) {
   echo 'ID does not exist!';
   exit;
 }
+
 
 
 
