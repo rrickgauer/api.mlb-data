@@ -55,10 +55,10 @@ if (isset($request[2])) {
       returnPersonSalaries($playerID);
       break;
     case 'batting':
-      echo "Your favorite color is blue!";
+      returnPersonBatting($playerID);
       break;
     case 'pitching':
-      echo "Your favorite color is green!";
+      returnPersonPitching($playerID);
       break;
     case 'appearances':
       echo "Your favorite color is green!";
