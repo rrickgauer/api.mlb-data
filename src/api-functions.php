@@ -96,16 +96,22 @@ class ApiFunctions {
   }
 
   public static function returnDefaultDisplay() {
-    // $results = [];
-    $people['peopleAll'] = '/people{?page}';
-    $people['peopleBiography'] = '/people/{playerID}';
-    $people['peopleBatting'] = '/people/{playerID}/batting';
-    $people['peoplePitching'] = '/people/{playerID}/pitching';
-    $people['peopleAppearances'] = '/people/{playerID}/appearances';
-    $people['peopleSalaries'] = '/people/{playerID}/salaries';
-    $people['peopleSchools'] = '/people/{playerID}/schools';
 
-    $results['people'] = $people;
+    $projectInfo['author']         = 'Ryan Rickgauer';
+    $projectInfo['authorWebsite']  = 'https://www.ryanrickgauer.com/resume/index.html';
+    $projectInfo['projectWebsite'] = 'https://github.com/rrickgauer/mlb-api';
+    $results['projectInfo']        = $projectInfo;
+
+
+    $people['all']          = '/people{?page}';
+    $people['biography']    = '/people/{playerID}';
+    $people['appearances']  = '/people/{playerID}/appearances';
+    $people['batting']      = '/people/{playerID}/batting';
+    $people['pitching']     = '/people/{playerID}/pitching';
+    $people['salaries']     = '/people/{playerID}/salaries';
+    $people['schools']      = '/people/{playerID}/schools';
+    $results['modules']['people'] = $people;
+
 
     header('Content-Type: application/json; charset=utf-8');
     http_response_code(200);
