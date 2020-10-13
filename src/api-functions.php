@@ -40,7 +40,7 @@ class ApiFunctions {
 
   public static function returnPerson($playerID) {
     header('Content-Type: application/json');
-    $results = getPlayer($playerID)->fetch(PDO::FETCH_ASSOC);
+    $results = DB::getPlayer($playerID)->fetch(PDO::FETCH_ASSOC);
     echo json_encode($results, JSON_PRETTY_PRINT);
     http_response_code(200);
     exit;
@@ -49,7 +49,7 @@ class ApiFunctions {
 
   public static function returnPersonBatting($playerID) {
     header('Content-Type: application/json');
-    $results = getPlayerBatting($playerID)->fetchAll(PDO::FETCH_ASSOC);
+    $results = DB::getPlayerBatting($playerID)->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($results, JSON_PRETTY_PRINT);
     http_response_code(200);
     exit;
@@ -57,7 +57,7 @@ class ApiFunctions {
 
   public static function returnPersonPitching($playerID) {
     header('Content-Type: application/json');
-    $results = getPlayerPitching($playerID)->fetchAll(PDO::FETCH_ASSOC);
+    $results = DB::getPlayerPitching($playerID)->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($results, JSON_PRETTY_PRINT);
     http_response_code(200);
     exit;
@@ -65,7 +65,7 @@ class ApiFunctions {
 
   public static function returnPersonSalaries($playerID) {
     header('Content-Type: application/json');
-    $results = getPersonSalaries($playerID)->fetchAll(PDO::FETCH_ASSOC);
+    $results = DB::getPersonSalaries($playerID)->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($results, JSON_PRETTY_PRINT);
     http_response_code(200);
     exit;
@@ -73,7 +73,7 @@ class ApiFunctions {
 
   public static function returnPersonAppearances($playerID) {
     header('Content-Type: application/json');
-    $results = getPersonAppearances($playerID)->fetchAll(PDO::FETCH_ASSOC);
+    $results = DB::getPersonAppearances($playerID)->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($results, JSON_PRETTY_PRINT);
     http_response_code(200);
     exit;
@@ -81,7 +81,7 @@ class ApiFunctions {
 
   public static function returnPersonSchools($playerID) {
     header('Content-Type: application/json');
-    $results = getPersonSchools($playerID)->fetchAll(PDO::FETCH_ASSOC);
+    $results = DB::getPersonSchools($playerID)->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($results, JSON_PRETTY_PRINT);
     http_response_code(200);
     exit;

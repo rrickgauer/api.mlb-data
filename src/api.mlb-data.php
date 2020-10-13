@@ -2,12 +2,9 @@
 
 
 include_once('functions.php');
-// include_once('api-functions.php');
 require_once('api-functions.php');
 
 $MAX_PAGE_ITEMS = 1000;
-
-// header('Content-Type: application/json');
 
 
 // check if user specified a path in the url
@@ -21,11 +18,10 @@ $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 $module = $request[0];
 
 
-
 // return all people
 if (!isset($request[1])) {
   $result = [];
-  $people = getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
+  $people = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
 
   // determine current page
   $currentPage = 1;
@@ -45,15 +41,12 @@ if (!isset($request[1])) {
 }
 
 
-
 // check if player exists
-if (!doesPlayerExist($playerID)) {
+if (!DB::doesPlayerExist($playerID)) {
   http_response_code(404);
   echo 'ID does not exist!';
   exit;
 }
-
-
 
 
 // determine which person submodule to return
@@ -88,51 +81,6 @@ if (isset($request[2])) {
 
 
 exit;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
