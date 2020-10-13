@@ -2,7 +2,7 @@
 
 Restful API for MLB data
 
-`api.mlb-data.php/`
+**api.mlb-data.php**
 
 ## Resources
 
@@ -15,9 +15,11 @@ Restful API for MLB data
 You can read about the full list of tables [here](docs/tables.md)
 
 
-The base URL is `api.mlb-data.php`. As of now, there is one module: **people**.
+### Modules
 
-### People
+As of now, there is one module: **people**.
+
+#### People
 
 Submodule | Result
 :--- | :---
