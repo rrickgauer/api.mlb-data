@@ -204,7 +204,7 @@ function getPersonSchools($playerID) {
   FROM   collegeplaying c
          LEFT JOIN schools s
                 ON c.schoolID = s.schoolID
-  WHERE c.playerID = :playerid
+  WHERE c.playerID = :playerID
   GROUP  BY id
   ORDER  BY year ASC';
 

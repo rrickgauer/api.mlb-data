@@ -67,7 +67,9 @@ if (isset($request[2])) {
       returnPersonSchools($playerID);
       break;
     default:
-      echo "Your favorite color is neither red, blue, nor green!";
+      echo 'invalid module.';
+      http_response_code(400);
+      exit;
   }
 } else {
   // biographical
