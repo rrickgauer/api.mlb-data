@@ -39,14 +39,7 @@ if (!doesPlayerExist($playerID)) {
 
 
 
-// determine which module to return
-// people/playerID - biographical
-// people/playerID/salaries - salary info
-// people/playerID/batting - batting stats
-// people/playerID/pitching - pitching stats
-// people/playerID/appearances - appearances
-// people/playerID/schools - schools attended
-
+// determine which person submodule to return
 if (isset($request[2])) {
   $module = $request[2];
 
