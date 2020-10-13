@@ -94,6 +94,22 @@ class ApiFunctions {
     
     return $pages;
   }
+
+  public static function returnDefaultDisplay() {
+    $results = [];
+    $results['people'] = '/people{?page}';
+    $results['peopleBiography'] = '/people/{playerID}';
+    $results['peopleBatting'] = '/people/{playerID}/batting';
+    $results['peoplePitching'] = '/people/{playerID}/pitching';
+    $results['peopleAppearances'] = '/people/{playerID}/appearances';
+    $results['peopleSalaries'] = '/people/{playerID}/salaries';
+    $results['peopleSchools'] = '/people/{playerID}/schools';
+
+    header('Content-Type: application/json; charset=utf-8');
+    http_response_code(200);
+    echo json_encode($results, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
+    exit;
+  }
 }
 
 

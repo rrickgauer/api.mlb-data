@@ -7,8 +7,7 @@ require_once('api-functions.php');
 
 // check if user specified a path in the url
 if (!isset($_SERVER['PATH_INFO'])) {
-  http_response_code(404);
-  exit;
+  ApiFunctions::returnDefaultDisplay();
 }
 
 
