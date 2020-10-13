@@ -16,12 +16,53 @@ function dbConnect() {
   }
 }
 
-
-
-
+/******************************************************************************
+ *  Returns people row
+ *
+ *  playerID
+ *  birthCountry
+ *  birthState
+ *  birthCity
+ *  deathState
+ *  deathCity
+ *  nameFirst
+ *  nameLast
+ *  nameGiven
+ *  weight
+ *  height
+ *  bats
+ *  throws
+ *  retroID
+ *  bbrefID
+ *  birthDate
+ *  debutDate
+ *  finalGameDate
+ *  deathDate
+******************************************************************************/
 function getPlayer($playerID) {
-
-  $stmt = 'SELECT * from people p where p.playerID = :playerID';
+  $stmt = '
+  SELECT playerID,
+         birthCountry,
+         birthState,
+         birthCity,
+         deathState,
+         deathCity,
+         nameFirst,
+         nameLast,
+         nameGiven,
+         weight,
+         height,
+         bats,
+         throws,
+         retroID,
+         bbrefID,
+         birth_date     AS birthDate,
+         debut_date     AS debutDate,
+         finalgame_date AS finalGameDate,
+         death_date     AS deathDate
+  FROM   people
+  WHERE  playerID = :playerID
+  LIMIT  1';
 
   $sql = dbConnect()->prepare($stmt);
 
@@ -109,6 +150,75 @@ function doesPlayerExist($playerID) {
     return false;
 }
 
+/******************************************************************************
+ *  Returns persons salaries
+ *
+ *  year
+ *  salary
+******************************************************************************/
+function getPersonSalaries($playerID) {
+  $stmt = '
+  SELECT   s.yearid AS year,
+           s.salary
+  from     salaries s
+  WHERE    s.playerid = :playerID
+  ORDER BY year ASC';
+
+  $sql = dbConnect()->prepare($stmt);
+  
+  // filter and bind playerID
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+}
+
+function getPersonAppearances($playerID) {
+  $stmt = '
+  SELECT *
+  FROM   appearances
+  WHERE  playerID = :playerID
+  ORDER  BY yearID DESC';
+
+  $sql = dbConnect()->prepare($stmt);
+  
+  // filter and bind playerID
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+}
+
+function getPersonSchools($playerID) {
+  $stmt = '
+  SELECT c.ID        AS id,
+         c.yearID    AS year,
+         s.name_full AS schoolName,
+         s.city,
+         s.state,
+         s.country
+  FROM   collegeplaying c
+         LEFT JOIN schools s
+                ON c.schoolID = s.schoolID
+  WHERE c.playerID = :playerID
+  GROUP  BY id
+  ORDER  BY year ASC';
+
+  $sql = dbConnect()->prepare($stmt);
+  
+  // filter and bind playerID
+  $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+
+}
 
 
 
