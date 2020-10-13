@@ -4,8 +4,6 @@
 include_once('functions.php');
 require_once('api-functions.php');
 
-$MAX_PAGE_ITEMS = 1000;
-
 
 // check if user specified a path in the url
 if (!isset($_SERVER['PATH_INFO'])) {
