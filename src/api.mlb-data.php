@@ -2,7 +2,8 @@
 
 
 include_once('functions.php');
-include_once('api-functions.php');
+// include_once('api-functions.php');
+require_once('api-functions.php');
 
 $MAX_PAGE_ITEMS = 1000;
 
@@ -17,62 +18,27 @@ if (!isset($_SERVER['PATH_INFO'])) {
 
 
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
-
-
 $module = $request[0];
+
 
 
 // return all people
 if (!isset($request[1])) {
-
-
   $result = [];
-
-
-
   $people = getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
-  $numPages =  floor(count($people) / $MAX_PAGE_ITEMS);
 
-  // set the current page
-  // default is 1 if it is not specified
+  // determine current page
   $currentPage = 1;
-  if (isset($_GET['page'])) {
+  if (isset($_GET['page']))
     $currentPage = $_GET['page'];
-  }
 
-  // ensure the current page does not exceed the last available page
-  if ($currentPage > $numPages) {
-    http_response_code(404);
-    echo 'Page does not exist';
-    exit;
-  }
+  // get pagination
+  $result['pagination'] = ApiFunctions::getPaginationResults($people, $MAX_PAGE_ITEMS, $currentPage);
 
-
-  $pages = [];
-  $pages['first'] = 'people?page=1';
-  $pages['last'] = 'people?page=' . $numPages;
-
-  // next page is null if user is on the last page
-  $pages['next'] = null;
-  if ($currentPage < $numPages) {
-    $nextPage = $currentPage + 1;
-    $pages['next'] = 'people?page=' . $nextPage;
-  }
-
-
-  $result['pagination'] = $pages;
-
-
+  // return response
   header('Content-Type: application/json');
   echo json_encode($result, JSON_PRETTY_PRINT);
-
-
-
   exit;
-
-
-
-
 
 } else {
   $playerID = $request[1];
@@ -96,19 +62,19 @@ if (isset($request[2])) {
 
   switch ($module) {
     case 'salaries':
-      returnPersonSalaries($playerID);
+      ApiFunctions::returnPersonSalaries($playerID);
       break;
     case 'batting':
-      returnPersonBatting($playerID);
+      ApiFunctions::returnPersonBatting($playerID);
       break;
     case 'pitching':
-      returnPersonPitching($playerID);
+      ApiFunctions::returnPersonPitching($playerID);
       break;
     case 'appearances':
-      returnPersonAppearances($playerID);
+      ApiFunctions::returnPersonAppearances($playerID);
       break;
     case 'schools':
-      returnPersonSchools($playerID);
+      ApiFunctions::returnPersonSchools($playerID);
       break;
     default:
       echo 'invalid module.';
@@ -117,7 +83,7 @@ if (isset($request[2])) {
   }
 } else {
   // biographical
-  returnPerson($playerID);
+  ApiFunctions::returnPerson($playerID);
 }
 
 
