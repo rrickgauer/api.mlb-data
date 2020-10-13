@@ -16,12 +16,53 @@ function dbConnect() {
   }
 }
 
-
-
-
+/******************************************************************************
+ *  Returns people row
+ *
+ *  playerID
+ *  birthCountry
+ *  birthState
+ *  birthCity
+ *  deathState
+ *  deathCity
+ *  nameFirst
+ *  nameLast
+ *  nameGiven
+ *  weight
+ *  height
+ *  bats
+ *  throws
+ *  retroID
+ *  bbrefID
+ *  birthDate
+ *  debutDate
+ *  finalGameDate
+ *  deathDate
+******************************************************************************/
 function getPlayer($playerID) {
-
-  $stmt = 'SELECT * from people p where p.playerID = :playerID';
+  $stmt = '
+  SELECT playerID,
+         birthCountry,
+         birthState,
+         birthCity,
+         deathState,
+         deathCity,
+         nameFirst,
+         nameLast,
+         nameGiven,
+         weight,
+         height,
+         bats,
+         throws,
+         retroID,
+         bbrefID,
+         birth_date     AS birthDate,
+         debut_date     AS debutDate,
+         finalgame_date AS finalGameDate,
+         death_date     AS deathDate
+  FROM   people
+  WHERE  playerID = :playerID
+  LIMIT  1';
 
   $sql = dbConnect()->prepare($stmt);
 
