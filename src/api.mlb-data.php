@@ -21,15 +21,20 @@ $module = $request[0];
 // return all people
 if (!isset($request[1])) {
   $result = [];
-  $people = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
+  $peopleAll = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
 
   // determine current page
-  $currentPage = 1;
+  $currentPage = 0;
   if (isset($_GET['page']))
     $currentPage = $_GET['page'];
 
   // get pagination
-  $result['pagination'] = ApiFunctions::getPaginationResults($people, $MAX_PAGE_ITEMS, $currentPage);
+  $result['pagination'] = ApiFunctions::getPaginationResults($peopleAll, $MAX_PAGE_ITEMS, $currentPage);
+
+
+  $offset = $currentPage * $MAX_PAGE_ITEMS;
+  $people = DB::getPlayers($MAX_PAGE_ITEMS, $offset)->fetchAll(PDO::FETCH_ASSOC);
+  $result['results'] = $people;
 
   // return response
   header('Content-Type: application/json');

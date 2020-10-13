@@ -85,12 +85,22 @@ class DB {
     return $sql;
   }
 
+  public static function getPlayers($limit, $offset) {
+    $stmt = 'SELECT * from people order by nameLast, nameFirst, playerID limit :limit offset :offset';
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+    
+    $sql->execute();
+    return $sql;
+  }
+
 
   public static function searchPlayers($query = '') {
-
-    // Projects.name like :name
-    // $name = "%$query%";
-
     $stmt = 'SELECT p.playerID, p.nameFirst, p.nameLast from people p where p.nameFirst like :nameFirst or p.nameLast like :nameLast limit 100';
 
     $sql = DB::dbConnect()->prepare($stmt);

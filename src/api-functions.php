@@ -98,7 +98,7 @@ class ApiFunctions {
     }
 
     $pages = [];
-    $pages['first'] = 1;
+    $pages['first'] = 0;
     $pages['last'] = $numPages;
 
     // next page is null if user is on the last page
