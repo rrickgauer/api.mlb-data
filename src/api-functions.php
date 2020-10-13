@@ -96,14 +96,16 @@ class ApiFunctions {
   }
 
   public static function returnDefaultDisplay() {
-    $results = [];
-    $results['people'] = '/people{?page}';
-    $results['peopleBiography'] = '/people/{playerID}';
-    $results['peopleBatting'] = '/people/{playerID}/batting';
-    $results['peoplePitching'] = '/people/{playerID}/pitching';
-    $results['peopleAppearances'] = '/people/{playerID}/appearances';
-    $results['peopleSalaries'] = '/people/{playerID}/salaries';
-    $results['peopleSchools'] = '/people/{playerID}/schools';
+    // $results = [];
+    $people['peopleAll'] = '/people{?page}';
+    $people['peopleBiography'] = '/people/{playerID}';
+    $people['peopleBatting'] = '/people/{playerID}/batting';
+    $people['peoplePitching'] = '/people/{playerID}/pitching';
+    $people['peopleAppearances'] = '/people/{playerID}/appearances';
+    $people['peopleSalaries'] = '/people/{playerID}/salaries';
+    $people['peopleSchools'] = '/people/{playerID}/schools';
+
+    $results['people'] = $people;
 
     header('Content-Type: application/json; charset=utf-8');
     http_response_code(200);
