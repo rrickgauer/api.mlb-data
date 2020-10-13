@@ -2,69 +2,77 @@
 
 
 include_once('functions.php');
-include_once('api-functions.php');
+require_once('api-functions.php');
 
-// header('Content-Type: application/json');
+$MAX_PAGE_ITEMS = 1000;
 
 
 // check if user specified a path in the url
 if (!isset($_SERVER['PATH_INFO'])) {
-  echo http_response_code(404);
+  http_response_code(404);
   exit;
 }
 
 
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
-
-
 $module = $request[0];
 
-// ensure that a player id was provided in the url
+
+// return all people
 if (!isset($request[1])) {
-  http_response_code(404);
-  echo 'Please provide a player ID';
+  $result = [];
+  $peopleAll = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
+
+  // determine current page
+  $currentPage = 0;
+  if (isset($_GET['page']))
+    $currentPage = $_GET['page'];
+
+  // get pagination
+  $result['pagination'] = ApiFunctions::getPaginationResults($peopleAll, $MAX_PAGE_ITEMS, $currentPage);
+
+
+  $offset = $currentPage * $MAX_PAGE_ITEMS;
+  $people = DB::getPlayers($MAX_PAGE_ITEMS, $offset)->fetchAll(PDO::FETCH_ASSOC);
+  $result['results'] = $people;
+
+  // return response
+  header('Content-Type: application/json');
+  echo json_encode($result, JSON_PRETTY_PRINT);
   exit;
+
 } else {
   $playerID = $request[1];
 }
 
 
-
 // check if player exists
-if (!doesPlayerExist($playerID)) {
+if (!DB::doesPlayerExist($playerID)) {
   http_response_code(404);
   echo 'ID does not exist!';
   exit;
 }
 
 
-
-// determine which module to return
-// people/playerID - biographical
-// people/playerID/salaries - salary info
-// people/playerID/batting - batting stats
-// people/playerID/pitching - pitching stats
-// people/playerID/appearances - appearances
-// people/playerID/schools - schools attended
-
+// determine which person submodule to return
 if (isset($request[2])) {
   $module = $request[2];
 
   switch ($module) {
     case 'salaries':
-      returnPersonSalaries($playerID);
+      ApiFunctions::returnPersonSalaries($playerID);
       break;
     case 'batting':
-      returnPersonBatting($playerID);
+      ApiFunctions::returnPersonBatting($playerID);
       break;
     case 'pitching':
-      returnPersonPitching($playerID);
+      ApiFunctions::returnPersonPitching($playerID);
       break;
     case 'appearances':
-      returnPersonAppearances($playerID);
+      ApiFunctions::returnPersonAppearances($playerID);
       break;
     case 'schools':
-      returnPersonSchools($playerID);
+      ApiFunctions::returnPersonSchools($playerID);
       break;
     default:
       echo 'invalid module.';
@@ -73,56 +81,11 @@ if (isset($request[2])) {
   }
 } else {
   // biographical
-  returnPerson($playerID);
+  ApiFunctions::returnPerson($playerID);
 }
 
 
 exit;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
