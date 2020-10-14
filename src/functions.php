@@ -265,7 +265,40 @@ class DB {
     $sql->execute();
 
     return $sql;
+  }
 
+  public static function getPeopleSearch($query) {
+    $stmt = '
+    SELECT   playerid,
+             namefirst,
+             namelast,
+             namegiven,
+             weight,
+             height,
+             bats,
+             throws,
+             debut_date,
+             finalgame_date,
+             birth_date,
+             death_date,
+             birthcountry,
+             birthstate,
+             birthcity
+    FROM     people
+    WHERE    MATCH(namefirst, namelast) against(:query IN boolean mode) > 0
+    ORDER BY namelast ASC,
+             namefirst ASC
+    LIMIT    30';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+    
+    // filter and bind playerID
+    $query = '(' . $query . '*)';
+    $query = filter_var($query, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':query', $query, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql;
   }
 }
 
