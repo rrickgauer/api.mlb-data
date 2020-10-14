@@ -7,6 +7,13 @@ class ApiFunctions {
 
   const MAX_PAGE_ITEMS = 1000;
 
+  public static function printJson($data) {
+    // return response
+    header('Content-Type: application/json');
+    echo json_encode($data, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
+    exit;
+  }
+
   public static function returnPeople($currentPage) {
     $result = [];
     $peopleAll = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
