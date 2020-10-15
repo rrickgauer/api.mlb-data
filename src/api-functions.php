@@ -156,6 +156,12 @@ class ApiFunctions {
     ApiFunctions::printJson($appearancesTotal);
     exit;
   }
+
+  public static function returnPersonSalariesTotals($playerID) {
+    $salariesTotal = DB::getPersonSalariesTotals($playerID)->fetch(PDO::FETCH_ASSOC);
+    ApiFunctions::printJson($salariesTotal);
+    exit;
+  }
 }
 
 

@@ -71,7 +71,11 @@ else if ($module == 'people') {
 
     switch ($module) {
       case 'salaries':
-        ApiFunctions::returnPersonSalaries($playerID);
+        if (isset($_GET['total']) && $_GET['total'] == 'true')
+          ApiFunctions::returnPersonSalariesTotals($playerID);
+        else
+          ApiFunctions::returnPersonSalaries($playerID);
+        exit;
         break;
 
       case 'batting':
