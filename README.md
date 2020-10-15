@@ -2,7 +2,7 @@
 
 Restful API for MLB data
 
-**api.mlb-data.php**
+**https://mlb.ryanrickgauer.com/api.mlb-data.php**
 
 ## Resources
 
