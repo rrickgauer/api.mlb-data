@@ -40,6 +40,10 @@ Schools :school:                    | **`/people/{playerID}/schools`**
 
 * To search the database by first and last name: **`/search?q=`**
 
+## Examples
+
+Checkout our [examples document](docs/examples.md) to see several examples.
+
 ## Complete Database Descriptions
 
 You can read about the full list of tables [here](docs/tables.md)
