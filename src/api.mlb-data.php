@@ -67,9 +67,11 @@ else {
       case 'salaries':
         ApiFunctions::returnPersonSalaries($playerID);
         break;
+
       case 'batting':
         ApiFunctions::returnPersonBatting($playerID);
         break;
+
       case 'pitching': 
         // if total is set but not true or false, error
         if (isset($_GET['total']) && !in_array($_GET['total'], ['true', 'false'])) {
@@ -84,12 +86,15 @@ else {
           ApiFunctions::returnPersonPitching($playerID);
         exit;
         break;
+
       case 'appearances':
         ApiFunctions::returnPersonAppearances($playerID);
         break;
+
       case 'schools':
         ApiFunctions::returnPersonSchools($playerID);
         break;
+        
       default:
         echo 'invalid module.';
         http_response_code(400);
