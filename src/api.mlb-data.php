@@ -70,8 +70,19 @@ else {
       case 'batting':
         ApiFunctions::returnPersonBatting($playerID);
         break;
-      case 'pitching':
-        ApiFunctions::returnPersonPitching($playerID);
+      case 'pitching': 
+        // if total is set but not true or false, error
+        if (isset($_GET['total']) && !in_array($_GET['total'], ['true', 'false'])) {
+          ApiFunctions::returnInvalidUrl('Total must be "true" or "false"');
+          exit;
+        }
+
+        // return pitching
+        if (isset($_GET['total']) && $_GET['total'] == 'true')
+          ApiFunctions::returnPersonPitchingTotals($playerID);
+        else
+          ApiFunctions::returnPersonPitching($playerID);
+        exit;
         break;
       case 'appearances':
         ApiFunctions::returnPersonAppearances($playerID);

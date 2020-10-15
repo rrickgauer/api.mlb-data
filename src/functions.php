@@ -292,7 +292,7 @@ class DB {
 
     $sql = DB::dbConnect()->prepare($stmt);
     
-    // filter and bind playerID
+    // filter and bind query
     $query = '(' . $query . '*)';
     $query = filter_var($query, FILTER_SANITIZE_STRING);
     $sql->bindParam(':query', $query, PDO::PARAM_STR);
@@ -300,6 +300,57 @@ class DB {
     $sql->execute();
     return $sql;
   }
+
+
+  public static function getPersonPitchingTotal($playerID) {
+
+    $stmt = '
+    SELECT (SELECT COUNT(playerID)
+            FROM   pitching
+            WHERE  playerID = :playerID2) AS yearsTotal,
+           SUM(W)                         AS W,
+           SUM(L)                         AS L,
+           SUM(G)                         AS G,
+           SUM(GS)                        AS GS,
+           SUM(CG)                        AS CG,
+           SUM(SHO)                       AS SHO,
+           SUM(SV)                        AS SV,
+           SUM(IPouts)                    AS IPouts,
+           SUM(H)                         AS H,
+           SUM(ER)                        AS ER,
+           SUM(HR)                        AS HR,
+           SUM(BB)                        AS BB,
+           SUM(SO)                        AS SO,
+           SUM(BAOpp)                     AS BAOpp,
+           SUM(ERA)                       AS ERA,
+           SUM(IBB)                       AS IBB,
+           SUM(WP)                        AS WP,
+           SUM(HBP)                       AS HBP,
+           SUM(BK)                        AS BK,
+           SUM(BFP)                       AS BFP,
+           SUM(GF)                        AS GF,
+           SUM(R)                         AS R,
+           SUM(SH)                        AS SH,
+           SUM(SF)                        AS SF,
+           SUM(GIDP)                      AS GIDP
+    FROM   pitching
+    WHERE  playerID = :playerID
+    LIMIT  1';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind playerID/playerID2
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+
+
 }
 
 

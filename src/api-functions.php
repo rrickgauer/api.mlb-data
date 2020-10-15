@@ -129,6 +129,19 @@ class ApiFunctions {
     echo json_encode($results, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
     exit;
   }
+
+
+  public static function returnPersonPitchingTotals($playerID) {
+    $pitchingTotal = DB::getPersonPitchingTotal($playerID)->fetch(PDO::FETCH_ASSOC);
+    ApiFunctions::printJson($pitchingTotal);
+    exit;
+  }
+
+  public static function returnInvalidUrl($message = 'Unrecoginzed parameter in the URL') {
+    http_response_code(400);
+    echo $message;
+    exit;
+  }
 }
 
 
