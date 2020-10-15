@@ -292,7 +292,7 @@ class DB {
 
     $sql = DB::dbConnect()->prepare($stmt);
     
-    // filter and bind playerID
+    // filter and bind query
     $query = '(' . $query . '*)';
     $query = filter_var($query, FILTER_SANITIZE_STRING);
     $sql->bindParam(':query', $query, PDO::PARAM_STR);
@@ -300,15 +300,132 @@ class DB {
     $sql->execute();
     return $sql;
   }
+
+
+  public static function getPersonPitchingTotals($playerID) {
+    $stmt = '
+    SELECT (SELECT COUNT(playerID)
+            FROM   pitching
+            WHERE  playerID = :playerID2) AS yearsTotal,
+           SUM(W)                         AS W,
+           SUM(L)                         AS L,
+           SUM(G)                         AS G,
+           SUM(GS)                        AS GS,
+           SUM(CG)                        AS CG,
+           SUM(SHO)                       AS SHO,
+           SUM(SV)                        AS SV,
+           SUM(IPouts)                    AS IPouts,
+           SUM(H)                         AS H,
+           SUM(ER)                        AS ER,
+           SUM(HR)                        AS HR,
+           SUM(BB)                        AS BB,
+           SUM(SO)                        AS SO,
+           SUM(BAOpp)                     AS BAOpp,
+           SUM(ERA)                       AS ERA,
+           SUM(IBB)                       AS IBB,
+           SUM(WP)                        AS WP,
+           SUM(HBP)                       AS HBP,
+           SUM(BK)                        AS BK,
+           SUM(BFP)                       AS BFP,
+           SUM(GF)                        AS GF,
+           SUM(R)                         AS R,
+           SUM(SH)                        AS SH,
+           SUM(SF)                        AS SF,
+           SUM(GIDP)                      AS GIDP
+    FROM   pitching
+    WHERE  playerID = :playerID
+    LIMIT  1';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind playerID/playerID2
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+  public static function getPersonBattingTotals($playerID) {
+    $stmt = '
+    SELECT (SELECT COUNT(playerID)
+            FROM   batting
+            WHERE  playerID = :playerID2) AS yearsTotal,
+            SUM(G)                        AS G,
+            SUM(G_batting)                AS G_batting,
+            SUM(AB)                       AS AB,
+            SUM(R)                        AS R,
+            SUM(H)                        AS H,
+            SUM(2B)                       AS "2B",
+            SUM(3B)                       AS "3B",
+            SUM(HR)                       AS HR,
+            SUM(RBI)                      AS RBI,
+            SUM(SB)                       AS SB,
+            SUM(CS)                       AS CS,
+            SUM(BB)                       AS BB,
+            SUM(SO)                       AS SO,
+            SUM(IBB)                      AS IBB,
+            SUM(HBP)                      AS HBP,
+            SUM(SH)                       AS SH,
+            SUM(SF)                       AS SF,
+            SUM(GIDP)                     AS GIDP
+    FROM   batting
+    WHERE  playerID = :playerID
+    LIMIT  1';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind playerID/playerID2
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql;
+  }
+
+  public static function getPersonAppearancesTotals($playerID) {
+    $stmt = '
+    SELECT (SELECT COUNT(playerID)
+            FROM   appearances
+            WHERE  playerID = :playerID2) AS yearsTotal,
+            SUM(G_all)                    AS G_all,
+            SUM(GS)                       AS GS,
+            SUM(G_batting)                AS G_batting,
+            SUM(G_defense)                AS G_defense,
+            SUM(G_p)                      AS G_p,
+            SUM(G_c)                      AS G_c,
+            SUM(G_1b)                     AS G_1b,
+            SUM(G_2b)                     AS G_2b,
+            SUM(G_3b)                     AS G_3b,
+            SUM(G_ss)                     AS G_ss,
+            SUM(G_lf)                     AS G_lf,
+            SUM(G_cf)                     AS G_cf,
+            SUM(G_rf)                     AS G_rf,
+            SUM(G_of)                     AS G_of,
+            SUM(G_dh)                     AS G_dh,
+            SUM(G_ph)                     AS G_ph,
+            SUM(G_pr)                     AS G_pr
+    FROM   appearances
+    WHERE  playerID = :playerID
+    LIMIT  1';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind playerID/playerID2
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+
 }
-
-
-
-
-
-
-
-
 
 
 

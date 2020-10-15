@@ -37,7 +37,7 @@ if ($module == 'search') {
 ///////////////////
 // people module //
 ///////////////////
-else {
+else if ($module == 'people') {
   // return all people
   if (!isset($request[1])) {
     $currentPage = 0;
@@ -63,22 +63,45 @@ else {
   if (isset($request[2])) {
     $module = $request[2];
 
+    // if total is set but not true or false, error
+    if (isset($_GET['total']) && !in_array($_GET['total'], ['true', 'false'])) {
+      ApiFunctions::returnInvalidUrl('Total must be "true" or "false"');
+      exit;
+    }
+
     switch ($module) {
       case 'salaries':
         ApiFunctions::returnPersonSalaries($playerID);
         break;
+
       case 'batting':
-        ApiFunctions::returnPersonBatting($playerID);
+        if (isset($_GET['total']) && $_GET['total'] == 'true')
+          ApiFunctions::returnPersonBattingTotals($playerID);
+        else
+          ApiFunctions::returnPersonBatting($playerID);
+        exit;
         break;
-      case 'pitching':
-        ApiFunctions::returnPersonPitching($playerID);
+
+      case 'pitching': 
+        // return pitching
+        if (isset($_GET['total']) && $_GET['total'] == 'true')
+          ApiFunctions::returnPersonPitchingTotals($playerID);
+        else
+          ApiFunctions::returnPersonPitching($playerID);
+        exit;
         break;
+
       case 'appearances':
-        ApiFunctions::returnPersonAppearances($playerID);
+        if (isset($_GET['total']) && $_GET['total'] == 'true')
+          ApiFunctions::returnPersonAppearancesTotals($playerID);
+        else
+          ApiFunctions::returnPersonAppearances($playerID);
         break;
+
       case 'schools':
         ApiFunctions::returnPersonSchools($playerID);
         break;
+
       default:
         echo 'invalid module.';
         http_response_code(400);
@@ -90,14 +113,15 @@ else {
   }
 }
 
+else {
+  ApiFunctions::returnInvalidUrl('Error. Invalid module.');
+  exit;
+}
+
 
 
 
 exit;
-
-
-
-
 
 
 

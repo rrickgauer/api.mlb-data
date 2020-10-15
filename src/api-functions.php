@@ -10,6 +10,7 @@ class ApiFunctions {
   public static function printJson($data) {
     // return response
     header('Content-Type: application/json');
+    http_response_code(200);
     echo json_encode($data, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
     exit;
   }
@@ -127,6 +128,32 @@ class ApiFunctions {
     header('Content-Type: application/json; charset=utf-8');
     http_response_code(200);
     echo json_encode($results, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
+    exit;
+  }
+
+
+  public static function returnPersonPitchingTotals($playerID) {
+    $pitchingTotal = DB::getPersonPitchingTotals($playerID)->fetch(PDO::FETCH_ASSOC);
+    ApiFunctions::printJson($pitchingTotal);
+    exit;
+  }
+
+  public static function returnInvalidUrl($message = 'Unrecoginzed parameter in the URL') {
+    http_response_code(400);
+    echo $message;
+    exit;
+  }
+
+
+  public static function returnPersonBattingTotals($playerID) {
+    $battingTotal = DB::getPersonBattingTotals($playerID)->fetch(PDO::FETCH_ASSOC);
+    ApiFunctions::printJson($battingTotal);
+    exit;
+  }
+
+  public static function returnPersonAppearancesTotals($playerID) {
+    $appearancesTotal = DB::getPersonAppearancesTotals($playerID)->fetch(PDO::FETCH_ASSOC);
+    ApiFunctions::printJson($appearancesTotal);
     exit;
   }
 }
