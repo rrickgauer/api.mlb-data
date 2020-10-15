@@ -23,7 +23,7 @@ As of now, there is one module: **people**.
 
 Submodule | Result
 :--- | :---
-`/people/` | All people in the database
+`/people{?page}` | All people in the database
 `/people/{playerID}` | biographical
 `/people/{playerID}/salaries` | salary info
 `/people/{playerID}/batting` | batting stats
@@ -31,3 +31,9 @@ Submodule | Result
 `/people/{playerID}/appearances` | appearances
 `/people/{playerID}/schools` | schools attended
 
+
+#### Search
+
+Submodule | Result
+:--- | :---
+`/search?q=` | Search the database
