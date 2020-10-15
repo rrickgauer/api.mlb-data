@@ -303,7 +303,6 @@ class DB {
 
 
   public static function getPersonPitchingTotal($playerID) {
-
     $stmt = '
     SELECT (SELECT COUNT(playerID)
             FROM   pitching
@@ -349,17 +348,47 @@ class DB {
   }
 
 
+  public static function getPersonBattingTotal($playerID) {
+    $stmt = '
+    SELECT (SELECT COUNT(playerID)
+            FROM   batting
+            WHERE  playerID = :playerID2) AS yearsTotal,
+            SUM(G)                        AS G,
+            SUM(G_batting)                AS G_batting,
+            SUM(AB)                       AS AB,
+            SUM(R)                        AS R,
+            SUM(H)                        AS H,
+            SUM(2B)                       AS "2B",
+            SUM(3B)                       AS "3B",
+            SUM(HR)                       AS HR,
+            SUM(RBI)                      AS RBI,
+            SUM(SB)                       AS SB,
+            SUM(CS)                       AS CS,
+            SUM(BB)                       AS BB,
+            SUM(SO)                       AS SO,
+            SUM(IBB)                      AS IBB,
+            SUM(HBP)                      AS HBP,
+            SUM(SH)                       AS SH,
+            SUM(SF)                       AS SF,
+            SUM(GIDP)                     AS GIDP
+    FROM   batting
+    WHERE  playerID = :playerID
+    LIMIT  1';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind playerID/playerID2
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql;
+  }
+
 
 
 }
-
-
-
-
-
-
-
-
 
 
 

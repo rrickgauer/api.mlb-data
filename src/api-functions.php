@@ -10,6 +10,7 @@ class ApiFunctions {
   public static function printJson($data) {
     // return response
     header('Content-Type: application/json');
+    http_response_code(200);
     echo json_encode($data, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
     exit;
   }
@@ -140,6 +141,13 @@ class ApiFunctions {
   public static function returnInvalidUrl($message = 'Unrecoginzed parameter in the URL') {
     http_response_code(400);
     echo $message;
+    exit;
+  }
+
+
+  public static function returnPersonBattingTotals($playerID) {
+    $battingTotal = DB::getPersonBattingTotal($playerID)->fetch(PDO::FETCH_ASSOC);
+    ApiFunctions::printJson($battingTotal);
     exit;
   }
 }
