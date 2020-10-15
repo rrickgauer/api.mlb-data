@@ -423,6 +423,27 @@ class DB {
     return $sql;
   }
 
+  public static function getPersonSalariesTotals($playerID) {
+    $stmt = '
+    SELECT (SELECT COUNT(playerID)
+            FROM   salaries
+            WHERE  playerID = :playerID2) AS yearsTotal,
+            SUM(salary)                   as salary
+    FROM   salaries
+    WHERE  playerID = :playerID
+    LIMIT  1';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind playerID/playerID2
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql;
+  }
+
 
 
 }
