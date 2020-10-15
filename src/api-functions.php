@@ -113,10 +113,10 @@ class ApiFunctions {
 
     $people['all']          = '/people{?page}';
     $people['biography']    = '/people/{playerID}';
-    $people['appearances']  = '/people/{playerID}/appearances';
-    $people['batting']      = '/people/{playerID}/batting';
-    $people['pitching']     = '/people/{playerID}/pitching';
-    $people['salaries']     = '/people/{playerID}/salaries';
+    $people['appearances']  = '/people/{playerID}/appearances{?total}';
+    $people['batting']      = '/people/{playerID}/batting{?total}';
+    $people['pitching']     = '/people/{playerID}/pitching{?total}';
+    $people['salaries']     = '/people/{playerID}/salaries{?total}';
     $people['schools']      = '/people/{playerID}/schools';
     $results['modules']['/people'] = $people;
 
