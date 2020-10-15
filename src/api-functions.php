@@ -120,6 +120,10 @@ class ApiFunctions {
     $results['modules']['/people'] = $people;
 
 
+    $search['searchDatabase'] = '/search?q=';
+    $results['modules']['/search'] = $search;
+
+
     header('Content-Type: application/json; charset=utf-8');
     http_response_code(200);
     echo json_encode($results, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
