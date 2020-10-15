@@ -133,7 +133,7 @@ class ApiFunctions {
 
 
   public static function returnPersonPitchingTotals($playerID) {
-    $pitchingTotal = DB::getPersonPitchingTotal($playerID)->fetch(PDO::FETCH_ASSOC);
+    $pitchingTotal = DB::getPersonPitchingTotals($playerID)->fetch(PDO::FETCH_ASSOC);
     ApiFunctions::printJson($pitchingTotal);
     exit;
   }
@@ -146,8 +146,14 @@ class ApiFunctions {
 
 
   public static function returnPersonBattingTotals($playerID) {
-    $battingTotal = DB::getPersonBattingTotal($playerID)->fetch(PDO::FETCH_ASSOC);
+    $battingTotal = DB::getPersonBattingTotals($playerID)->fetch(PDO::FETCH_ASSOC);
     ApiFunctions::printJson($battingTotal);
+    exit;
+  }
+
+  public static function returnPersonAppearancesTotals($playerID) {
+    $appearancesTotal = DB::getPersonAppearancesTotals($playerID)->fetch(PDO::FETCH_ASSOC);
+    ApiFunctions::printJson($appearancesTotal);
     exit;
   }
 }

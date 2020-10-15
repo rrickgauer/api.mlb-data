@@ -302,7 +302,7 @@ class DB {
   }
 
 
-  public static function getPersonPitchingTotal($playerID) {
+  public static function getPersonPitchingTotals($playerID) {
     $stmt = '
     SELECT (SELECT COUNT(playerID)
             FROM   pitching
@@ -348,7 +348,7 @@ class DB {
   }
 
 
-  public static function getPersonBattingTotal($playerID) {
+  public static function getPersonBattingTotals($playerID) {
     $stmt = '
     SELECT (SELECT COUNT(playerID)
             FROM   batting
@@ -372,6 +372,43 @@ class DB {
             SUM(SF)                       AS SF,
             SUM(GIDP)                     AS GIDP
     FROM   batting
+    WHERE  playerID = :playerID
+    LIMIT  1';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind playerID/playerID2
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql;
+  }
+
+  public static function getPersonAppearancesTotals($playerID) {
+    $stmt = '
+    SELECT (SELECT COUNT(playerID)
+            FROM   appearances
+            WHERE  playerID = :playerID2) AS yearsTotal,
+            SUM(G_all)                    AS G_all,
+            SUM(GS)                       AS GS,
+            SUM(G_batting)                AS G_batting,
+            SUM(G_defense)                AS G_defense,
+            SUM(G_p)                      AS G_p,
+            SUM(G_c)                      AS G_c,
+            SUM(G_1b)                     AS G_1b,
+            SUM(G_2b)                     AS G_2b,
+            SUM(G_3b)                     AS G_3b,
+            SUM(G_ss)                     AS G_ss,
+            SUM(G_lf)                     AS G_lf,
+            SUM(G_cf)                     AS G_cf,
+            SUM(G_rf)                     AS G_rf,
+            SUM(G_of)                     AS G_of,
+            SUM(G_dh)                     AS G_dh,
+            SUM(G_ph)                     AS G_ph,
+            SUM(G_pr)                     AS G_pr
+    FROM   appearances
     WHERE  playerID = :playerID
     LIMIT  1';
 

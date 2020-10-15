@@ -92,7 +92,10 @@ else if ($module == 'people') {
         break;
 
       case 'appearances':
-        ApiFunctions::returnPersonAppearances($playerID);
+        if (isset($_GET['total']) && $_GET['total'] == 'true')
+          ApiFunctions::returnPersonAppearancesTotals($playerID);
+        else
+          ApiFunctions::returnPersonAppearances($playerID);
         break;
 
       case 'schools':
