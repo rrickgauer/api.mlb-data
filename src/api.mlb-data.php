@@ -3,6 +3,7 @@
 
 include_once('functions.php');
 require_once('api-functions.php');
+require_once('constants.php');
 
 
 // check if user specified a path in the url
