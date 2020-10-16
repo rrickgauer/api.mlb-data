@@ -189,8 +189,12 @@ class Constants {
   ];
 
   const Defaults = [
-    "PerPage" => 100;
-    "Page"    => 1;
+    "PerPage" => 100,
+    "Page"    => 1,
+  ];
+
+  const Limits = [
+    "PerPage" => 1000,
   ];
 }
 
