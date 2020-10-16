@@ -445,13 +445,66 @@ class DB {
   }
 
 
+  public static function getTopBattersSeason($sort = 'playerID', $limit = 100, $offset = 0) {
+
+    $stmt = '
+    SELECT    b.playerID,
+              p.nameFirst,
+              p.nameLast,
+              b.yearID,
+              b.stint,
+              b.teamID,
+              b.team_ID,
+              b.lgID,
+              b.G,
+              b.G_batting,
+              b.AB,
+              b.R,
+              b.H,
+              b.2B,
+              b.3B,
+              b.HR,
+              b.RBI,
+              b.SB,
+              b.CS,
+              b.BB,
+              b.SO,
+              b.IBB,
+              b.HBP,
+              b.SH,
+              b.SF,
+              b.GIDP
+    FROM      batting b
+    LEFT JOIN people p
+    ON        b.playerID = p.playerID
+    GROUP BY  b.id
+    ORDER BY  b.HR desc limit :limit offset :offset';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // sort
+    // $sort = filter_var($sort, FILTER_SANITIZE_STRING);
+    // $sql->bindParam(':sort', $sort, PDO::PARAM_STR);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+  function getBattingTop() {
+    // $stmt = 'SELECT * from batting order by HR'
+  }
+
+
 
 }
-
-
-
-
-
 
 
 

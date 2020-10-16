@@ -1,7 +1,5 @@
 <?php
 
-
-
 class Constants {
   const Batting = [
     "ID"        => "ID",
@@ -186,6 +184,15 @@ class Constants {
     "FieldingOF"      => "fielding-of",
     "FieldingOFSplit" => "fielding-of-split",
     "Salaries"        => "salaries",
+  ];
+
+  const Defaults = [
+    "PerPage" => 100,
+    "Page"    => 1,
+  ];
+
+  const Limits = [
+    "PerPage" => 1000,
   ];
 }
 
