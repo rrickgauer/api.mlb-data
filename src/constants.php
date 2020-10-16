@@ -1,7 +1,5 @@
 <?php
 
-
-
 class Constants {
   const Batting = [
     "ID"        => "ID",

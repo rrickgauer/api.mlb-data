@@ -9,12 +9,15 @@ class Module
     protected $sorts;       // array of sorts
     protected $perPage;     // int - number of items in data set
     protected $page;        // int - offset
+    protected $dataSet;
 
     public function __construct($newFilters, $newSorts, $newPerPage = Constants::Defaults['PerPage'], $newPage = Constants::Defaults['Page']) {
-        $this->$filters = $newFilters;
-        $this->$sorts   = $newSorts;
-        $this->$perPage = $newPerPage;
-        $this->$page    = $newPage;
+        $this->filters = $newFilters;
+        $this->sorts   = $newSorts;
+        $this->perPage = $newPerPage;
+        $this->page    = $newPage;
+        
+        $this->dataSet = null;
     }
 
 
@@ -50,6 +53,9 @@ class Module
         $this->page = $newPage;
     }
 
+    public function returnData() {
+        ApiFunctions::printJson($this->dataSet);
+    }
 }
 
 ?>
