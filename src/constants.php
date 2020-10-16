@@ -187,6 +187,11 @@ class Constants {
     "FieldingOFSplit" => "fielding-of-split",
     "Salaries"        => "salaries",
   ];
+
+  const Defaults = [
+    "PerPage" => 100;
+    "Page"    => 1;
+  ];
 }
 
 
