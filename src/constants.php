@@ -175,6 +175,18 @@ class Constants {
     "year"   => "year",
     "salary" => "salary",
   ];
+
+
+  const Resources = [
+    "Batting"         => "batting",
+    "Pitching"        => "pitching",
+    "Appearances"     => "appearances",
+    "Fielding"        => "fielding",
+    "People"          => "people",
+    "FieldingOF"      => "fielding-of",
+    "FieldingOFSplit" => "fielding-of-split",
+    "Salaries"        => "salaries",
+  ];
 }
 
 
