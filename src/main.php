@@ -7,9 +7,6 @@ include_once('Batting.php');
 
 $b1 = new Batting('filter', 'sort');
 
-
-// echo Constants::Batting['HR'];
-
 $b1->returnData();
 exit;
 

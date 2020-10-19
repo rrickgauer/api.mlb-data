@@ -444,10 +444,44 @@ class DB {
     return $sql;
   }
 
+  /****************************************************************************
+   * Returns people batting
+   * 
+   * Sort is the column to sort with
+   * limit is the number of rows to return
+   * offset is the offset
+   * 
+   * returns
+   * playerID
+   * nameFist
+   * yearID,
+   * stint,
+   * teamID,
+   * team_ID,
+   * lgID,
+   * G,
+   * G_batting,
+   * AB,
+   * R,
+   * H,
+   * 2B,
+   * 3B,
+   * HR,
+   * RBI,
+   * SB,
+   * CS,
+   * BB,
+   * SO,
+   * IBB,
+   * HBP,
+   * SH,
+   * SF,
+   * GIDP
+   ***************************************************************************/
+  public static function getTopBattersSeason($sort, $limit = 100, $offset = 0) {
+    $sort = filter_var($sort, FILTER_SANITIZE_STRING);
 
-  public static function getTopBattersSeason($sort = 'playerID', $limit = 100, $offset = 0) {
-
-    $stmt = '
+    $stmt = "
     SELECT    b.playerID,
               p.nameFirst,
               p.nameLast,
@@ -478,13 +512,9 @@ class DB {
     LEFT JOIN people p
     ON        b.playerID = p.playerID
     GROUP BY  b.id
-    ORDER BY  b.HR desc limit :limit offset :offset';
+    ORDER BY  $sort desc limit :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
-
-    // sort
-    // $sort = filter_var($sort, FILTER_SANITIZE_STRING);
-    // $sql->bindParam(':sort', $sort, PDO::PARAM_STR);
 
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
@@ -498,31 +528,7 @@ class DB {
     return $sql;
   }
 
-  function getBattingTop() {
-    // $stmt = 'SELECT * from batting order by HR'
-  }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>
