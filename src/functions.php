@@ -1,5 +1,6 @@
 <?php
 
+include_once('constants.php');
 
 class DB {
 
@@ -513,6 +514,72 @@ class DB {
     ON        b.playerID = p.playerID
     GROUP BY  b.id
     ORDER BY  $sort desc limit :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+  public static function getPitching($sort = 'playerID', $sortType = 'DESC', $limit = Constants::Defaults['PerPage'], $offset = 0) {
+
+    $sort = filter_var($sort, FILTER_SANITIZE_STRING);
+
+    $sortType = strtoupper($sortType);
+    if ($sortType != 'ASC')
+      $sortType = 'DESC';
+
+    $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
+
+    $stmt = "
+    SELECT p.playerID,
+           people.nameFirst,
+           people.nameLast,
+           p.yearID as year,
+           p.stint,
+           p.team_ID,
+           t.name as teamName,
+           p.lgID,
+           p.W,
+           p.L,
+           p.G,
+           p.GS,
+           p.CG,
+           p.SHO,
+           p.SV,
+           p.IPouts,
+           p.H,
+           p.ER,
+           p.HR,
+           p.BB,
+           p.SO,
+           p.BAOpp,
+           p.ERA,
+           p.IBB,
+           p.WP,
+           p.HBP,
+           p.BK,
+           p.BFP,
+           p.GF,
+           p.R,
+           p.SH,
+           p.SF,
+           p.GIDP
+    FROM   pitching p
+    LEFT   JOIN people on p.playerID = people.playerID
+    LEFT   JOIN teams t on p.team_ID = t.ID
+    GROUP  BY p.ID
+    ORDER  BY $sort $sortType
+    LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
 
