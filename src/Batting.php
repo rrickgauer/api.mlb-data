@@ -8,7 +8,7 @@ class Batting extends Module
     }
 
     private function retrieveData() {
-        $this->dataSet = DB::getTopBattersSeason('HR', 50)->fetchAll(PDO::FETCH_ASSOC);
+        $this->dataSet = DB::getTopBattersSeason($this->sorts, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

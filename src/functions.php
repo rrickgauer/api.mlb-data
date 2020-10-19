@@ -1,5 +1,6 @@
 <?php
 
+include_once('constants.php');
 
 class DB {
 
@@ -444,10 +445,44 @@ class DB {
     return $sql;
   }
 
-
+  /****************************************************************************
+   * Returns people batting
+   * 
+   * Sort is the column to sort with
+   * limit is the number of rows to return
+   * offset is the offset
+   * 
+   * returns
+   * playerID
+   * nameFist
+   * yearID,
+   * stint,
+   * teamID,
+   * team_ID,
+   * lgID,
+   * G,
+   * G_batting,
+   * AB,
+   * R,
+   * H,
+   * 2B,
+   * 3B,
+   * HR,
+   * RBI,
+   * SB,
+   * CS,
+   * BB,
+   * SO,
+   * IBB,
+   * HBP,
+   * SH,
+   * SF,
+   * GIDP
+   ***************************************************************************/
   public static function getTopBattersSeason($sort = 'playerID', $limit = 100, $offset = 0) {
+    $sort = filter_var($sort, FILTER_SANITIZE_STRING);
 
-    $stmt = '
+    $stmt = "
     SELECT    b.playerID,
               p.nameFirst,
               p.nameLast,
@@ -478,13 +513,9 @@ class DB {
     LEFT JOIN people p
     ON        b.playerID = p.playerID
     GROUP BY  b.id
-    ORDER BY  b.HR desc limit :limit offset :offset';
+    ORDER BY  $sort desc limit :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
-
-    // sort
-    // $sort = filter_var($sort, FILTER_SANITIZE_STRING);
-    // $sql->bindParam(':sort', $sort, PDO::PARAM_STR);
 
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
@@ -498,31 +529,73 @@ class DB {
     return $sql;
   }
 
-  function getBattingTop() {
-    // $stmt = 'SELECT * from batting order by HR'
+
+  public static function getPitching($sort = 'playerID', $sortType = 'DESC', $limit = Constants::Defaults['PerPage'], $offset = 0) {
+
+    $sort = filter_var($sort, FILTER_SANITIZE_STRING);
+
+    $sortType = strtoupper($sortType);
+    if ($sortType != 'ASC')
+      $sortType = 'DESC';
+
+    $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
+
+    $stmt = "
+    SELECT p.playerID,
+           people.nameFirst,
+           people.nameLast,
+           p.yearID as year,
+           p.stint,
+           p.team_ID,
+           t.name as teamName,
+           p.lgID,
+           p.W,
+           p.L,
+           p.G,
+           p.GS,
+           p.CG,
+           p.SHO,
+           p.SV,
+           p.IPouts,
+           p.H,
+           p.ER,
+           p.HR,
+           p.BB,
+           p.SO,
+           p.BAOpp,
+           p.ERA,
+           p.IBB,
+           p.WP,
+           p.HBP,
+           p.BK,
+           p.BFP,
+           p.GF,
+           p.R,
+           p.SH,
+           p.SF,
+           p.GIDP
+    FROM   pitching p
+    LEFT   JOIN people on p.playerID = people.playerID
+    LEFT   JOIN teams t on p.team_ID = t.ID
+    GROUP  BY p.ID
+    ORDER  BY $sort $sortType
+    LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
   }
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>
