@@ -10,7 +10,7 @@ class Parser {
     private $module;
     private $sorts;
     private $request;
-    private $filters;
+    private $filters;   // list of arrays(column, conditional, qualifier)
 
     public function __construct() {
 
