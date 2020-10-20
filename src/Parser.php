@@ -45,7 +45,7 @@ class Parser {
         $this->module = $this->request[0];
 
         if (!in_array($this->module, Constants::Modules)) {
-            ApiFunctions::returnBadRequest('Unrecogized module!');
+            ApiFunctions::returnBadRequest('Unrecognized module!');
             exit;
         }
     }
