@@ -697,6 +697,40 @@ class DB {
     return $sql;
   }
 
+
+  public static function getFieldingOF($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT  f.playerID,
+            p.nameFirst,
+            p.nameLast,
+            f.yearID,
+            f.stint,
+            f.Glf,
+            f.Gcf,
+            f.Grf
+    FROM    fieldingof f 
+    LEFT JOIN people p ON f.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, '.f');
+    $stmt .= " GROUP  BY f.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
   public static function getFilterStmt($filters, $tableName) {
 
     if ($filters == null)

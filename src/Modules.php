@@ -113,4 +113,15 @@ class Appearances extends Module {
     }
 }
 
+class FieldingOF extends Module {
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        $this->dataSet = DB::getFieldingOF($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
 ?>

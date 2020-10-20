@@ -24,6 +24,11 @@ switch ($p1->getModule()) {
     $appearances->returnData();
     break;
 
+  case Constants::Modules['FieldingOF']:
+    $appearances = new FieldingOF($p1->getFilters(), $p1->getSorts(), 100, 0);
+    $appearances->returnData();
+    break;
+
   default:
     ApiFunctions::returnDefaultDisplay();
     break;
