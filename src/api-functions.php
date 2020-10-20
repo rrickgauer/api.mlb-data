@@ -15,6 +15,12 @@ class ApiFunctions {
     exit;
   }
 
+  public static function returnBadRequest($message = 'Invalid URL') {
+    http_response_code(400);
+    echo $message;
+    exit;
+  }
+
   public static function returnPeople($currentPage) {
     $result = [];
     $peopleAll = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);

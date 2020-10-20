@@ -530,15 +530,20 @@ class DB {
   }
 
 
-  public static function getPitching($sort = 'playerID', $sortType = 'DESC', $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getPitching($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
 
-    $sort = filter_var($sort, FILTER_SANITIZE_STRING);
+    // build order by statement
+    $orderStmt = '';
+    if ($sort != null) {
+      $sortColumn = filter_var($sort['column'], FILTER_SANITIZE_STRING);
 
-    $sortType = strtoupper($sortType);
-    if ($sortType != 'ASC')
-      $sortType = 'DESC';
+      $sortType = strtoupper($sort['type']);
+      if ($sortType != 'ASC')
+        $sortType = 'DESC';
+      $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
 
-    $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
+      $orderStmt = " ORDER BY $sortColumn $sortType ";
+    }
 
     $stmt = "
     SELECT p.playerID,
@@ -576,10 +581,20 @@ class DB {
            p.GIDP
     FROM   pitching p
     LEFT   JOIN people on p.playerID = people.playerID
-    LEFT   JOIN teams t on p.team_ID = t.ID
-    GROUP  BY p.ID
-    ORDER  BY $sort $sortType
-    LIMIT  :limit offset :offset";
+    LEFT   JOIN teams t on p.team_ID = t.ID";
+
+
+    // add filter options
+    if ($filters != null) {
+      $filterStmt = DB::getFilterStmt($filters, 'p');
+      $stmt .= $filterStmt;
+    }
+
+
+    $stmt .= " GROUP  BY p.ID ";
+    $stmt .= $orderStmt;
+    $stmt .= " LIMIT  :limit offset :offset";
+
 
     $sql = DB::dbConnect()->prepare($stmt);
 
@@ -591,8 +606,31 @@ class DB {
     $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
 
+
     $sql->execute();
     return $sql;
+  }
+
+
+
+  public static function getFilterStmt($filters, $tableName) {
+
+    $stmt = ' WHERE ';
+
+    for ($count = 0; $count < count($filters); $count++) {
+      $filter      = $filters[$count];
+      $column      = $filter['column'];
+      $conditional = $filter['conditional'];
+      $qualifier   = $filter['qualifier'];
+
+      if ($count > 0)
+        $stmt .= ' AND';
+        $stmt = $stmt . " $tableName.$column $conditional $qualifier";
+
+    }
+
+
+    return $stmt;
   }
 
 }
