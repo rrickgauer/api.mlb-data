@@ -598,8 +598,60 @@ class DB {
   }
 
 
+  public static function getFielding($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+
+    $stmt = "
+    SELECT  f.playerID,
+            p.nameFirst,
+            p.nameLast,
+            f.yearID,
+            f.stint,
+            f.teamID,
+            f.team_ID,
+            t.name as teamName,
+            f.lgID,
+            f.POS,
+            f.G,
+            f.GS,
+            f.InnOuts,
+            f.PO,
+            f.A,
+            f.E,
+            f.DP,
+            f.PB,
+            f.WP,
+            f.SB,
+            f.CS,
+            f.ZR
+    FROM    fielding f 
+    LEFT JOIN people p ON f.playerID = p.playerID
+    LEFT JOIN teams t on f.team_ID = t.ID ";
+
+    $stmt .= DB::getFilterStmt($filters, '.f');
+    $stmt .= " GROUP  BY f.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
 
   public static function getFilterStmt($filters, $tableName) {
+
+    if ($filters == null)
+      return '';
+
     $stmt = ' WHERE ';
 
     for ($count = 0; $count < count($filters); $count++) {

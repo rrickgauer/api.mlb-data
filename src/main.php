@@ -14,6 +14,11 @@ switch ($p1->getModule()) {
     $pitch->returnData();
     break;
 
+  case Constants::Modules['Fielding']:
+    $fielding = new Fielding($p1->getFilters(), $p1->getSorts(), 100, 0);
+    $fielding->returnData();
+    break;
+
   default:
     ApiFunctions::returnDefaultDisplay();
     break;
