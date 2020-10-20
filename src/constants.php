@@ -194,6 +194,16 @@ class Constants {
   const Limits = [
     "PerPage" => 1000,
   ];
+
+
+  const FilterConditionals = [
+    "E"  => "=",    // equal to
+    "NE" => "!=",   // not equal to
+    "GE" => ">=",   // greater than or equal to
+    "LE" => "<=",   // less than or equal to
+    "G"  => ">",    // greater than
+    "L"  => "<",    // less than
+  ];
 }
 
 
