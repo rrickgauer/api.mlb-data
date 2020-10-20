@@ -1,9 +1,9 @@
 <?php
 
 
-include_once('functions.php');
-require_once('api-functions.php');
-require_once('constants.php');
+include_once('DB-Functions.php');
+require_once('API-Functions.php');
+require_once('Constants.php');
 
 
 // check if user specified a path in the url

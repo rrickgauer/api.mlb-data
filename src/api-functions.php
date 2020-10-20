@@ -1,6 +1,6 @@
 <?php
 
-include_once('functions.php');
+include_once('DB-Functions.php');
 
 
 class ApiFunctions {

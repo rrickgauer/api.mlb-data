@@ -1,6 +1,6 @@
 <?php
 
-include_once('constants.php');
+include_once('Constants.php');
 
 class DB {
 

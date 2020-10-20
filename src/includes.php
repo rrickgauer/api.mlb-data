@@ -1,7 +1,7 @@
 <?php
 
-include_once('functions.php');
-include_once('constants.php');
-include_once('api-functions.php');
+include_once('DB-Functions.php');
+include_once('Constants.php');
+include_once('API-Functions.php');
 
 ?>
