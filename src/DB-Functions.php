@@ -268,40 +268,6 @@ class DB {
     return $sql;
   }
 
-  public static function getPeopleSearch($query) {
-    $stmt = '
-    SELECT   playerid,
-    namefirst,
-    namelast,
-    namegiven,
-    weight,
-    height,
-    bats,
-    throws,
-    debut_date,
-    finalgame_date,
-    birth_date,
-    death_date,
-    birthcountry,
-    birthstate,
-    birthcity
-    FROM     people
-    WHERE    MATCH(namefirst, namelast) against(:query IN boolean mode) > 0
-    ORDER BY namelast ASC,
-    namefirst ASC
-    LIMIT    30';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-    
-    // filter and bind query
-    $query = '(' . $query . '*)';
-    $query = filter_var($query, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':query', $query, PDO::PARAM_STR);
-
-    $sql->execute();
-    return $sql;
-  }
-
 
   public static function getPersonPitchingTotals($playerID) {
     $stmt = '
@@ -844,6 +810,63 @@ class DB {
     $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
+    
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+
+    return $sql;
+  }
+
+
+
+  public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+
+    // create the module link variables
+    $moduleBatting         = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Batting']);
+    $modulePitching        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Pitching']);
+    $moduleAppearances     = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Appearances']);
+    $moduleFielding        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Fielding']);
+    $modulePeople          = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['People']);
+    $moduleFieldingOF      = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['FieldingOF']);
+    $moduleFieldingOFSplit = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['FieldingOFSplit']);
+    $moduleSalaries        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Salaries']);
+
+    $stmt = "
+    SELECT    p.playerID as playerID,
+              p.nameFirst as nameFirst,
+              p.nameLast as nameLast,
+              p.birth_date as birthDate,
+              p.debut_date as debutDate,
+              p.finalgame_date as finalGameDate,
+              p.death_date as deathDate,
+              $moduleBatting as moduleBatting,
+              $modulePitching as modulePitching,
+              $moduleAppearances as moduleAppearances,
+              $moduleFielding as moduleFielding,
+              $modulePeople as modulePeople,
+              $moduleFieldingOF as moduleFieldingOF,
+              $moduleFieldingOFSplit as moduleFieldingOFSplit,
+              $moduleSalaries as moduleSalaries
+    FROM      people p 
+    WHERE     MATCH(namefirst, namelast) against(:query IN boolean mode) > 0
+    GROUP BY  playerID
+    ORDER BY  nameLast ASC, nameFirst ASC, playerID ASC, birthDate ASC
+    LIMIT     :limit
+    OFFSET    :offset";
+      
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind query
+    $query = '(' . $query . '*)';
+    $query = filter_var($query, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':query', $query, PDO::PARAM_STR);
     
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
