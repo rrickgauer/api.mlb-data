@@ -532,19 +532,6 @@ class DB {
 
   public static function getPitching($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
 
-    // build order by statement
-    $orderStmt = '';
-    if ($sort != null) {
-      $sortColumn = filter_var($sort['column'], FILTER_SANITIZE_STRING);
-
-      $sortType = strtoupper($sort['type']);
-      if ($sortType != 'ASC')
-        $sortType = 'DESC';
-      $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
-
-      $orderStmt = " ORDER BY $sortColumn $sortType ";
-    }
-
     $stmt = "
     SELECT p.playerID,
     people.nameFirst,
@@ -590,9 +577,8 @@ class DB {
       $stmt .= $filterStmt;
     }
 
-
     $stmt .= " GROUP  BY p.ID ";
-    $stmt .= $orderStmt;
+    $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
 
@@ -633,22 +619,21 @@ class DB {
   }
 
   public static function getOrderStmt($sort) {
-
-      if ($sort == null)
-        return '';
+    if ($sort == null)
+      return '';
 
       // build order by statement
-      $orderStmt = '';
-      $sortColumn = filter_var($sort['column'], FILTER_SANITIZE_STRING);
+    $orderStmt = '';
+    $sortColumn = filter_var($sort['column'], FILTER_SANITIZE_STRING);
 
-      $sortType = strtoupper($sort['type']);
-      if ($sortType != 'ASC')
-        $sortType = 'DESC';
-      $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
+    $sortType = strtoupper($sort['type']);
+    if ($sortType != 'ASC')
+      $sortType = 'DESC';
+    $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
 
-      $orderStmt = " ORDER BY $sortColumn $sortType ";
+    $orderStmt = " ORDER BY $sortColumn $sortType ";
 
-      return $orderStmt;
+    return $orderStmt;
   }
 
 }
