@@ -4,26 +4,42 @@ include_once('includes.php');
 include_once('Modules.php'); // filters, sorts, sortType, perPage, page
 include_once('Parser.php');
 
+// display default return if no module is specified
+if (!isset($_SERVER['PATH_INFO'])) {
+  ApiFunctions::returnDefaultDisplay();
+  exit;
+}
+
 $p1 = new Parser();
 $sort = $p1->getSorts();
 
-
+// generate the results based on the specified module
 switch ($p1->getModule()) {
   case Constants::Modules['Pitching']:
-    $pitch = new Pitching($p1->getFilters(), $p1->getSorts(), 100, 0);
-    $pitch->returnData();
+    $results = new Pitching($p1->getFilters(), $p1->getSorts(), 100, 0); break;
+  case Constants::Modules['Fielding']:
+    $results = new Fielding($p1->getFilters(), $p1->getSorts(), 100, 0); break;
+  case Constants::Modules['Appearances']:
+    $results = new Appearances($p1->getFilters(), $p1->getSorts(), 100, 0); break;
+  case Constants::Modules['FieldingOF']:
+    $results = new FieldingOF($p1->getFilters(), $p1->getSorts(), 100, 0); break;
+  case Constants::Modules['FieldingOFSplit']:
+    $results = new FieldingOFSplit($p1->getFilters(), $p1->getSorts(), 100, 0);
     break;
-
+  case Constants::Modules['Salaries']:
+    $results = new Salaries($p1->getFilters(), $p1->getSorts(), 100, 0); break;
+  case Constants::Modules['People']:
+    $results = new People($p1->getFilters(), $p1->getSorts(), 100, 0);break;
   default:
-    ApiFunctions::returnDefaultDisplay();
+    ApiFunctions::returnBadRequest('Module does not exist!');
+    exit;
     break;
 }
 
+// return the results
+$results->returnData();
 
 exit;
-
-
-
 
 
 ?>
