@@ -16,7 +16,7 @@ class DB {
       return $pdo;
 
     } catch(PDOexception $e) {
-        return 0;
+      return 0;
     }
   }
 
@@ -46,24 +46,24 @@ class DB {
   public static function getPlayer($playerID) {
     $stmt = '
     SELECT playerID,
-           birthCountry,
-           birthState,
-           birthCity,
-           deathState,
-           deathCity,
-           nameFirst,
-           nameLast,
-           nameGiven,
-           weight,
-           height,
-           bats,
-           throws,
-           retroID,
-           bbrefID,
-           birth_date     AS birthDate,
-           debut_date     AS debutDate,
-           finalgame_date AS finalGameDate,
-           death_date     AS deathDate
+    birthCountry,
+    birthState,
+    birthCity,
+    deathState,
+    deathCity,
+    nameFirst,
+    nameLast,
+    nameGiven,
+    weight,
+    height,
+    bats,
+    throws,
+    retroID,
+    bbrefID,
+    birth_date     AS birthDate,
+    debut_date     AS debutDate,
+    finalgame_date AS finalGameDate,
+    death_date     AS deathDate
     FROM   people
     WHERE  playerID = :playerID
     LIMIT  1';
@@ -84,8 +84,8 @@ class DB {
     SELECT *
     FROM   people
     ORDER  BY nameLast,
-              nameFirst,
-              playerID';
+    nameFirst,
+    playerID';
 
     $sql = DB::dbConnect()->prepare($stmt);
     $sql->execute();
@@ -97,8 +97,8 @@ class DB {
     SELECT *
     FROM   people
     ORDER  BY nameLast,
-              nameFirst,
-              playerID
+    nameFirst,
+    playerID
     LIMIT  :limit OFFSET :offset';
 
 
@@ -118,11 +118,11 @@ class DB {
   public static function searchPlayers($query = '') {
     $stmt = '
     SELECT p.playerID,
-           p.nameFirst,
-           p.nameLast
+    p.nameFirst,
+    p.nameLast
     FROM   people p
     WHERE  p.nameFirst LIKE :nameFirst
-            OR p.nameLast LIKE :nameLast
+    OR p.nameLast LIKE :nameLast
     LIMIT  100';
 
     $sql = DB::dbConnect()->prepare($stmt);
@@ -208,7 +208,7 @@ class DB {
   public static function getPersonSalaries($playerID) {
     $stmt = '
     SELECT   s.yearid AS year,
-             s.salary
+    s.salary
     from     salaries s
     WHERE    s.playerid = :playerID
     ORDER BY year ASC';
@@ -245,14 +245,14 @@ class DB {
   public static function getPersonSchools($playerID) {
     $stmt = '
     SELECT c.ID        AS id,
-           c.yearID    AS year,
-           s.name_full AS schoolName,
-           s.city,
-           s.state,
-           s.country
+    c.yearID    AS year,
+    s.name_full AS schoolName,
+    s.city,
+    s.state,
+    s.country
     FROM   collegeplaying c
-           LEFT JOIN schools s
-                  ON c.schoolID = s.schoolID
+    LEFT JOIN schools s
+    ON c.schoolID = s.schoolID
     WHERE c.playerID = :playerID
     GROUP  BY id
     ORDER  BY year ASC';
@@ -271,24 +271,24 @@ class DB {
   public static function getPeopleSearch($query) {
     $stmt = '
     SELECT   playerid,
-             namefirst,
-             namelast,
-             namegiven,
-             weight,
-             height,
-             bats,
-             throws,
-             debut_date,
-             finalgame_date,
-             birth_date,
-             death_date,
-             birthcountry,
-             birthstate,
-             birthcity
+    namefirst,
+    namelast,
+    namegiven,
+    weight,
+    height,
+    bats,
+    throws,
+    debut_date,
+    finalgame_date,
+    birth_date,
+    death_date,
+    birthcountry,
+    birthstate,
+    birthcity
     FROM     people
     WHERE    MATCH(namefirst, namelast) against(:query IN boolean mode) > 0
     ORDER BY namelast ASC,
-             namefirst ASC
+    namefirst ASC
     LIMIT    30';
 
     $sql = DB::dbConnect()->prepare($stmt);
@@ -306,33 +306,33 @@ class DB {
   public static function getPersonPitchingTotals($playerID) {
     $stmt = '
     SELECT (SELECT COUNT(playerID)
-            FROM   pitching
-            WHERE  playerID = :playerID2) AS yearsTotal,
-           SUM(W)                         AS W,
-           SUM(L)                         AS L,
-           SUM(G)                         AS G,
-           SUM(GS)                        AS GS,
-           SUM(CG)                        AS CG,
-           SUM(SHO)                       AS SHO,
-           SUM(SV)                        AS SV,
-           SUM(IPouts)                    AS IPouts,
-           SUM(H)                         AS H,
-           SUM(ER)                        AS ER,
-           SUM(HR)                        AS HR,
-           SUM(BB)                        AS BB,
-           SUM(SO)                        AS SO,
-           SUM(BAOpp)                     AS BAOpp,
-           SUM(ERA)                       AS ERA,
-           SUM(IBB)                       AS IBB,
-           SUM(WP)                        AS WP,
-           SUM(HBP)                       AS HBP,
-           SUM(BK)                        AS BK,
-           SUM(BFP)                       AS BFP,
-           SUM(GF)                        AS GF,
-           SUM(R)                         AS R,
-           SUM(SH)                        AS SH,
-           SUM(SF)                        AS SF,
-           SUM(GIDP)                      AS GIDP
+    FROM   pitching
+    WHERE  playerID = :playerID2) AS yearsTotal,
+    SUM(W)                         AS W,
+    SUM(L)                         AS L,
+    SUM(G)                         AS G,
+    SUM(GS)                        AS GS,
+    SUM(CG)                        AS CG,
+    SUM(SHO)                       AS SHO,
+    SUM(SV)                        AS SV,
+    SUM(IPouts)                    AS IPouts,
+    SUM(H)                         AS H,
+    SUM(ER)                        AS ER,
+    SUM(HR)                        AS HR,
+    SUM(BB)                        AS BB,
+    SUM(SO)                        AS SO,
+    SUM(BAOpp)                     AS BAOpp,
+    SUM(ERA)                       AS ERA,
+    SUM(IBB)                       AS IBB,
+    SUM(WP)                        AS WP,
+    SUM(HBP)                       AS HBP,
+    SUM(BK)                        AS BK,
+    SUM(BFP)                       AS BFP,
+    SUM(GF)                        AS GF,
+    SUM(R)                         AS R,
+    SUM(SH)                        AS SH,
+    SUM(SF)                        AS SF,
+    SUM(GIDP)                      AS GIDP
     FROM   pitching
     WHERE  playerID = :playerID
     LIMIT  1';
@@ -352,26 +352,26 @@ class DB {
   public static function getPersonBattingTotals($playerID) {
     $stmt = '
     SELECT (SELECT COUNT(playerID)
-            FROM   batting
-            WHERE  playerID = :playerID2) AS yearsTotal,
-            SUM(G)                        AS G,
-            SUM(G_batting)                AS G_batting,
-            SUM(AB)                       AS AB,
-            SUM(R)                        AS R,
-            SUM(H)                        AS H,
-            SUM(2B)                       AS "2B",
-            SUM(3B)                       AS "3B",
-            SUM(HR)                       AS HR,
-            SUM(RBI)                      AS RBI,
-            SUM(SB)                       AS SB,
-            SUM(CS)                       AS CS,
-            SUM(BB)                       AS BB,
-            SUM(SO)                       AS SO,
-            SUM(IBB)                      AS IBB,
-            SUM(HBP)                      AS HBP,
-            SUM(SH)                       AS SH,
-            SUM(SF)                       AS SF,
-            SUM(GIDP)                     AS GIDP
+    FROM   batting
+    WHERE  playerID = :playerID2) AS yearsTotal,
+    SUM(G)                        AS G,
+    SUM(G_batting)                AS G_batting,
+    SUM(AB)                       AS AB,
+    SUM(R)                        AS R,
+    SUM(H)                        AS H,
+    SUM(2B)                       AS "2B",
+    SUM(3B)                       AS "3B",
+    SUM(HR)                       AS HR,
+    SUM(RBI)                      AS RBI,
+    SUM(SB)                       AS SB,
+    SUM(CS)                       AS CS,
+    SUM(BB)                       AS BB,
+    SUM(SO)                       AS SO,
+    SUM(IBB)                      AS IBB,
+    SUM(HBP)                      AS HBP,
+    SUM(SH)                       AS SH,
+    SUM(SF)                       AS SF,
+    SUM(GIDP)                     AS GIDP
     FROM   batting
     WHERE  playerID = :playerID
     LIMIT  1';
@@ -390,25 +390,25 @@ class DB {
   public static function getPersonAppearancesTotals($playerID) {
     $stmt = '
     SELECT (SELECT COUNT(playerID)
-            FROM   appearances
-            WHERE  playerID = :playerID2) AS yearsTotal,
-            SUM(G_all)                    AS G_all,
-            SUM(GS)                       AS GS,
-            SUM(G_batting)                AS G_batting,
-            SUM(G_defense)                AS G_defense,
-            SUM(G_p)                      AS G_p,
-            SUM(G_c)                      AS G_c,
-            SUM(G_1b)                     AS G_1b,
-            SUM(G_2b)                     AS G_2b,
-            SUM(G_3b)                     AS G_3b,
-            SUM(G_ss)                     AS G_ss,
-            SUM(G_lf)                     AS G_lf,
-            SUM(G_cf)                     AS G_cf,
-            SUM(G_rf)                     AS G_rf,
-            SUM(G_of)                     AS G_of,
-            SUM(G_dh)                     AS G_dh,
-            SUM(G_ph)                     AS G_ph,
-            SUM(G_pr)                     AS G_pr
+    FROM   appearances
+    WHERE  playerID = :playerID2) AS yearsTotal,
+    SUM(G_all)                    AS G_all,
+    SUM(GS)                       AS GS,
+    SUM(G_batting)                AS G_batting,
+    SUM(G_defense)                AS G_defense,
+    SUM(G_p)                      AS G_p,
+    SUM(G_c)                      AS G_c,
+    SUM(G_1b)                     AS G_1b,
+    SUM(G_2b)                     AS G_2b,
+    SUM(G_3b)                     AS G_3b,
+    SUM(G_ss)                     AS G_ss,
+    SUM(G_lf)                     AS G_lf,
+    SUM(G_cf)                     AS G_cf,
+    SUM(G_rf)                     AS G_rf,
+    SUM(G_of)                     AS G_of,
+    SUM(G_dh)                     AS G_dh,
+    SUM(G_ph)                     AS G_ph,
+    SUM(G_pr)                     AS G_pr
     FROM   appearances
     WHERE  playerID = :playerID
     LIMIT  1';
@@ -427,9 +427,9 @@ class DB {
   public static function getPersonSalariesTotals($playerID) {
     $stmt = '
     SELECT (SELECT COUNT(playerID)
-            FROM   salaries
-            WHERE  playerID = :playerID2) AS yearsTotal,
-            SUM(salary)                   as salary
+    FROM   salaries
+    WHERE  playerID = :playerID2) AS yearsTotal,
+    SUM(salary)                   as salary
     FROM   salaries
     WHERE  playerID = :playerID
     LIMIT  1';
@@ -484,31 +484,31 @@ class DB {
 
     $stmt = "
     SELECT    b.playerID,
-              p.nameFirst,
-              p.nameLast,
-              b.yearID,
-              b.stint,
-              b.teamID,
-              b.team_ID,
-              b.lgID,
-              b.G,
-              b.G_batting,
-              b.AB,
-              b.R,
-              b.H,
-              b.2B,
-              b.3B,
-              b.HR,
-              b.RBI,
-              b.SB,
-              b.CS,
-              b.BB,
-              b.SO,
-              b.IBB,
-              b.HBP,
-              b.SH,
-              b.SF,
-              b.GIDP
+    p.nameFirst,
+    p.nameLast,
+    b.yearID,
+    b.stint,
+    b.teamID,
+    b.team_ID,
+    b.lgID,
+    b.G,
+    b.G_batting,
+    b.AB,
+    b.R,
+    b.H,
+    b.2B,
+    b.3B,
+    b.HR,
+    b.RBI,
+    b.SB,
+    b.CS,
+    b.BB,
+    b.SO,
+    b.IBB,
+    b.HBP,
+    b.SH,
+    b.SF,
+    b.GIDP
     FROM      batting b
     LEFT JOIN people p
     ON        b.playerID = p.playerID
@@ -547,38 +547,38 @@ class DB {
 
     $stmt = "
     SELECT p.playerID,
-           people.nameFirst,
-           people.nameLast,
-           p.yearID as year,
-           p.stint,
-           p.team_ID,
-           t.name as teamName,
-           p.lgID,
-           p.W,
-           p.L,
-           p.G,
-           p.GS,
-           p.CG,
-           p.SHO,
-           p.SV,
-           p.IPouts,
-           p.H,
-           p.ER,
-           p.HR,
-           p.BB,
-           p.SO,
-           p.BAOpp,
-           p.ERA,
-           p.IBB,
-           p.WP,
-           p.HBP,
-           p.BK,
-           p.BFP,
-           p.GF,
-           p.R,
-           p.SH,
-           p.SF,
-           p.GIDP
+    people.nameFirst,
+    people.nameLast,
+    p.yearID as year,
+    p.stint,
+    p.team_ID,
+    t.name as teamName,
+    p.lgID,
+    p.W,
+    p.L,
+    p.G,
+    p.GS,
+    p.CG,
+    p.SHO,
+    p.SV,
+    p.IPouts,
+    p.H,
+    p.ER,
+    p.HR,
+    p.BB,
+    p.SO,
+    p.BAOpp,
+    p.ERA,
+    p.IBB,
+    p.WP,
+    p.HBP,
+    p.BK,
+    p.BFP,
+    p.GF,
+    p.R,
+    p.SH,
+    p.SF,
+    p.GIDP
     FROM   pitching p
     LEFT   JOIN people on p.playerID = people.playerID
     LEFT   JOIN teams t on p.team_ID = t.ID";
@@ -614,7 +614,6 @@ class DB {
 
 
   public static function getFilterStmt($filters, $tableName) {
-
     $stmt = ' WHERE ';
 
     for ($count = 0; $count < count($filters); $count++) {
@@ -625,12 +624,31 @@ class DB {
 
       if ($count > 0)
         $stmt .= ' AND';
-        $stmt = $stmt . " $tableName.$column $conditional $qualifier";
+      $stmt = $stmt . " $tableName.$column $conditional $qualifier";
 
     }
 
 
     return $stmt;
+  }
+
+  public static function getOrderStmt($sort) {
+
+      if ($sort == null)
+        return '';
+
+      // build order by statement
+      $orderStmt = '';
+      $sortColumn = filter_var($sort['column'], FILTER_SANITIZE_STRING);
+
+      $sortType = strtoupper($sort['type']);
+      if ($sortType != 'ASC')
+        $sortType = 'DESC';
+      $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
+
+      $orderStmt = " ORDER BY $sortColumn $sortType ";
+
+      return $orderStmt;
   }
 
 }
