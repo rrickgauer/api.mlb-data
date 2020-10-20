@@ -174,6 +174,18 @@ class Constants {
     "salary" => "salary",
   ];
 
+  const Search = [
+    "playerID"      => "playerID",
+    "nameFirst"     => "nameFirst",
+    "nameLast"      => "nameLast",
+    "dateBirth"     => "dateBirth",
+    "dateDebut"     => "dateDebut",
+    "dateFinalGame" => "dateFinalGame",
+    "dateDeath"     => "dateDeath",
+    "teams"         => "teams",
+    "urls"          => "urls",
+  ];
+
 
   const Modules = [
     "Batting"         => "batting",
@@ -184,6 +196,7 @@ class Constants {
     "FieldingOF"      => "fielding-of",
     "FieldingOFSplit" => "fielding-of-split",
     "Salaries"        => "salaries",
+    "Search"          => "search",
   ];
 
   const Defaults = [

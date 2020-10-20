@@ -157,4 +157,42 @@ class People extends Module {
     }
 }
 
+
+class Search {
+    private $query;
+    private $perPage;
+    private $dataSet;
+
+    public function __construct($newQuery, $newPerPage) {
+        $this->setQuery($newQuery);
+        $this->setPerPage($newPerPage);
+        $this->retrieveData();
+    }
+
+    public function getQuery() {
+        return $this->query;
+    }
+
+    public function getPerPage() {
+        return $this->perPage;
+    }
+
+
+    public function setQuery($newQuery) {
+        $this->query = $newQuery;
+    }
+
+    public function setPerPage($newPerPage) {
+        $this->perPage = $newPerPage;
+    }
+
+    private function retrieveData() {
+        $this->dataSet = DB::getPeopleSearch($this->query, null, null, $this->perPage)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function returnData() {
+        ApiFunctions::printJson($this->dataSet);
+    }
+}
+
 ?>
