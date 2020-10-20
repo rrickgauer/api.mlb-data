@@ -10,6 +10,7 @@ class Parser {
     private $module;
     private $sorts;
     private $request;
+    private $filters;
 
     public function __construct() {
 
@@ -22,6 +23,7 @@ class Parser {
 
         $this->setModule();
         $this->setSorts();
+        $this->setFilters();
     }
 
 
@@ -33,14 +35,16 @@ class Parser {
         return $this->sorts;
     }
 
+    public function getFilters() {
+        return $this->filters;
+    }
+
 
     private function setModule() {
         $this->module = $this->request[0];
     }
 
-
     private function setSorts() {
-
         // check if sort is set
         if (!isset($_GET['sort'])) {
             $this->sorts = null;
@@ -59,9 +63,46 @@ class Parser {
     }
 
 
+    private function setFilters() {
+
+        if (!isset($_GET['filter'])) {
+            $this->filters = null;
+            return;
+        }
+
+        // break up filters by comma
+        $filters = explode(',', $_GET['filter']);
+
+        $filterList = [];
+
+        for ($count = 0; $count < count($filters); $count++) {
+            $newFilter = $this->parseFilter($filters[$count]);
+            array_push($filterList, $newFilter);
+        }
 
 
+        $this->filters = $filterList;
+    }
 
+    // HR:>=:500
+    // column_name:conditional:qualifier
+    private function parseFilter($rawFilter) {
+        $filter = explode(':', $rawFilter);
+
+        // verify that the conditional is valid
+        if (!in_array($filter[1], Constants::FilterConditionals)) {
+            ApiFunctions::returnBadRequest('Unrecognized filter conditional');
+            exit;
+        }
+
+        // eventually, need to check if the column is in the constants
+        $parsedFilter = [];
+        $parsedFilter['column'] = $filter[0];
+        $parsedFilter['conditional'] = $filter[1];
+        $parsedFilter['qualifier'] = $filter[2];
+
+        return $parsedFilter;
+    }
 
 
 }
