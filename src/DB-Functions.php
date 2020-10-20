@@ -647,6 +647,56 @@ class DB {
   }
 
 
+  public static function getAppearances($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT  a.yearID,
+            a.teamID,
+            a.team_ID,
+            t.name,
+            a.lgID,
+            a.playerID,
+            p.nameFirst,
+            p.nameLast,
+            a.G_all,
+            a.GS,
+            a.G_batting,
+            a.G_defense,
+            a.G_p,
+            a.G_c,
+            a.G_1b,
+            a.G_2b,
+            a.G_3b,
+            a.G_ss,
+            a.G_lf,
+            a.G_cf,
+            a.G_rf,
+            a.G_of,
+            a.G_dh,
+            a.G_ph,
+            a.G_pr
+    FROM appearances a 
+    LEFT JOIN people p ON a.playerID = p.playerID
+    LEFT JOIN teams t on a.team_ID = t.ID ";
+
+    $stmt .= DB::getFilterStmt($filters, '.a');
+    $stmt .= " GROUP  BY a.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
   public static function getFilterStmt($filters, $tableName) {
 
     if ($filters == null)

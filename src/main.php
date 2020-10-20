@@ -19,6 +19,11 @@ switch ($p1->getModule()) {
     $fielding->returnData();
     break;
 
+  case Constants::Modules['Appearances']:
+    $appearances = new Appearances($p1->getFilters(), $p1->getSorts(), 100, 0);
+    $appearances->returnData();
+    break;
+
   default:
     ApiFunctions::returnDefaultDisplay();
     break;
