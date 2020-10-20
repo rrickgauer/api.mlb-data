@@ -11,6 +11,7 @@ class Parser {
     private $sorts;
     private $request;
     private $filters;   // list of arrays(column, conditional, qualifier)
+    private $filterColumns;
 
     public function __construct() {
 
@@ -42,6 +43,11 @@ class Parser {
 
     private function setModule() {
         $this->module = $this->request[0];
+
+        if (!in_array($this->module, Constants::Modules)) {
+            ApiFunctions::returnBadRequest('Unrecogized module!');
+            exit;
+        }
     }
 
     private function setSorts() {
@@ -95,6 +101,11 @@ class Parser {
             exit;
         }
 
+        if (!in_array($this->filterColumns)) {
+            ApiFunctions::returnBadRequest('Unrecognized filter column');
+            exit;
+        }
+
         // eventually, need to check if the column is in the constants
         $parsedFilter = [];
         $parsedFilter['column'] = $filter[0];
@@ -102,6 +113,39 @@ class Parser {
         $parsedFilter['qualifier'] = $filter[2];
 
         return $parsedFilter;
+    }
+
+    // Determine the matching columns
+    private function retrieveFilterColumns() {
+        switch ($this->module) {
+            case Constants::Modules['Batting']:
+                $this->filterColumns = Constants::Batting;
+                break;
+            case Constants::Modules['Pitching']:
+                $this->filterColumns = Constants::Pitching;
+                break;
+            case Constants::Modules['Appearances']:
+                $this->filterColumns = Constants::Appearances;
+                break;
+            case Constants::Modules['Fielding']:
+                $this->filterColumns = Constants::Fielding;
+                break;
+            case Constants::Modules['People']:
+                $this->filterColumns = Constants::People;
+                break;
+            case Constants::Modules['FieldingOF']:
+                $this->filterColumns = Constants::FieldingOF;
+                break;
+            case Constants::Modules['FieldingOFSplit']:
+                $this->filterColumns = Constants::FieldingOFSplit;
+                break;
+            case Constants::Modules['Salaries']:
+                $this->filterColumns = Constants::Salaries;
+                break;
+            default:
+                $this->filterColumns = null;
+                break;
+        }
     }
 
 
