@@ -63,17 +63,14 @@ class Module {
     public function returnData() {
         ApiFunctions::printJson($this->dataSet);
     }
+
+
 }
 
 
 class Pitching extends Module {
-
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->retrieveData();
-    }
-
-    private function retrieveData() {
         $this->dataSet = DB::getPitching($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
@@ -81,10 +78,6 @@ class Pitching extends Module {
 class Batting extends Module {
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->retrieveData();
-    }
-
-    private function retrieveData() {
         $this->dataSet = DB::getBatting($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
@@ -93,10 +86,6 @@ class Batting extends Module {
 class Fielding extends Module {
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->retrieveData();
-    }
-
-    private function retrieveData() {
         $this->dataSet = DB::getFielding($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
@@ -105,10 +94,6 @@ class Fielding extends Module {
 class Appearances extends Module {
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->retrieveData();
-    }
-
-    private function retrieveData() {
         $this->dataSet = DB::getAppearances($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
@@ -116,10 +101,6 @@ class Appearances extends Module {
 class FieldingOF extends Module {
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->retrieveData();
-    }
-
-    private function retrieveData() {
         $this->dataSet = DB::getFieldingOF($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
@@ -127,10 +108,6 @@ class FieldingOF extends Module {
 class FieldingOFSplit extends Module {
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->retrieveData();
-    }
-
-    private function retrieveData() {
         $this->dataSet = DB::getFieldingOFSplit($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
@@ -138,10 +115,6 @@ class FieldingOFSplit extends Module {
 class Salaries extends Module {
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->retrieveData();
-    }
-
-    private function retrieveData() {
         $this->dataSet = DB::getSalaries($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
@@ -149,10 +122,6 @@ class Salaries extends Module {
 class People extends Module {
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->retrieveData();
-    }
-
-    private function retrieveData() {
         $this->dataSet = DB::getPeople($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -445,41 +445,43 @@ class DB {
    * SF,
    * GIDP
    ***************************************************************************/
-  public static function getBatting($sort = 'playerID', $limit = 100, $offset = 0) {
-    $sort = filter_var($sort, FILTER_SANITIZE_STRING);
+  public static function getBatting($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
 
     $stmt = "
-    SELECT    b.playerID,
-    p.nameFirst,
-    p.nameLast,
-    b.yearID,
-    b.stint,
-    b.teamID,
-    b.team_ID,
-    b.lgID,
-    b.G,
-    b.G_batting,
-    b.AB,
-    b.R,
-    b.H,
-    b.2B,
-    b.3B,
-    b.HR,
-    b.RBI,
-    b.SB,
-    b.CS,
-    b.BB,
-    b.SO,
-    b.IBB,
-    b.HBP,
-    b.SH,
-    b.SF,
-    b.GIDP
-    FROM      batting b
-    LEFT JOIN people p
-    ON        b.playerID = p.playerID
-    GROUP BY  b.id
-    ORDER BY  $sort desc limit :limit offset :offset";
+    SELECT      b.playerID,
+                p.nameFirst,
+                p.nameLast,
+                b.yearID,
+                b.stint,
+                b.teamID,
+                b.team_ID,
+                b.lgID,
+                b.G,
+                b.G_batting,
+                b.AB,
+                b.R,
+                b.H,
+                b.2B,
+                b.3B,
+                b.HR,
+                b.RBI,
+                b.SB,
+                b.CS,
+                b.BB,
+                b.SO,
+                b.IBB,
+                b.HBP,
+                b.SH,
+                b.SF,
+                b.GIDP
+    FROM        batting b
+    LEFT JOIN   people p
+    ON          b.playerID = p.playerID";
+
+    $stmt .= DB::getFilterStmt($filters, '');
+    $stmt .= " GROUP  BY b.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
 
@@ -539,7 +541,7 @@ class DB {
 
     // add filter options
     if ($filters != null) {
-      $filterStmt = DB::getFilterStmt($filters, 'p');
+      $filterStmt = DB::getFilterStmt($filters, 'p.');
       $stmt .= $filterStmt;
     }
 
@@ -593,7 +595,7 @@ class DB {
     LEFT JOIN people p ON f.playerID = p.playerID
     LEFT JOIN teams t on f.team_ID = t.ID ";
 
-    $stmt .= DB::getFilterStmt($filters, '.f');
+    $stmt .= DB::getFilterStmt($filters, 'f.');
     $stmt .= " GROUP  BY f.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
@@ -644,7 +646,7 @@ class DB {
     LEFT JOIN people p ON a.playerID = p.playerID
     LEFT JOIN teams t on a.team_ID = t.ID ";
 
-    $stmt .= DB::getFilterStmt($filters, '.a');
+    $stmt .= DB::getFilterStmt($filters, 'a.');
     $stmt .= " GROUP  BY a.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
@@ -677,7 +679,7 @@ class DB {
     FROM    fieldingof f 
     LEFT JOIN people p ON f.playerID = p.playerID ";
 
-    $stmt .= DB::getFilterStmt($filters, '.f');
+    $stmt .= DB::getFilterStmt($filters, 'f.');
     $stmt .= " GROUP  BY f.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
@@ -724,7 +726,7 @@ class DB {
     LEFT JOIN people p ON f.playerID = p.playerID
     LEFT JOIN teams t on f.team_ID = t.ID ";
 
-    $stmt .= DB::getFilterStmt($filters, '.f');
+    $stmt .= DB::getFilterStmt($filters, 'f.');
     $stmt .= " GROUP  BY f.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
@@ -759,7 +761,7 @@ class DB {
     LEFT JOIN people p ON s.playerID = p.playerID
     LEFT JOIN teams t on s.team_ID = t.ID ";
 
-    $stmt .= DB::getFilterStmt($filters, '.s');
+    $stmt .= DB::getFilterStmt($filters, 's.');
     $stmt .= " GROUP  BY s.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
@@ -897,7 +899,7 @@ class DB {
 
       if ($count > 0)
         $stmt .= ' AND';
-      $stmt = $stmt . " $tableName.$column $conditional $qualifier";
+      $stmt = $stmt . " $tableName$column $conditional $qualifier";
 
     }
 

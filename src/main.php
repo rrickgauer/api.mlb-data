@@ -17,6 +17,8 @@ $sort = $p1->getSorts();
 switch ($p1->getModule()) {
   case Constants::Modules['Pitching']:
     $results = new Pitching($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0); break;
+  case Constants::Modules['Batting']:
+    $results = new Batting($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0); break;
   case Constants::Modules['Fielding']:
     $results = new Fielding($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0); break;
   case Constants::Modules['Appearances']:
