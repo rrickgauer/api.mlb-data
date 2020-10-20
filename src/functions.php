@@ -530,15 +530,17 @@ class DB {
   }
 
 
-  public static function getPitching($sort = 'playerID', $sortType = 'DESC', $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getPitching($sort, $limit = Constants::Defaults['PerPage'], $offset = 0) {
 
-    $sort = filter_var($sort, FILTER_SANITIZE_STRING);
+
+    $sortColumn = filter_var($sort, FILTER_SANITIZE_STRING);
 
     $sortType = strtoupper($sortType);
     if ($sortType != 'ASC')
       $sortType = 'DESC';
-
     $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
+
+
 
     $stmt = "
     SELECT p.playerID,
@@ -578,7 +580,7 @@ class DB {
     LEFT   JOIN people on p.playerID = people.playerID
     LEFT   JOIN teams t on p.team_ID = t.ID
     GROUP  BY p.ID
-    ORDER  BY $sort $sortType
+    ORDER  BY $sortColumn $sortType
     LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
