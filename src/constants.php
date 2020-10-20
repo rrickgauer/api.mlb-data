@@ -175,7 +175,7 @@ class Constants {
   ];
 
 
-  const Resources = [
+  const Modules = [
     "Batting"         => "batting",
     "Pitching"        => "pitching",
     "Appearances"     => "appearances",

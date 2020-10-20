@@ -9,7 +9,7 @@ class Parser {
 
     private $module;
     private $sorts;
-    private $request;
+    private $request;   // array(column, type)
     private $filters;   // list of arrays(column, conditional, qualifier)
     private $filterColumns;
 
@@ -98,11 +98,6 @@ class Parser {
         // verify that the conditional is valid
         if (!in_array($filter[1], Constants::FilterConditionals)) {
             ApiFunctions::returnBadRequest('Unrecognized filter conditional');
-            exit;
-        }
-
-        if (!in_array($this->filterColumns)) {
-            ApiFunctions::returnBadRequest('Unrecognized filter column');
             exit;
         }
 
