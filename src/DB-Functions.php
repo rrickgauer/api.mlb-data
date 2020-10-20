@@ -814,6 +814,50 @@ class DB {
   }
 
 
+  public static function getPeople($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT  p.playerID,
+            p.birthCountry,
+            p.birthState,
+            p.birthCity,
+            p.deathCountry,
+            p.deathState,
+            p.deathCity,
+            p.nameFirst,
+            p.nameLast,
+            p.nameGiven,
+            p.weight,
+            p.height,
+            p.bats,
+            p.throws,
+            p.retroID,
+            p.bbrefID,
+            p.birth_date as birthDate,
+            p.debut_date as debuteDate,
+            p.finalgame_date as finalGameDate,
+            p.death_date as deathDate
+    FROM    people p ";
+
+    $stmt .= DB::getFilterStmt($filters, '');
+    $stmt .= " GROUP  BY p.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+    
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+
+    return $sql;
+  }
+
 
   public static function getFilterStmt($filters, $tableName) {
 

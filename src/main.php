@@ -39,6 +39,11 @@ switch ($p1->getModule()) {
     $salaries->returnData();
     break;
 
+  case Constants::Modules['People']:
+    $people = new People($p1->getFilters(), $p1->getSorts(), 100, 0);
+    $people->returnData();
+    break;
+
   default:
     ApiFunctions::returnDefaultDisplay();
     break;
