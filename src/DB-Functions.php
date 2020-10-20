@@ -778,6 +778,43 @@ class DB {
   }
 
 
+  public static function getSalaries($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT  s.playerID,
+            p.nameFirst,
+            p.nameLast,
+            s.yearID,
+            s.teamID,
+            s.team_ID,
+            t.name as teamName,
+            s.lgID,
+            s.salary
+    FROM    salaries s 
+    LEFT JOIN people p ON s.playerID = p.playerID
+    LEFT JOIN teams t on s.team_ID = t.ID ";
+
+    $stmt .= DB::getFilterStmt($filters, '.s');
+    $stmt .= " GROUP  BY s.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+
+    return $sql;
+  }
+
+
+
   public static function getFilterStmt($filters, $tableName) {
 
     if ($filters == null)

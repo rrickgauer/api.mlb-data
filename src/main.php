@@ -34,6 +34,11 @@ switch ($p1->getModule()) {
     $fieldingOFSplit->returnData();
     break;
 
+  case Constants::Modules['Salaries']:
+    $salaries = new Salaries($p1->getFilters(), $p1->getSorts(), 100, 0);
+    $salaries->returnData();
+    break;
+
   default:
     ApiFunctions::returnDefaultDisplay();
     break;
