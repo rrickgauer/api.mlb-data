@@ -124,4 +124,15 @@ class FieldingOF extends Module {
     }
 }
 
+class FieldingOFSplit extends Module {
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        $this->dataSet = DB::getFieldingOFSplit($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
 ?>

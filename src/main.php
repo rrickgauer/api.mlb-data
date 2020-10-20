@@ -25,8 +25,13 @@ switch ($p1->getModule()) {
     break;
 
   case Constants::Modules['FieldingOF']:
-    $appearances = new FieldingOF($p1->getFilters(), $p1->getSorts(), 100, 0);
-    $appearances->returnData();
+    $fieldingOF = new FieldingOF($p1->getFilters(), $p1->getSorts(), 100, 0);
+    $fieldingOF->returnData();
+    break;
+
+  case Constants::Modules['FieldingOFSplit']:
+    $fieldingOFSplit = new FieldingOFSplit($p1->getFilters(), $p1->getSorts(), 100, 0);
+    $fieldingOFSplit->returnData();
     break;
 
   default:
