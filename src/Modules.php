@@ -79,13 +79,13 @@ class Pitching extends Module {
 }
 
 class Batting extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage = Constants::Defaults['PerPage'], $newPage = Constants::Defaults['Page']) {
-        parent::__construct($newFilters, $newSorts, $newPerPage = Constants::Defaults['PerPage'], $newPage = Constants::Defaults['Page']);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
         $this->retrieveData();
     }
 
     private function retrieveData() {
-        $this->dataSet = DB::getTopBattersSeason($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+        $this->dataSet = DB::getBatting($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

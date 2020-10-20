@@ -479,7 +479,7 @@ class DB {
    * SF,
    * GIDP
    ***************************************************************************/
-  public static function getTopBattersSeason($sort = 'playerID', $limit = 100, $offset = 0) {
+  public static function getBatting($sort = 'playerID', $limit = 100, $offset = 0) {
     $sort = filter_var($sort, FILTER_SANITIZE_STRING);
 
     $stmt = "
