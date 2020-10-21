@@ -76,17 +76,14 @@ class Module {
 
 
 class People extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
-        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
         $this->dataSet = DB::getPeople($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
-
-
-
 class Pitching extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage ,$newAggregate) {
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
         parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
         $this->retrieveData();
     }
@@ -104,9 +101,16 @@ class Pitching extends Module {
 
 
 class Batting extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
-        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->dataSet = DB::getBatting($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        if ($this->aggregate == true)
+            $this->dataSet = DB::getBattingAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+        else 
+            $this->dataSet = DB::getBatting($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
@@ -126,30 +130,58 @@ class Fielding extends Module {
 }
 
 class FieldingOF extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
-        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->dataSet = DB::getFieldingOF($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        if ($this->aggregate == true)
+            // $this->dataSet = DB::getFieldingAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+        else 
+            $this->dataSet = DB::getFieldingOF($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
 class FieldingOFSplit extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
-        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->dataSet = DB::getFieldingOFSplit($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        if ($this->aggregate == true)
+            // $this->dataSet = DB::getFieldingAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+        else 
+            $this->dataSet = DB::getFieldingOFSplit($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
 class Appearances extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
-        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->dataSet = DB::getAppearances($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        if ($this->aggregate == true)
+            // $this->dataSet = DB::getFieldingAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+        else 
+            $this->dataSet = DB::getAppearances($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
 class Salaries extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
-        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->dataSet = DB::getSalaries($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        if ($this->aggregate == true)
+            // $this->dataSet = DB::getFieldingAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+        else 
+            $this->dataSet = DB::getSalaries($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
