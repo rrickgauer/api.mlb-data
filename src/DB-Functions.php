@@ -77,7 +77,6 @@ class DB {
    * GIDP
    ***************************************************************************/
   public static function getBatting($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
-
     $stmt = "
     SELECT      b.playerID,
     p.nameFirst,
@@ -111,6 +110,54 @@ class DB {
 
     $stmt .= DB::getFilterStmt($filters, '');
     $stmt .= " GROUP  BY b.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+  public static function getBattingAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT      b.playerID,
+                p.nameFirst,
+                p.nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM batting b2 where b2.playerID = b.playerID) as years,
+                SUM(b.G) AS G,
+                SUM(b.G_batting) AS G_batting,
+                SUM(b.AB) AS AB,
+                SUM(b.R) AS R,
+                SUM(b.H) AS H,
+                SUM(b.2B) AS 2B,
+                SUM(b.3B) AS 3B,
+                SUM(b.HR) AS HR,
+                SUM(b.RBI) AS RBI,
+                SUM(b.SB) AS SB,
+                SUM(b.CS) AS CS,
+                SUM(b.BB) AS BB,
+                SUM(b.SO) AS SO,
+                SUM(b.IBB) AS IBB,
+                SUM(b.HBP) AS HBP,
+                SUM(b.SH) AS SH,
+                SUM(b.SF) AS SF,
+                SUM(b.GIDP) AS GIDP
+    FROM        batting b
+    LEFT JOIN   people p
+    ON          b.playerID = p.playerID";
+
+    $stmt .= DB::getFilterStmt($filters, '');
+    $stmt .= " GROUP  BY b.playerID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
