@@ -423,7 +423,7 @@ class DB {
     return $sql;
   }
 
-  public static function getAppearances($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getAppearances($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
     $stmt = "
     SELECT      a.yearID,
                 a.teamID,
@@ -455,11 +455,27 @@ class DB {
     LEFT JOIN   teams t on a.team_ID = t.ID ";
 
     $stmt .= DB::getFilterStmt($filters, 'a.');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE a.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND a.playerID = :playerID ';
+      }
+    }
+
     $stmt .= " GROUP  BY a.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
 
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
