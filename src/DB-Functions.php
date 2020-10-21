@@ -70,7 +70,7 @@ class DB {
     else return false;
   }
 
-  public static function getBatting($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getBatting($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
     $stmt = "
     SELECT      b.playerID,
                 p.nameFirst,
@@ -103,11 +103,27 @@ class DB {
     ON          b.playerID = p.playerID";
 
     $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE b.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND b.playerID = :playerID ';
+      }
+    }
+
     $stmt .= " GROUP  BY b.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
 
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
@@ -794,7 +810,7 @@ class DB {
 
     $stmt = ' WHERE ';
 
-    for ($count = 0;$count < count($filters);$count++) {
+    for ($count = 0; $count < count($filters); $count++) {
       $filter      = $filters[$count];
       $column      = $filter['column'];
       $conditional = $filter['conditional'];
