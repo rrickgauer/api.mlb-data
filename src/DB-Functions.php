@@ -613,7 +613,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFSplit($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getFieldingOFSplit($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -642,11 +642,27 @@ class DB {
     LEFT JOIN   teams t on f.team_ID = t.ID ";
 
     $stmt .= DB::getFilterStmt($filters, 'f.');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE f.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND f.playerID = :playerID ';
+      }
+    }
+
     $stmt .= " GROUP  BY f.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
 
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
@@ -700,7 +716,7 @@ class DB {
     return $sql;
   }
 
-  public static function getSalaries($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getSalaries($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
     $stmt = "
     SELECT      s.playerID,
                 p.nameFirst,
@@ -716,11 +732,27 @@ class DB {
     LEFT JOIN   teams t on s.team_ID = t.ID ";
 
     $stmt .= DB::getFilterStmt($filters, 's.');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE s.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND s.playerID = :playerID ';
+      }
+    }
+
     $stmt .= " GROUP  BY s.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
 
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
@@ -765,7 +797,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPeople($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getPeople($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
     $stmt = "
     SELECT  p.playerID,
             p.birthCountry,
@@ -790,11 +822,27 @@ class DB {
     FROM    people p ";
 
     $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE p.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND p.playerID = :playerID ';
+      }
+    }
+
     $stmt .= " GROUP  BY p.playerID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
 
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
