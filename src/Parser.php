@@ -34,6 +34,8 @@ class Parser {
   private $filterColumns;
   private $aggregate;
 
+  private $playerID;
+
   public function __construct() {
 
     if (!isset($_SERVER['PATH_INFO'])) {
@@ -47,6 +49,7 @@ class Parser {
     $this->setSorts();
     $this->setFilters();
     $this->setAggregate();
+    $this->setPlayerID();
   }
 
   public function getModule() {
@@ -166,6 +169,36 @@ class Parser {
     return $this->aggregate;
   }
 
+
+  private function setPlayerID() {
+    // set playerID to null if not set in the url
+    if (!isset($this->request[1])) {
+      $this->playerID = null;
+      return;
+    }
+
+    $playerID = $this->request[1];
+
+    // check if playerID exists
+    if (!DB::doesPlayerExist($playerID)) {
+      ApiFunctions::returnBadRequest('Error. playerID does not exist!');
+      return;
+    }
+
+
+    $this->playerID = $playerID;
+  } 
+
+  public function getPlayerID() {
+    return $this->playerID;
+  }
+
+  public function isPlayerIDSet() {
+    if ($this->playerID == null)
+      return false;
+    else
+      return true;
+  }
 }
 
 ?>
