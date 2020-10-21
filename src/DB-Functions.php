@@ -20,163 +20,6 @@ class DB {
     }
   }
 
-  /******************************************************************************
-   *  Returns people row
-   *
-   *  playerID
-   *  birthCountry
-   *  birthState
-   *  birthCity
-   *  deathState
-   *  deathCity
-   *  nameFirst
-   *  nameLast
-   *  nameGiven
-   *  weight
-   *  height
-   *  bats
-   *  throws
-   *  retroID
-   *  bbrefID
-   *  birthDate
-   *  debutDate
-   *  finalGameDate
-   *  deathDate
-  ******************************************************************************/
-  public static function getPlayer($playerID) {
-    $stmt = '
-    SELECT playerID,
-    birthCountry,
-    birthState,
-    birthCity,
-    deathState,
-    deathCity,
-    nameFirst,
-    nameLast,
-    nameGiven,
-    weight,
-    height,
-    bats,
-    throws,
-    retroID,
-    bbrefID,
-    birth_date     AS birthDate,
-    debut_date     AS debutDate,
-    finalgame_date AS finalGameDate,
-    death_date     AS deathDate
-    FROM   people
-    WHERE  playerID = :playerID
-    LIMIT  1';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-
-    $sql->execute();
-    return $sql;
-  }
-
-
-  public static function getAllPlayers() {
-    $stmt = '
-    SELECT *
-    FROM   people
-    ORDER  BY nameLast,
-    nameFirst,
-    playerID';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-    $sql->execute();
-    return $sql;
-  }
-
-  public static function getPlayers($limit, $offset) {
-    $stmt = '
-    SELECT *
-    FROM   people
-    ORDER  BY nameLast,
-    nameFirst,
-    playerID
-    LIMIT  :limit OFFSET :offset';
-
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
-    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
-
-    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
-    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
-    
-    $sql->execute();
-    return $sql;
-  }
-
-
-  public static function searchPlayers($query = '') {
-    $stmt = '
-    SELECT p.playerID,
-    p.nameFirst,
-    p.nameLast
-    FROM   people p
-    WHERE  p.nameFirst LIKE :nameFirst
-    OR p.nameLast LIKE :nameLast
-    LIMIT  100';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    $nameFirst = "%$query%";
-    $nameFirst = filter_var($nameFirst, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':nameFirst', $nameFirst, PDO::PARAM_STR);
-
-    $nameLast = "%$query%";
-    $nameLast = filter_var($nameLast, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':nameLast', $nameLast, PDO::PARAM_STR);
-
-    $sql->execute();
-    return $sql;
-
-  }
-
-
-  public static function getPlayerBatting($playerID) {
-    $stmt = '
-    SELECT *
-    FROM   batting
-    WHERE  playerID = :playerID
-    ORDER  BY yearID ASC';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-
-    $sql->execute();
-    return $sql;
-  }
-
-
-  public static function getPlayerPitching($playerID) {
-    $stmt = '
-    SELECT *
-    FROM   pitching
-    WHERE  playerID = :playerID
-    ORDER  BY yearID ASC';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-
-    $sql->execute();
-    return $sql;
-  }
-
-
   public static function doesPlayerExist($playerID) {
     $stmt = '
     SELECT playerID
@@ -197,218 +40,6 @@ class DB {
       return true;
     else
       return false;
-  }
-
-  /******************************************************************************
-   *  Returns persons salaries
-   *
-   *  year
-   *  salary
-  ******************************************************************************/
-  public static function getPersonSalaries($playerID) {
-    $stmt = '
-    SELECT   s.yearid AS year,
-    s.salary
-    from     salaries s
-    WHERE    s.playerid = :playerID
-    ORDER BY year ASC';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-    
-    // filter and bind playerID
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-    $sql->execute();
-
-    return $sql;
-  }
-
-  public static function getPersonAppearances($playerID) {
-    $stmt = '
-    SELECT *
-    FROM   appearances
-    WHERE  playerID = :playerID
-    ORDER  BY yearID DESC';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-    
-    // filter and bind playerID
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-    $sql->execute();
-
-    return $sql;
-  }
-
-  public static function getPersonSchools($playerID) {
-    $stmt = '
-    SELECT c.ID        AS id,
-    c.yearID    AS year,
-    s.name_full AS schoolName,
-    s.city,
-    s.state,
-    s.country
-    FROM   collegeplaying c
-    LEFT JOIN schools s
-    ON c.schoolID = s.schoolID
-    WHERE c.playerID = :playerID
-    GROUP  BY id
-    ORDER  BY year ASC';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-    
-    // filter and bind playerID
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-    $sql->execute();
-
-    return $sql;
-  }
-
-
-  public static function getPersonPitchingTotals($playerID) {
-    $stmt = '
-    SELECT (SELECT COUNT(playerID)
-    FROM   pitching
-    WHERE  playerID = :playerID2) AS yearsTotal,
-    SUM(W)                         AS W,
-    SUM(L)                         AS L,
-    SUM(G)                         AS G,
-    SUM(GS)                        AS GS,
-    SUM(CG)                        AS CG,
-    SUM(SHO)                       AS SHO,
-    SUM(SV)                        AS SV,
-    SUM(IPouts)                    AS IPouts,
-    SUM(H)                         AS H,
-    SUM(ER)                        AS ER,
-    SUM(HR)                        AS HR,
-    SUM(BB)                        AS BB,
-    SUM(SO)                        AS SO,
-    SUM(BAOpp)                     AS BAOpp,
-    SUM(ERA)                       AS ERA,
-    SUM(IBB)                       AS IBB,
-    SUM(WP)                        AS WP,
-    SUM(HBP)                       AS HBP,
-    SUM(BK)                        AS BK,
-    SUM(BFP)                       AS BFP,
-    SUM(GF)                        AS GF,
-    SUM(R)                         AS R,
-    SUM(SH)                        AS SH,
-    SUM(SF)                        AS SF,
-    SUM(GIDP)                      AS GIDP
-    FROM   pitching
-    WHERE  playerID = :playerID
-    LIMIT  1';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    // filter and bind playerID/playerID2
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-    $sql->execute();
-    return $sql;
-  }
-
-
-  public static function getPersonBattingTotals($playerID) {
-    $stmt = '
-    SELECT (SELECT COUNT(playerID)
-    FROM   batting
-    WHERE  playerID = :playerID2) AS yearsTotal,
-    SUM(G)                        AS G,
-    SUM(G_batting)                AS G_batting,
-    SUM(AB)                       AS AB,
-    SUM(R)                        AS R,
-    SUM(H)                        AS H,
-    SUM(2B)                       AS "2B",
-    SUM(3B)                       AS "3B",
-    SUM(HR)                       AS HR,
-    SUM(RBI)                      AS RBI,
-    SUM(SB)                       AS SB,
-    SUM(CS)                       AS CS,
-    SUM(BB)                       AS BB,
-    SUM(SO)                       AS SO,
-    SUM(IBB)                      AS IBB,
-    SUM(HBP)                      AS HBP,
-    SUM(SH)                       AS SH,
-    SUM(SF)                       AS SF,
-    SUM(GIDP)                     AS GIDP
-    FROM   batting
-    WHERE  playerID = :playerID
-    LIMIT  1';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    // filter and bind playerID/playerID2
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-    $sql->execute();
-    return $sql;
-  }
-
-  public static function getPersonAppearancesTotals($playerID) {
-    $stmt = '
-    SELECT (SELECT COUNT(playerID)
-    FROM   appearances
-    WHERE  playerID = :playerID2) AS yearsTotal,
-    SUM(G_all)                    AS G_all,
-    SUM(GS)                       AS GS,
-    SUM(G_batting)                AS G_batting,
-    SUM(G_defense)                AS G_defense,
-    SUM(G_p)                      AS G_p,
-    SUM(G_c)                      AS G_c,
-    SUM(G_1b)                     AS G_1b,
-    SUM(G_2b)                     AS G_2b,
-    SUM(G_3b)                     AS G_3b,
-    SUM(G_ss)                     AS G_ss,
-    SUM(G_lf)                     AS G_lf,
-    SUM(G_cf)                     AS G_cf,
-    SUM(G_rf)                     AS G_rf,
-    SUM(G_of)                     AS G_of,
-    SUM(G_dh)                     AS G_dh,
-    SUM(G_ph)                     AS G_ph,
-    SUM(G_pr)                     AS G_pr
-    FROM   appearances
-    WHERE  playerID = :playerID
-    LIMIT  1';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    // filter and bind playerID/playerID2
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-    $sql->execute();
-    return $sql;
-  }
-
-  public static function getPersonSalariesTotals($playerID) {
-    $stmt = '
-    SELECT (SELECT COUNT(playerID)
-    FROM   salaries
-    WHERE  playerID = :playerID2) AS yearsTotal,
-    SUM(salary)                   as salary
-    FROM   salaries
-    WHERE  playerID = :playerID
-    LIMIT  1';
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    // filter and bind playerID/playerID2
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-    $sql->bindParam(':playerID2', $playerID, PDO::PARAM_STR);
-    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-
-    $sql->execute();
-    return $sql;
   }
 
   /****************************************************************************
@@ -446,34 +77,33 @@ class DB {
    * GIDP
    ***************************************************************************/
   public static function getBatting($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
-
     $stmt = "
     SELECT      b.playerID,
-                p.nameFirst,
-                p.nameLast,
-                b.yearID,
-                b.stint,
-                b.teamID,
-                b.team_ID,
-                b.lgID,
-                b.G,
-                b.G_batting,
-                b.AB,
-                b.R,
-                b.H,
-                b.2B,
-                b.3B,
-                b.HR,
-                b.RBI,
-                b.SB,
-                b.CS,
-                b.BB,
-                b.SO,
-                b.IBB,
-                b.HBP,
-                b.SH,
-                b.SF,
-                b.GIDP
+    p.nameFirst,
+    p.nameLast,
+    b.yearID,
+    b.stint,
+    b.teamID,
+    b.team_ID,
+    b.lgID,
+    b.G,
+    b.G_batting,
+    b.AB,
+    b.R,
+    b.H,
+    b.2B,
+    b.3B,
+    b.HR,
+    b.RBI,
+    b.SB,
+    b.CS,
+    b.BB,
+    b.SO,
+    b.IBB,
+    b.HBP,
+    b.SH,
+    b.SF,
+    b.GIDP
     FROM        batting b
     LEFT JOIN   people p
     ON          b.playerID = p.playerID";
@@ -498,10 +128,57 @@ class DB {
   }
 
 
-  public static function getPitching($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
-
+  public static function getBattingAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
-    SELECT p.playerID,
+    SELECT      b.playerID,
+                p.nameFirst,
+                p.nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM batting b2 where b2.playerID = b.playerID) as years,
+                SUM(b.G) AS G,
+                SUM(b.G_batting) AS G_batting,
+                SUM(b.AB) AS AB,
+                SUM(b.R) AS R,
+                SUM(b.H) AS H,
+                SUM(b.2B) AS 2B,
+                SUM(b.3B) AS 3B,
+                SUM(b.HR) AS HR,
+                SUM(b.RBI) AS RBI,
+                SUM(b.SB) AS SB,
+                SUM(b.CS) AS CS,
+                SUM(b.BB) AS BB,
+                SUM(b.SO) AS SO,
+                SUM(b.IBB) AS IBB,
+                SUM(b.HBP) AS HBP,
+                SUM(b.SH) AS SH,
+                SUM(b.SF) AS SF,
+                SUM(b.GIDP) AS GIDP
+    FROM        batting b
+    LEFT JOIN   people p
+    ON          b.playerID = p.playerID";
+
+    $stmt .= DB::getFilterStmt($filters, '');
+    $stmt .= " GROUP  BY b.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+  public static function getPitching($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT  p.playerID,
     people.nameFirst,
     people.nameLast,
     p.yearID as year,
@@ -565,32 +242,93 @@ class DB {
     return $sql;
   }
 
+  public static function getPitchingAggregate($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+
+    $stmt = "
+    SELECT  p.playerID,
+            people.nameFirst,
+            people.nameLast,
+            (SELECT COUNT(DISTINCT yearID) FROM pitching p2 where p2.playerID = p.playerID) as years,
+            SUM(p.W) AS W,
+            SUM(p.L) AS L,
+            SUM(p.G) AS G,
+            SUM(p.GS) AS GS,
+            SUM(p.CG) AS CG,
+            SUM(p.SHO) AS SHO,
+            SUM(p.SV) AS SV,
+            SUM(p.IPouts) AS IPouts,
+            SUM(p.H) AS H,
+            SUM(p.ER) AS ER,
+            SUM(p.HR) AS HR,
+            SUM(p.BB) AS BB,
+            SUM(p.SO) AS SO,
+            SUM(p.BAOpp) AS BAOpp,
+            SUM(p.ERA) AS ERA,
+            SUM(p.IBB) AS IBB,
+            SUM(p.WP) AS WP,
+            SUM(p.HBP) AS HBP,
+            SUM(p.BK) AS BK,
+            SUM(p.BFP) AS BFP,
+            SUM(p.GF) AS GF,
+            SUM(p.R) AS R,
+            SUM(p.SH) AS SH,
+            SUM(p.SF) AS SF,
+            SUM(p.GIDP) AS GIDP
+    FROM    pitching p
+    LEFT    JOIN people on p.playerID = people.playerID";
+
+
+    // add filter options
+    if ($filters != null) {
+      $filterStmt = DB::getFilterStmt($filters, 'p.');
+      $stmt .= $filterStmt;
+    }
+
+    $stmt .= " GROUP  BY p.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+
+    $sql->execute();
+    return $sql;
+  }
+
 
   public static function getFielding($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
 
     $stmt = "
     SELECT  f.playerID,
-            p.nameFirst,
-            p.nameLast,
-            f.yearID,
-            f.stint,
-            f.teamID,
-            f.team_ID,
-            t.name as teamName,
-            f.lgID,
-            f.POS,
-            f.G,
-            f.GS,
-            f.InnOuts,
-            f.PO,
-            f.A,
-            f.E,
-            f.DP,
-            f.PB,
-            f.WP,
-            f.SB,
-            f.CS,
-            f.ZR
+    p.nameFirst,
+    p.nameLast,
+    f.yearID,
+    f.stint,
+    f.teamID,
+    f.team_ID,
+    t.name as teamName,
+    f.lgID,
+    f.POS,
+    f.G,
+    f.GS,
+    f.InnOuts,
+    f.PO,
+    f.A,
+    f.E,
+    f.DP,
+    f.PB,
+    f.WP,
+    f.SB,
+    f.CS,
+    f.ZR
     FROM    fielding f 
     LEFT JOIN people p ON f.playerID = p.playerID
     LEFT JOIN teams t on f.team_ID = t.ID ";
@@ -614,34 +352,76 @@ class DB {
     return $sql;
   }
 
+  public static function getFieldingAggregate($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT  f.playerID as playerID,
+    p.nameFirst as nameFirst,
+    p.nameLast as nameLast,
+    (SELECT COUNT(DISTINCT yearID) FROM fielding f2 where f2.playerID = f.playerID) as years,
+    SUM(f.G) as G,
+    SUM(f.GS) as GS,
+    SUM(f.InnOuts) as InnOuts,
+    SUM(f.PO) as PO,
+    SUM(f.A) as A,
+    SUM(f.E) as E,
+    SUM(f.DP) as DP,
+    SUM(f.PB) as PB,
+    SUM(f.WP) as WP,
+    SUM(f.SB) as SB,
+    SUM(f.CS) as CS,
+    SUM(f.ZR) as ZR
+    FROM    fielding f 
+    LEFT JOIN people p ON f.playerID = p.playerID";
+
+    $stmt .= DB::getFilterStmt($filters, 'f.');
+    $stmt .= " GROUP  BY f.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+
 
   public static function getAppearances($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  a.yearID,
-            a.teamID,
-            a.team_ID,
-            t.name,
-            a.lgID,
-            a.playerID,
-            p.nameFirst,
-            p.nameLast,
-            a.G_all,
-            a.GS,
-            a.G_batting,
-            a.G_defense,
-            a.G_p,
-            a.G_c,
-            a.G_1b,
-            a.G_2b,
-            a.G_3b,
-            a.G_ss,
-            a.G_lf,
-            a.G_cf,
-            a.G_rf,
-            a.G_of,
-            a.G_dh,
-            a.G_ph,
-            a.G_pr
+    a.teamID,
+    a.team_ID,
+    t.name,
+    a.lgID,
+    a.playerID,
+    p.nameFirst,
+    p.nameLast,
+    a.G_all,
+    a.GS,
+    a.G_batting,
+    a.G_defense,
+    a.G_p,
+    a.G_c,
+    a.G_1b,
+    a.G_2b,
+    a.G_3b,
+    a.G_ss,
+    a.G_lf,
+    a.G_cf,
+    a.G_rf,
+    a.G_of,
+    a.G_dh,
+    a.G_ph,
+    a.G_pr
     FROM appearances a 
     LEFT JOIN people p ON a.playerID = p.playerID
     LEFT JOIN teams t on a.team_ID = t.ID ";
@@ -665,17 +445,62 @@ class DB {
     return $sql;
   }
 
+  public static function getAppearancesAggregate($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT      a.playerID,
+                p.nameFirst,
+                p.nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM appearances a2 where a2.playerID = a.playerID) as years,
+                SUM(a.G_all) AS G_all,
+                SUM(a.GS) AS GS,
+                SUM(a.G_batting) AS G_batting,
+                SUM(a.G_defense) AS G_defense,
+                SUM(a.G_p) AS G_p,
+                SUM(a.G_c) AS G_c,
+                SUM(a.G_1b) AS G_1b,
+                SUM(a.G_2b) AS G_2b,
+                SUM(a.G_3b) AS G_3b,
+                SUM(a.G_ss) AS G_ss,
+                SUM(a.G_lf) AS G_lf,
+                SUM(a.G_cf) AS G_cf,
+                SUM(a.G_rf) AS G_rf,
+                SUM(a.G_of) AS G_of,
+                SUM(a.G_dh) AS G_dh,
+                SUM(a.G_ph) AS G_ph,
+                SUM(a.G_pr) AS G_pr
+    FROM        appearances a 
+    LEFT JOIN   people p ON a.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, 'a.');
+    $stmt .= " GROUP  BY a.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
 
   public static function getFieldingOF($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  f.playerID,
-            p.nameFirst,
-            p.nameLast,
-            f.yearID,
-            f.stint,
-            f.Glf,
-            f.Gcf,
-            f.Grf
+    p.nameFirst,
+    p.nameLast,
+    f.yearID,
+    f.stint,
+    f.Glf,
+    f.Gcf,
+    f.Grf
     FROM    fieldingof f 
     LEFT JOIN people p ON f.playerID = p.playerID ";
 
@@ -698,30 +523,61 @@ class DB {
     return $sql;
   }
 
+  public static function getFieldingOFAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT    f.playerID,
+              p.nameFirst,
+              p.nameLast,
+              (SELECT COUNT(DISTINCT yearID) FROM fieldingof f2 where f2.playerID = f.playerID) as years,
+              SUM(f.Glf) AS Glf,
+              SUM(f.Gcf) AS Gcf,
+              SUM(f.Grf) AS Grf
+    FROM      fieldingof f 
+    LEFT JOIN people p ON f.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, 'f.');
+    $stmt .= " GROUP  BY f.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
   public static function getFieldingOFSplit($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  f.playerID,
-            p.nameFirst,
-            p.nameLast,
-            f.yearID,
-            f.stint,
-            f.teamID,
-            f.team_ID,
-            t.name,
-            f.lgID,
-            f.POS,
-            f.G,
-            f.GS,
-            f.InnOuts,
-            f.PO,
-            f.A,
-            f.E,
-            f.DP,
-            f.PB,
-            f.WP,
-            f.SB,
-            f.CS,
-            f.ZR
+    p.nameFirst,
+    p.nameLast,
+    f.yearID,
+    f.stint,
+    f.teamID,
+    f.team_ID,
+    t.name,
+    f.lgID,
+    f.POS,
+    f.G,
+    f.GS,
+    f.InnOuts,
+    f.PO,
+    f.A,
+    f.E,
+    f.DP,
+    f.PB,
+    f.WP,
+    f.SB,
+    f.CS,
+    f.ZR
     FROM    fieldingofsplit f 
     LEFT JOIN people p ON f.playerID = p.playerID
     LEFT JOIN teams t on f.team_ID = t.ID ";
@@ -745,18 +601,58 @@ class DB {
     return $sql;
   }
 
+  public static function getFieldingOFSplitAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT      f.playerID,
+                p.nameFirst,
+                p.nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM fieldingofsplit f2 where f2.playerID = f.playerID) as years,
+                SUM(f.G) AS G,
+                SUM(f.GS) AS GS,
+                SUM(f.InnOuts) AS InnOuts,
+                SUM(f.PO) AS PO,
+                SUM(f.A) AS A,
+                SUM(f.E) AS E,
+                SUM(f.DP) AS DP,
+                SUM(f.PB) AS PB,
+                SUM(f.WP) AS WP,
+                SUM(f.SB) AS SB,
+                SUM(f.CS) AS CS,
+                SUM(f.ZR) AS ZR
+    FROM        fieldingofsplit f 
+    LEFT JOIN   people p ON f.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, '');
+    $stmt .= " GROUP  BY f.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
 
   public static function getSalaries($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  s.playerID,
-            p.nameFirst,
-            p.nameLast,
-            s.yearID,
-            s.teamID,
-            s.team_ID,
-            t.name as teamName,
-            s.lgID,
-            s.salary
+    p.nameFirst,
+    p.nameLast,
+    s.yearID,
+    s.teamID,
+    s.team_ID,
+    t.name as teamName,
+    s.lgID,
+    s.salary
     FROM    salaries s 
     LEFT JOIN people p ON s.playerID = p.playerID
     LEFT JOIN teams t on s.team_ID = t.ID ";
@@ -781,29 +677,59 @@ class DB {
     return $sql;
   }
 
+  public static function getSalariesAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT      s.playerID,
+                p.nameFirst,
+                p.nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM salaries s2 where s2.playerID = s.playerID) as years,
+                SUM(s.salary) AS salary
+    FROM        salaries s 
+    LEFT JOIN   people p ON s.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, 's.');
+    $stmt .= " GROUP  BY s.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+
+    return $sql;
+  }
+
 
   public static function getPeople($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  p.playerID,
-            p.birthCountry,
-            p.birthState,
-            p.birthCity,
-            p.deathCountry,
-            p.deathState,
-            p.deathCity,
-            p.nameFirst,
-            p.nameLast,
-            p.nameGiven,
-            p.weight,
-            p.height,
-            p.bats,
-            p.throws,
-            p.retroID,
-            p.bbrefID,
-            p.birth_date as birthDate,
-            p.debut_date as debuteDate,
-            p.finalgame_date as finalGameDate,
-            p.death_date as deathDate
+    p.birthCountry,
+    p.birthState,
+    p.birthCity,
+    p.deathCountry,
+    p.deathState,
+    p.deathCity,
+    p.nameFirst,
+    p.nameLast,
+    p.nameGiven,
+    p.weight,
+    p.height,
+    p.bats,
+    p.throws,
+    p.retroID,
+    p.bbrefID,
+    p.birth_date as birthDate,
+    p.debut_date as debuteDate,
+    p.finalgame_date as finalGameDate,
+    p.death_date as deathDate
     FROM    people p ";
 
     $stmt .= DB::getFilterStmt($filters, '');
@@ -842,27 +768,27 @@ class DB {
 
     $stmt = "
     SELECT    p.playerID as playerID,
-              p.nameFirst as nameFirst,
-              p.nameLast as nameLast,
-              p.birth_date as birthDate,
-              p.debut_date as debutDate,
-              p.finalgame_date as finalGameDate,
-              p.death_date as deathDate,
-              $moduleBatting as moduleBatting,
-              $modulePitching as modulePitching,
-              $moduleAppearances as moduleAppearances,
-              $moduleFielding as moduleFielding,
-              $modulePeople as modulePeople,
-              $moduleFieldingOF as moduleFieldingOF,
-              $moduleFieldingOFSplit as moduleFieldingOFSplit,
-              $moduleSalaries as moduleSalaries
+    p.nameFirst as nameFirst,
+    p.nameLast as nameLast,
+    p.birth_date as birthDate,
+    p.debut_date as debutDate,
+    p.finalgame_date as finalGameDate,
+    p.death_date as deathDate,
+    $moduleBatting as moduleBatting,
+    $modulePitching as modulePitching,
+    $moduleAppearances as moduleAppearances,
+    $moduleFielding as moduleFielding,
+    $modulePeople as modulePeople,
+    $moduleFieldingOF as moduleFieldingOF,
+    $moduleFieldingOFSplit as moduleFieldingOFSplit,
+    $moduleSalaries as moduleSalaries
     FROM      people p 
     WHERE     MATCH(namefirst, namelast) against(:query IN boolean mode) > 0
     GROUP BY  playerID
     ORDER BY  nameLast ASC, nameFirst ASC, playerID ASC, birthDate ASC
     LIMIT     :limit
     OFFSET    :offset";
-      
+
     $sql = DB::dbConnect()->prepare($stmt);
 
     // filter and bind query

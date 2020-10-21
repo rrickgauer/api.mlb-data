@@ -200,7 +200,7 @@ class Constants {
   ];
 
   const Defaults = [
-    "PerPage" => 100,
+    "PerPage" => 15,
     "Page"    => 1,
   ];
 
