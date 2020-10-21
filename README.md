@@ -4,6 +4,10 @@ Restful API for MLB data
 
 **https://mlb.ryanrickgauer.com/api.mlb-data.php**
 
+
+<b><span style="color: red;">Warning! This documentation is outdated. Will be updating soon</span></b>
+
+
 ## Resources
 
 * https://github.com/WebucatorTraining/lahman-baseball-mysql
