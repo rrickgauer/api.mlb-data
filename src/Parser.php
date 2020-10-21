@@ -12,6 +12,7 @@ class Parser {
     private $request;   // array(column, type)
     private $filters;   // list of arrays(column, conditional, qualifier)
     private $filterColumns;
+    private $aggregate;
 
     public function __construct() {
 
@@ -25,6 +26,7 @@ class Parser {
         $this->setModule();
         $this->setSorts();
         $this->setFilters();
+        $this->setAggregate();
     }
 
 
@@ -141,6 +143,14 @@ class Parser {
                 $this->filterColumns = null;
                 break;
         }
+    }
+
+    // the aggregate flag needs to be set to 'true' in order to do the aggregate
+    private function setAggregate() {
+        if (isset($_GET['aggregate']) && trim(strtolower($_GET['aggregate'])) == 'true')
+            $this->aggregate = true;
+        else
+            $this->aggregate = false;
     }
 
 
