@@ -450,7 +450,7 @@ class DB {
     SELECT      a.playerID,
                 p.nameFirst,
                 p.nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM fielding a2 where a2.playerID = a.playerID) as years,
+                (SELECT COUNT(DISTINCT yearID) FROM appearances a2 where a2.playerID = a.playerID) as years,
                 SUM(a.G_all) AS G_all,
                 SUM(a.GS) AS GS,
                 SUM(a.G_batting) AS G_batting,
@@ -506,6 +506,37 @@ class DB {
 
     $stmt .= DB::getFilterStmt($filters, 'f.');
     $stmt .= " GROUP  BY f.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+  public static function getFieldingOFAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT    f.playerID,
+              p.nameFirst,
+              p.nameLast,
+              (SELECT COUNT(DISTINCT yearID) FROM fieldingof f2 where f2.playerID = f.playerID) as years,
+              SUM(f.Glf) AS Glf,
+              SUM(f.Gcf) AS Gcf,
+              SUM(f.Grf) AS Grf
+    FROM      fieldingof f 
+    LEFT JOIN people p ON f.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, 'f.');
+    $stmt .= " GROUP  BY f.playerID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
