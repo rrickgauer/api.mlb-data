@@ -1,21 +1,46 @@
 <?php
-
-include_once('Constants.php');
+/**
+* Class and Function List:
+* Function list:
+* - dbConnect()
+* - doesPlayerExist()
+* - getBatting()
+* - getBattingAggregate()
+* - getPitching()
+* - getPitchingAggregate()
+* - getFielding()
+* - getFieldingAggregate()
+* - getAppearances()
+* - getAppearancesAggregate()
+* - getFieldingOF()
+* - getFieldingOFAggregate()
+* - getFieldingOFSplit()
+* - getFieldingOFSplitAggregate()
+* - getSalaries()
+* - getSalariesAggregate()
+* - getPeople()
+* - getPeopleSearch()
+* - getFilterStmt()
+* - getOrderStmt()
+* Classes list:
+* - DB
+*/
+include_once ('Constants.php');
 
 class DB {
 
-
   public static function dbConnect() {
-    include('db-info.php');
+    include ('db-info.php');
 
     try {
       // connect to database
-      $pdo = new PDO("mysql:host=$host;dbname=$dbName",$user,$password);
+      $pdo = new PDO("mysql:host=$host;dbname=$dbName", $user, $password);
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       return $pdo;
 
-    } catch(PDOexception $e) {
+    }
+    catch(PDOexception $e) {
       return 0;
     }
   }
@@ -28,7 +53,7 @@ class DB {
     LIMIT  1';
 
     $sql = DB::dbConnect()->prepare($stmt);
-    
+
     $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
 
@@ -36,19 +61,17 @@ class DB {
 
     $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-    if (count($result) == 1)
-      return true;
-    else
-      return false;
+    if (count($result) == 1) return true;
+    else return false;
   }
 
   /****************************************************************************
    * Returns people batting
-   * 
+   *
    * Sort is the column to sort with
    * limit is the number of rows to return
    * offset is the offset
-   * 
+   *
    * returns
    * playerID
    * nameFist
@@ -127,7 +150,6 @@ class DB {
     return $sql;
   }
 
-
   public static function getBattingAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      b.playerID,
@@ -175,7 +197,6 @@ class DB {
     return $sql;
   }
 
-
   public static function getPitching($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  p.playerID,
@@ -215,7 +236,6 @@ class DB {
     LEFT   JOIN people on p.playerID = people.playerID
     LEFT   JOIN teams t on p.team_ID = t.ID";
 
-
     // add filter options
     if ($filters != null) {
       $filterStmt = DB::getFilterStmt($filters, 'p.');
@@ -226,7 +246,6 @@ class DB {
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
-
     $sql = DB::dbConnect()->prepare($stmt);
 
     // limit
@@ -236,7 +255,6 @@ class DB {
     // offset
     $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
-
 
     $sql->execute();
     return $sql;
@@ -277,7 +295,6 @@ class DB {
     FROM    pitching p
     LEFT    JOIN people on p.playerID = people.playerID";
 
-
     // add filter options
     if ($filters != null) {
       $filterStmt = DB::getFilterStmt($filters, 'p.');
@@ -298,11 +315,9 @@ class DB {
     $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
 
-
     $sql->execute();
     return $sql;
   }
-
 
   public static function getFielding($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
 
@@ -391,9 +406,6 @@ class DB {
     $sql->execute();
     return $sql;
   }
-
-
-
 
   public static function getAppearances($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
@@ -489,7 +501,6 @@ class DB {
     $sql->execute();
     return $sql;
   }
-
 
   public static function getFieldingOF($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
@@ -641,7 +652,6 @@ class DB {
     return $sql;
   }
 
-
   public static function getSalaries($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  s.playerID,
@@ -707,7 +717,6 @@ class DB {
     return $sql;
   }
 
-
   public static function getPeople($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  p.playerID,
@@ -738,7 +747,7 @@ class DB {
     $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
-    
+
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -752,19 +761,17 @@ class DB {
     return $sql;
   }
 
-
-
   public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
 
     // create the module link variables
-    $moduleBatting         = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Batting']);
-    $modulePitching        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Pitching']);
-    $moduleAppearances     = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Appearances']);
-    $moduleFielding        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Fielding']);
-    $modulePeople          = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['People']);
-    $moduleFieldingOF      = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['FieldingOF']);
+    $moduleBatting = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Batting']);
+    $modulePitching = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Pitching']);
+    $moduleAppearances = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Appearances']);
+    $moduleFielding = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Fielding']);
+    $modulePeople = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['People']);
+    $moduleFieldingOF = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['FieldingOF']);
     $moduleFieldingOFSplit = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['FieldingOFSplit']);
-    $moduleSalaries        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Salaries']);
+    $moduleSalaries = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Salaries']);
 
     $stmt = "
     SELECT    p.playerID as playerID,
@@ -795,7 +802,7 @@ class DB {
     $query = '(' . $query . '*)';
     $query = filter_var($query, FILTER_SANITIZE_STRING);
     $sql->bindParam(':query', $query, PDO::PARAM_STR);
-    
+
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -809,41 +816,35 @@ class DB {
     return $sql;
   }
 
-
   public static function getFilterStmt($filters, $tableName) {
 
-    if ($filters == null)
-      return '';
+    if ($filters == null) return '';
 
     $stmt = ' WHERE ';
 
-    for ($count = 0; $count < count($filters); $count++) {
-      $filter      = $filters[$count];
-      $column      = $filter['column'];
+    for ($count = 0;$count < count($filters);$count++) {
+      $filter = $filters[$count];
+      $column = $filter['column'];
       $conditional = $filter['conditional'];
-      $qualifier   = $filter['qualifier'];
+      $qualifier = $filter['qualifier'];
 
-      if ($count > 0)
-        $stmt .= ' AND';
+      if ($count > 0) $stmt .= ' AND';
       $stmt = $stmt . " $tableName$column $conditional $qualifier";
 
     }
-
 
     return $stmt;
   }
 
   public static function getOrderStmt($sort) {
-    if ($sort == null)
-      return '';
+    if ($sort == null) return '';
 
-      // build order by statement
+    // build order by statement
     $orderStmt = '';
     $sortColumn = filter_var($sort['column'], FILTER_SANITIZE_STRING);
 
     $sortType = strtoupper($sort['type']);
-    if ($sortType != 'ASC')
-      $sortType = 'DESC';
+    if ($sortType != 'ASC') $sortType = 'DESC';
     $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
 
     $orderStmt = " ORDER BY $sortColumn $sortType ";
@@ -852,6 +853,5 @@ class DB {
   }
 
 }
-
 
 ?>

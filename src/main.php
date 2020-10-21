@@ -11,11 +11,6 @@ if (!isset($_SERVER['PATH_INFO'])) {
 }
 
 $p1 = new Parser();
-// $sort = $p1->getSorts();
-
-// $results = new Fielding($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0, $p1->getAggregate());
-
-
 
 // generate the results based on the specified module
 switch ($p1->getModule()) {
