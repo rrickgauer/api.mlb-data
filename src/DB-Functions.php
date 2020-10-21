@@ -601,6 +601,46 @@ class DB {
     return $sql;
   }
 
+  public static function getFieldingOFSplitAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT      f.playerID,
+                p.nameFirst,
+                p.nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM fieldingofsplit f2 where f2.playerID = f.playerID) as years,
+                SUM(f.G) AS G,
+                SUM(f.GS) AS GS,
+                SUM(f.InnOuts) AS InnOuts,
+                SUM(f.PO) AS PO,
+                SUM(f.A) AS A,
+                SUM(f.E) AS E,
+                SUM(f.DP) AS DP,
+                SUM(f.PB) AS PB,
+                SUM(f.WP) AS WP,
+                SUM(f.SB) AS SB,
+                SUM(f.CS) AS CS,
+                SUM(f.ZR) AS ZR
+    FROM        fieldingofsplit f 
+    LEFT JOIN   people p ON f.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, '');
+    $stmt .= " GROUP  BY f.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
 
   public static function getSalaries($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
