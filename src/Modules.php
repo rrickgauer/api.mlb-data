@@ -82,12 +82,26 @@ class People extends Module {
     }
 }
 
+
+
+
 class Pitching extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
-        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->dataSet = DB::getPitching($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage ,$newAggregate) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        if ($this->aggregate == true)
+            $this->dataSet = DB::getPitchingAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+        else 
+            $this->dataSet = DB::getPitching($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+
+
+
+
 
 class Batting extends Module {
     public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {

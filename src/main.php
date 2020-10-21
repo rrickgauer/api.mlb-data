@@ -20,7 +20,7 @@ $p1 = new Parser();
 // generate the results based on the specified module
 switch ($p1->getModule()) {
   case Constants::Modules['Pitching']:
-    $results = new Pitching($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0); break;
+    $results = new Pitching($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0, $p1->getAggregate()); break;
   case Constants::Modules['Batting']:
     $results = new Batting($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0); break;
   case Constants::Modules['Fielding']:
