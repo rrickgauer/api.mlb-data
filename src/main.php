@@ -11,7 +11,11 @@ if (!isset($_SERVER['PATH_INFO'])) {
 }
 
 $p1 = new Parser();
-$sort = $p1->getSorts();
+// $sort = $p1->getSorts();
+
+// $results = new Fielding($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0, $p1->getAggregate());
+
+
 
 // generate the results based on the specified module
 switch ($p1->getModule()) {
@@ -20,7 +24,7 @@ switch ($p1->getModule()) {
   case Constants::Modules['Batting']:
     $results = new Batting($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0); break;
   case Constants::Modules['Fielding']:
-    $results = new Fielding($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0); break;
+    $results = new Fielding($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0, $p1->getAggregate()); break;
   case Constants::Modules['Appearances']:
     $results = new Appearances($p1->getFilters(), $p1->getSorts(), Constants::Defaults['PerPage'], 0); break;
   case Constants::Modules['FieldingOF']:

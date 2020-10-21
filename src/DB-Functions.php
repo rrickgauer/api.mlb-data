@@ -245,6 +245,48 @@ class DB {
     return $sql;
   }
 
+  public static function getFieldingAggregate($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT  f.playerID as playerID,
+            p.nameFirst as nameFirst,
+            p.nameLast as nameLast,
+            (SELECT COUNT(DISTINCT yearID) FROM fielding f2 where f2.playerID = f.playerID) as years,
+            SUM(f.G) as G,
+            SUM(f.GS) as GS,
+            SUM(f.InnOuts) as InnOuts,
+            SUM(f.PO) as PO,
+            SUM(f.A) as A,
+            SUM(f.E) as E,
+            SUM(f.DP) as DP,
+            SUM(f.PB) as PB,
+            SUM(f.WP) as WP,
+            SUM(f.SB) as SB,
+            SUM(f.CS) as CS,
+            SUM(f.ZR) as ZR
+    FROM    fielding f 
+    LEFT JOIN people p ON f.playerID = p.playerID";
+
+    $stmt .= DB::getFilterStmt($filters, 'f.');
+    $stmt .= " GROUP  BY f.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+
 
   public static function getAppearances($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "

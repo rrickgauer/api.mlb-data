@@ -147,10 +147,14 @@ class Parser {
 
     // the aggregate flag needs to be set to 'true' in order to do the aggregate
     private function setAggregate() {
-        if (isset($_GET['aggregate']) && trim(strtolower($_GET['aggregate'])) == 'true')
+        if (isset($_GET['aggregate']) && $_GET['aggregate'] == 'true')
             $this->aggregate = true;
         else
             $this->aggregate = false;
+    }
+
+    public function getAggregate() {
+        return $this->aggregate;
     }
 
 

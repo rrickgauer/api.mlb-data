@@ -11,7 +11,7 @@ class Module {
     protected $dataSet;
     protected $aggregate;
 
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate = false) {
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
         $this->setFilters($newFilters);
         $this->setSorts($newSorts);
         $this->setPerPage($newPerPage);
@@ -38,8 +38,6 @@ class Module {
     }
 
     public function setAggregate($newAggregate) {
-        $newAggregate = trim(strtolower($newAggregate));
-
         if ($newAggregate == 'true')
             $this->aggregate = true;
         else
@@ -100,9 +98,16 @@ class Batting extends Module {
 
 
 class Fielding extends Module {
-    public function __construct($newFilters, $newSorts, $newPerPage, $newPage) {
-        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage);
-        $this->dataSet = DB::getFielding($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+        parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+        $this->retrieveData();
+    }
+
+    private function retrieveData() {
+        if ($this->aggregate == true)
+            $this->dataSet = DB::getFieldingAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+        else 
+            $this->dataSet = DB::getFielding($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
