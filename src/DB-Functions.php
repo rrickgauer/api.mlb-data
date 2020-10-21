@@ -184,7 +184,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPitching($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getPitching($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -229,11 +229,26 @@ class DB {
       $stmt .= $filterStmt;
     }
 
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE p.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND p.playerID = :playerID ';
+      }
+    }
+
     $stmt .= " GROUP  BY p.ID ";
     $stmt .= DB::getOrderStmt($sort);
     $stmt .= " LIMIT  :limit offset :offset";
 
     $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
 
     // limit
     $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
