@@ -445,6 +445,51 @@ class DB {
     return $sql;
   }
 
+  public static function getAppearancesAggregate($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT      a.playerID,
+                p.nameFirst,
+                p.nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM fielding a2 where a2.playerID = a.playerID) as years,
+                SUM(a.G_all) AS G_all,
+                SUM(a.GS) AS GS,
+                SUM(a.G_batting) AS G_batting,
+                SUM(a.G_defense) AS G_defense,
+                SUM(a.G_p) AS G_p,
+                SUM(a.G_c) AS G_c,
+                SUM(a.G_1b) AS G_1b,
+                SUM(a.G_2b) AS G_2b,
+                SUM(a.G_3b) AS G_3b,
+                SUM(a.G_ss) AS G_ss,
+                SUM(a.G_lf) AS G_lf,
+                SUM(a.G_cf) AS G_cf,
+                SUM(a.G_rf) AS G_rf,
+                SUM(a.G_of) AS G_of,
+                SUM(a.G_dh) AS G_dh,
+                SUM(a.G_ph) AS G_ph,
+                SUM(a.G_pr) AS G_pr
+    FROM        appearances a 
+    LEFT JOIN   people p ON a.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, 'a.');
+    $stmt .= " GROUP  BY a.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
 
   public static function getFieldingOF($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
