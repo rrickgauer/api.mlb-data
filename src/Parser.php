@@ -1,21 +1,26 @@
 <?php
-/**
-* Class and Function List:
-* Function list:
-* - __construct()
-* - getModule()
-* - getSorts()
-* - getFilters()
-* - setModule()
-* - setSorts()
-* - setFilters()
-* - parseFilter()
-* - retrieveFilterColumns()
-* - setAggregate()
-* - getAggregate()
-* Classes list:
-* - Parser
-*/
+
+///////////////////////////////
+// Class and Function List:  //
+//                           //
+// Function list:            //
+// - __construct()           //
+// - getModule()             //
+// - getSorts()              //
+// - getFilters()            //
+// - setModule()             //
+// - setSorts()              //
+// - setFilters()            //
+// - parseFilter()           //
+// - retrieveFilterColumns() //
+// - setAggregate()          //
+// - getAggregate()          //
+//                           //
+// Classes list:             //
+// - Parser                  //
+//                           //
+///////////////////////////////
+
 include_once ('DB-Functions.php');
 include_once ('Constants.php');
 include_once ('API-Functions.php');

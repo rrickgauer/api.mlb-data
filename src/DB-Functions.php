@@ -1,30 +1,35 @@
 <?php
-/**
-* Class and Function List:
-* Function list:
-* - dbConnect()
-* - doesPlayerExist()
-* - getBatting()
-* - getBattingAggregate()
-* - getPitching()
-* - getPitchingAggregate()
-* - getFielding()
-* - getFieldingAggregate()
-* - getAppearances()
-* - getAppearancesAggregate()
-* - getFieldingOF()
-* - getFieldingOFAggregate()
-* - getFieldingOFSplit()
-* - getFieldingOFSplitAggregate()
-* - getSalaries()
-* - getSalariesAggregate()
-* - getPeople()
-* - getPeopleSearch()
-* - getFilterStmt()
-* - getOrderStmt()
-* Classes list:
-* - DB
-*/
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Class and Function List:                                                          //
+//                                                                                   //
+// Function list:                  Description:                                      //
+// - dbConnect()                   return a connection to the db                     //
+// - doesPlayerExist()             returns if a player exists in the database        //
+// - getBatting()                  seasonal batting stats                            //
+// - getBattingAggregate()         aggregate batting stats                           //
+// - getPitching()                 seasonal pitching stats                           //
+// - getPitchingAggregate()        aggregate pitching stats                          //
+// - getFielding()                 seasonal fielding stats                           //
+// - getFieldingAggregate()        aggregate fielding stats                          //
+// - getAppearances()              seasonal appearances stats                        //
+// - getAppearancesAggregate()     aggregate appearances stats                       //
+// - getFieldingOF()               seasonal fieldingOF stats                         //
+// - getFieldingOFAggregate()      aggregate fieldingOF stats                        //
+// - getFieldingOFSplit()          seasonal fieldingOFSplit stats                    //
+// - getFieldingOFSplitAggregate() aggregate fieldingOFSplit stats                   //
+// - getSalaries()                 seasonal salary stats                             //
+// - getSalariesAggregate()        aggregate salary stats                            //
+// - getPeople()                   player bio info                                   //
+// - getPeopleSearch()             results for database player search query          //
+// - getFilterStmt()               creates the filter statement for queries          //
+// - getOrderStmt()                creates the order by statement for queries        //
+//                                                                                   //
+// Classes list:                                                                     //
+// - DB                                                                              //
+//                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////
+
 include_once ('Constants.php');
 
 class DB {

@@ -1,52 +1,57 @@
 <?php
-/**
-* Class and Function List:
-* Function list:
-* - __construct()
-* - getFilters()
-* - setFilters()
-* - getSorts()
-* - setSorts()
-* - setAggregate()
-* - getPerPage()
-* - setPerPage()
-* - getPage()
-* - setPage()
-* - returnData()
-* - __construct()
-* - __construct()
-* - retrieveData()
-* - __construct()
-* - retrieveData()
-* - __construct()
-* - retrieveData()
-* - __construct()
-* - retrieveData()
-* - __construct()
-* - retrieveData()
-* - __construct()
-* - retrieveData()
-* - __construct()
-* - retrieveData()
-* - __construct()
-* - getQuery()
-* - getPerPage()
-* - setQuery()
-* - setPerPage()
-* - retrieveData()
-* - returnData()
-* Classes list:
-* - Module
-* - People extends Module
-* - Pitching extends Module
-* - Batting extends Module
-* - Fielding extends Module
-* - FieldingOF extends Module
-* - FieldingOFSplit extends Module
-* - Appearances extends Module
-* - Salaries extends Module
-* - Search
-*/
+
+//////////////////////////////////////
+// Class and Function List:         //
+//                                  //
+// Function list:                   //
+// - __construct()                  //
+// - getFilters()                   //
+// - setFilters()                   //
+// - getSorts()                     //
+// - setSorts()                     //
+// - setAggregate()                 //
+// - getPerPage()                   //
+// - setPerPage()                   //
+// - getPage()                      //
+// - setPage()                      //
+// - returnData()                   //
+// - __construct()                  //
+// - __construct()                  //
+// - retrieveData()                 //
+// - __construct()                  //
+// - retrieveData()                 //
+// - __construct()                  //
+// - retrieveData()                 //
+// - __construct()                  //
+// - retrieveData()                 //
+// - __construct()                  //
+// - retrieveData()                 //
+// - __construct()                  //
+// - retrieveData()                 //
+// - __construct()                  //
+// - retrieveData()                 //
+// - __construct()                  //
+// - getQuery()                     //
+// - getPerPage()                   //
+// - setQuery()                     //
+// - setPerPage()                   //
+// - retrieveData()                 //
+// - returnData()                   //
+//                                  //
+// Classes list:                    //
+// - Module                         //
+// - People extends Module          //
+// - Pitching extends Module        //
+// - Batting extends Module         //
+// - Fielding extends Module        //
+// - FieldingOF extends Module      //
+// - FieldingOFSplit extends Module //
+// - Appearances extends Module     //
+// - Salaries extends Module        //
+// - Search                         //
+//                                  //
+//////////////////////////////////////
+
 include_once ('Constants.php');
 
 class Module {
