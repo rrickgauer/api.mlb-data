@@ -677,6 +677,36 @@ class DB {
     return $sql;
   }
 
+  public static function getSalariesAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+    $stmt = "
+    SELECT      s.playerID,
+                p.nameFirst,
+                p.nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM salaries s2 where s2.playerID = s.playerID) as years,
+                SUM(s.salary) AS salary
+    FROM        salaries s 
+    LEFT JOIN   people p ON s.playerID = p.playerID ";
+
+    $stmt .= DB::getFilterStmt($filters, 's.');
+    $stmt .= " GROUP  BY s.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+
+    return $sql;
+  }
+
 
   public static function getPeople($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "

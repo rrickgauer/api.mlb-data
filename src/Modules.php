@@ -179,7 +179,7 @@ class Salaries extends Module {
 
     private function retrieveData() {
         if ($this->aggregate == true)
-            $this->dataSet = DB::getFieldingAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+            $this->dataSet = DB::getSalariesAggregate($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
         else 
             $this->dataSet = DB::getSalaries($this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
