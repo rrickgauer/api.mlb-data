@@ -1,18 +1,20 @@
 <?php
 
-
-include_once('DB-Functions.php');
-require_once('API-Functions.php');
-require_once('Constants.php');
-
+/**
+* Class and Function List:
+* Function list:
+* Classes list:
+*/
+include_once ('DB-Functions.php');
+require_once ('API-Functions.php');
+require_once ('Constants.php');
 
 // check if user specified a path in the url
 if (!isset($_SERVER['PATH_INFO'])) {
   ApiFunctions::returnDefaultDisplay();
 }
 
-
-$request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
+$request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 $module = $request[0];
 
 ///////////////////
@@ -26,7 +28,6 @@ if ($module == 'search') {
     echo 'please enter a query';
     exit;
   }
-
 
   $query = $_GET['q'];
   $results = DB::getPeopleSearch($query)->fetchAll(PDO::FETCH_ASSOC);
@@ -42,15 +43,14 @@ else if ($module == 'people') {
   // return all people
   if (!isset($request[1])) {
     $currentPage = 0;
-    if (isset($_GET['page']))
-      $currentPage = $_GET['page'];
+    if (isset($_GET['page'])) $currentPage = $_GET['page'];
 
     ApiFunctions::returnPeople($currentPage);
 
-  } else {
+  }
+  else {
     $playerID = $request[1];
   }
-
 
   // check if player exists
   if (!DB::doesPlayerExist($playerID)) {
@@ -58,7 +58,6 @@ else if ($module == 'people') {
     echo 'ID does not exist!';
     exit;
   }
-
 
   // determine which person submodule to return
   if (isset($request[2])) {
@@ -72,35 +71,27 @@ else if ($module == 'people') {
 
     switch ($module) {
       case 'salaries':
-        if (isset($_GET['total']) && $_GET['total'] == 'true')
-          ApiFunctions::returnPersonSalariesTotals($playerID);
-        else
-          ApiFunctions::returnPersonSalaries($playerID);
+        if (isset($_GET['total']) && $_GET['total'] == 'true') ApiFunctions::returnPersonSalariesTotals($playerID);
+        else ApiFunctions::returnPersonSalaries($playerID);
         exit;
         break;
 
       case 'batting':
-        if (isset($_GET['total']) && $_GET['total'] == 'true')
-          ApiFunctions::returnPersonBattingTotals($playerID);
-        else
-          ApiFunctions::returnPersonBatting($playerID);
+        if (isset($_GET['total']) && $_GET['total'] == 'true') ApiFunctions::returnPersonBattingTotals($playerID);
+        else ApiFunctions::returnPersonBatting($playerID);
         exit;
         break;
 
-      case 'pitching': 
+      case 'pitching':
         // return pitching
-        if (isset($_GET['total']) && $_GET['total'] == 'true')
-          ApiFunctions::returnPersonPitchingTotals($playerID);
-        else
-          ApiFunctions::returnPersonPitching($playerID);
+        if (isset($_GET['total']) && $_GET['total'] == 'true') ApiFunctions::returnPersonPitchingTotals($playerID);
+        else ApiFunctions::returnPersonPitching($playerID);
         exit;
         break;
 
       case 'appearances':
-        if (isset($_GET['total']) && $_GET['total'] == 'true')
-          ApiFunctions::returnPersonAppearancesTotals($playerID);
-        else
-          ApiFunctions::returnPersonAppearances($playerID);
+        if (isset($_GET['total']) && $_GET['total'] == 'true') ApiFunctions::returnPersonAppearancesTotals($playerID);
+        else ApiFunctions::returnPersonAppearances($playerID);
         break;
 
       case 'schools':
@@ -111,23 +102,19 @@ else if ($module == 'people') {
         echo 'invalid module.';
         http_response_code(400);
         exit;
+      }
     }
-  } else {
-    // biographical
-    ApiFunctions::returnPerson($playerID);
+    else {
+      // biographical
+      ApiFunctions::returnPerson($playerID);
+    }
   }
-}
 
-else {
-  ApiFunctions::returnInvalidUrl('Error. Invalid module.');
+  else {
+    ApiFunctions::returnInvalidUrl('Error. Invalid module.');
+    exit;
+  }
+
   exit;
-}
-
-
-
-
-exit;
-
-
 
 ?>

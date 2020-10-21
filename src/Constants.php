@@ -1,5 +1,22 @@
 <?php
 
+//////////////////////////
+// Groups:              //
+// - Batting            //
+// - Pitching           //
+// - Appearances        //
+// - Fielding           //
+// - People             //
+// - FieldingOF         //
+// - FieldingOFSplit    //
+// - Salaries           //
+// - Search             //
+// - Modules            //
+// - Defaults           //
+// - Limits             //
+// - FilterConditionals //
+//////////////////////////
+ 
 class Constants {
   const Batting = [
     "ID"        => "ID",
@@ -218,57 +235,6 @@ class Constants {
     "L"  => "<",    // less than
   ];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>

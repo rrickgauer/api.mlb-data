@@ -1,7 +1,27 @@
 <?php
-
-include_once('DB-Functions.php');
-
+/**
+* Class and Function List:
+* Function list:
+* - printJson()
+* - returnBadRequest()
+* - returnPeople()
+* - returnPerson()
+* - returnPersonBatting()
+* - returnPersonPitching()
+* - returnPersonSalaries()
+* - returnPersonAppearances()
+* - returnPersonSchools()
+* - getPaginationResults()
+* - returnDefaultDisplay()
+* - returnPersonPitchingTotals()
+* - returnInvalidUrl()
+* - returnPersonBattingTotals()
+* - returnPersonAppearancesTotals()
+* - returnPersonSalariesTotals()
+* Classes list:
+* - ApiFunctions
+*/
+include_once ('DB-Functions.php');
 
 class ApiFunctions {
 
@@ -46,7 +66,6 @@ class ApiFunctions {
     exit;
   }
 
-
   public static function returnPersonBatting($playerID) {
     header('Content-Type: application/json');
     $results = DB::getPlayerBatting($playerID)->fetchAll(PDO::FETCH_ASSOC);
@@ -88,8 +107,8 @@ class ApiFunctions {
   }
 
   public static function getPaginationResults($dataSet, $numItemsPerPage, $currentPage = 1) {
-    $numPages =  floor(count($dataSet) / $numItemsPerPage);
-    
+    $numPages = floor(count($dataSet) / $numItemsPerPage);
+
     // ensure the current page does not exceed the last available page
     if ($currentPage > $numPages) {
       http_response_code(404);
@@ -103,9 +122,10 @@ class ApiFunctions {
 
     // next page is null if user is on the last page
     $pages['next'] = null;
-    if ($currentPage < $numPages)
+    if ($currentPage < $numPages) {
       $pages['next'] = $currentPage + 1;
-    
+    }
+
     return $pages;
   }
 
@@ -116,27 +136,23 @@ class ApiFunctions {
     $projectInfo['projectWebsite'] = 'https://github.com/rrickgauer/mlb-api';
     $results['projectInfo']        = $projectInfo;
 
-
-    $people['all']          = '/people{?page}';
-    $people['biography']    = '/people/{playerID}';
-    $people['appearances']  = '/people/{playerID}/appearances{?total}';
-    $people['batting']      = '/people/{playerID}/batting{?total}';
-    $people['pitching']     = '/people/{playerID}/pitching{?total}';
-    $people['salaries']     = '/people/{playerID}/salaries{?total}';
-    $people['schools']      = '/people/{playerID}/schools';
+    $people['all']                 = '/people{?page}';
+    $people['biography']           = '/people/{playerID}';
+    $people['appearances']         = '/people/{playerID}/appearances{?total}';
+    $people['batting']             = '/people/{playerID}/batting{?total}';
+    $people['pitching']            = '/people/{playerID}/pitching{?total}';
+    $people['salaries']            = '/people/{playerID}/salaries{?total}';
+    $people['schools']             = '/people/{playerID}/schools';
     $results['modules']['/people'] = $people;
 
-
-    $search['searchDatabase'] = '/search?q=';
+    $search['searchDatabase']      = '/search?q=';
     $results['modules']['/search'] = $search;
-
 
     header('Content-Type: application/json; charset=utf-8');
     http_response_code(200);
     echo json_encode($results, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
     exit;
   }
-
 
   public static function returnPersonPitchingTotals($playerID) {
     $pitchingTotal = DB::getPersonPitchingTotals($playerID)->fetch(PDO::FETCH_ASSOC);
@@ -149,7 +165,6 @@ class ApiFunctions {
     echo $message;
     exit;
   }
-
 
   public static function returnPersonBattingTotals($playerID) {
     $battingTotal = DB::getPersonBattingTotals($playerID)->fetch(PDO::FETCH_ASSOC);
@@ -169,13 +184,5 @@ class ApiFunctions {
     exit;
   }
 }
-
-
-
-
-
-
-
-
 
 ?>
