@@ -29,11 +29,10 @@ class Parser {
 
   private $module;
   private $sorts;
-  private $request; // array(column, type)
-  private $filters; // list of arrays(column, conditional, qualifier)
+  private $request;         // array(column, type)
+  private $filters;         // list of arrays(column, conditional, qualifier)
   private $filterColumns;
   private $aggregate;
-
   private $playerID;
 
   public function __construct() {
