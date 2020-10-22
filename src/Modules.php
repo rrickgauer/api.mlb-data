@@ -62,14 +62,16 @@ class Module {
   protected $page; // int - offset
   protected $dataSet;
   protected $aggregate;
+  protected $playerID;
 
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
     $this->setFilters($newFilters);
     $this->setSorts($newSorts);
     $this->setPerPage($newPerPage);
     $this->setPage($newPage);
     $this->dataSet = null;
     $this->setAggregate($newAggregate);
+    $this->setPlayerID($newPlayerID);
   }
 
   public function getFilters() {
@@ -119,6 +121,14 @@ class Module {
     } else {
       $this->page = $newPage;
     }
+  }
+
+  public function setPlayerID($newPlayerID) {
+    $this->playerID = $newPlayerID;
+  }
+
+  public function getPlayerID() {
+    return $this->playerID;
   }
 
   public function returnData() {
