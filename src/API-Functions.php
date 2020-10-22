@@ -41,6 +41,15 @@ class ApiFunctions {
     exit;
   }
 
+
+  // use when the resource could not be found (like playerID DNE)
+  public static function returnRequestNotFound($message = 'Resource not found!') {
+    header('Content-Type: text/html; charset=UTF-8');
+    http_response_code(404);
+    echo $message;
+    exit;
+  }
+
   public static function returnPeople($currentPage) {
     $result = [];
     $peopleAll = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
