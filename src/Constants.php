@@ -220,7 +220,7 @@ class Constants {
   ];
 
   const Defaults = [
-    "PerPage" => 15,
+    "PerPage" => 100,
     "Page"    => 1,
   ];
 
@@ -252,6 +252,26 @@ class Constants {
     "FieldingOFSplit" => Constants::RootUrl . "/fielding-of-split",
     "Salaries"        => Constants::RootUrl . "/salaries",
     "Search"          => Constants::RootUrl . "/search",
+  ];
+
+  const DefaultPageDisplay = [
+
+    "Author"        => "Ryan Rickgauer",
+    "Author Website" => "https://www.ryanrickgauer.com/resume/index.html",
+    "Api Home Page"      => "https://github.com/rrickgauer/api.mlb-data",
+
+    "Resources" => [
+      "Appearances"     => 'https://api.mlb-data.ryanrickgauer.com/main.php/appearances{/playerID}{?sort,filter}',
+      "Batting"         => 'https://api.mlb-data.ryanrickgauer.com/main.php/batting{/playerID}{?sort,filter}',
+      "Fielding"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding{/playerID}{?sort,filter}',
+      "FieldingOF"      => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding-of{/playerID}{?sort,filter}',
+      "FieldingOFSplit" => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding-of-split{/playerID}{?sort,filter}',
+      "People"          => 'https://api.mlb-data.ryanrickgauer.com/main.php/people{/playerID}{?sort,filter}',
+      "Pitching"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/pitching{/playerID}{?sort,filter}',
+      "Salaries"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/salaries{/playerID}{?sort,filter}',
+      "Search"          => 'https://api.mlb-data.ryanrickgauer.com/main.php/search?q={query}',
+    ],
+
   ];
 
 }

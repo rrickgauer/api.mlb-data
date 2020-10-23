@@ -7,7 +7,10 @@ include_once('Parser.php');
 
 // $parser = new Parser();
 
-ApiFunctions::printJson(Constants::InternalUrls);
+
+ApiFunctions::returnDefaultDisplay();
+
+
 exit;
 
 
