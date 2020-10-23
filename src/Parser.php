@@ -45,8 +45,9 @@ class Parser {
     $this->request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 
     $this->setModule();
-    $this->setSorts();
+    $this->retrieveFilterColumns();
     $this->setFilters();
+    $this->setSorts();
     $this->setAggregate();
     $this->setPlayerID();
   }
@@ -84,6 +85,12 @@ class Parser {
 
     $this->sorts['column'] = $sorts[0];
 
+    // check if sort is in the constants array
+    if (!in_array($sorts[0], $this->filterColumns)) {
+      ApiFunctions::returnBadRequest('Error. Unrecognized sort column.');
+      exit;
+    }
+
     if (isset($sorts[1]) && strtoupper($sorts[1]) == 'ASC') {
       $this->sorts['type'] = 'ASC';
     } else {
@@ -119,6 +126,12 @@ class Parser {
     // verify that the conditional is valid
     if (!in_array($filter[1], Constants::FilterConditionals)) {
       ApiFunctions::returnBadRequest('Unrecognized filter conditional');
+      exit;
+    }
+
+    // verify that the column is valid
+    if (!in_array($filter[0], $this->filterColumns)) {
+      ApiFunctions::returnBadRequest('Error. Unrecognized filter column.');
       exit;
     }
 
