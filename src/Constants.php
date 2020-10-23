@@ -18,6 +18,9 @@
 //////////////////////////
  
 class Constants {
+
+  const RootUrl = 'https://api.mlb-data.ryanrickgauer.com/main.php';
+
   const Batting = [
     "ID"        => "ID",
     "playerID"  => "playerID",
@@ -238,6 +241,19 @@ class Constants {
   const ExternalUrls = [
     "bbrefID" => "https://www.baseball-reference.com/players/",  // https://www.baseball-reference.com/players/b/bondsba01.shtml
   ];
+
+  const InternalUrls = [
+    "Batting"         => Constants::RootUrl . "/batting",
+    "Pitching"        => Constants::RootUrl . "/pitching",
+    "Appearances"     => Constants::RootUrl . "/appearances",
+    "Fielding"        => Constants::RootUrl . "/fielding",
+    "People"          => Constants::RootUrl . "/people",
+    "FieldingOF"      => Constants::RootUrl . "/fielding-of",
+    "FieldingOFSplit" => Constants::RootUrl . "/fielding-of-split",
+    "Salaries"        => Constants::RootUrl . "/salaries",
+    "Search"          => Constants::RootUrl . "/search",
+  ];
+
 }
 
 

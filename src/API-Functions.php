@@ -50,93 +50,6 @@ class ApiFunctions {
     exit;
   }
 
-  public static function returnPeople($currentPage) {
-    $result = [];
-    $peopleAll = DB::getAllPlayers()->fetchAll(PDO::FETCH_ASSOC);
-
-    // get pagination
-    $result['pagination'] = ApiFunctions::getPaginationResults($peopleAll, self::MAX_PAGE_ITEMS, $currentPage);
-
-    $offset = $currentPage * self::MAX_PAGE_ITEMS;
-    $people = DB::getPlayers(self::MAX_PAGE_ITEMS, $offset)->fetchAll(PDO::FETCH_ASSOC);
-    $result['results'] = $people;
-
-    // return response
-    header('Content-Type: application/json');
-    echo json_encode($result, JSON_PRETTY_PRINT);
-    exit;
-  }
-
-  public static function returnPerson($playerID) {
-    header('Content-Type: application/json');
-    $results = DB::getPlayer($playerID)->fetch(PDO::FETCH_ASSOC);
-    echo json_encode($results, JSON_PRETTY_PRINT);
-    http_response_code(200);
-    exit;
-  }
-
-  public static function returnPersonBatting($playerID) {
-    header('Content-Type: application/json');
-    $results = DB::getPlayerBatting($playerID)->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($results, JSON_PRETTY_PRINT);
-    http_response_code(200);
-    exit;
-  }
-
-  public static function returnPersonPitching($playerID) {
-    header('Content-Type: application/json');
-    $results = DB::getPlayerPitching($playerID)->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($results, JSON_PRETTY_PRINT);
-    http_response_code(200);
-    exit;
-  }
-
-  public static function returnPersonSalaries($playerID) {
-    header('Content-Type: application/json');
-    $results = DB::getPersonSalaries($playerID)->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($results, JSON_PRETTY_PRINT);
-    http_response_code(200);
-    exit;
-  }
-
-  public static function returnPersonAppearances($playerID) {
-    header('Content-Type: application/json');
-    $results = DB::getPersonAppearances($playerID)->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($results, JSON_PRETTY_PRINT);
-    http_response_code(200);
-    exit;
-  }
-
-  public static function returnPersonSchools($playerID) {
-    header('Content-Type: application/json');
-    $results = DB::getPersonSchools($playerID)->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($results, JSON_PRETTY_PRINT);
-    http_response_code(200);
-    exit;
-  }
-
-  public static function getPaginationResults($dataSet, $numItemsPerPage, $currentPage = 1) {
-    $numPages = floor(count($dataSet) / $numItemsPerPage);
-
-    // ensure the current page does not exceed the last available page
-    if ($currentPage > $numPages) {
-      http_response_code(404);
-      echo 'Page does not exist';
-      exit;
-    }
-
-    $pages = [];
-    $pages['first'] = 0;
-    $pages['last'] = $numPages;
-
-    // next page is null if user is on the last page
-    $pages['next'] = null;
-    if ($currentPage < $numPages) {
-      $pages['next'] = $currentPage + 1;
-    }
-
-    return $pages;
-  }
 
   public static function returnDefaultDisplay() {
 
@@ -157,17 +70,9 @@ class ApiFunctions {
     $search['searchDatabase']      = '/search?q=';
     $results['modules']['/search'] = $search;
 
-    header('Content-Type: application/json; charset=utf-8');
-    http_response_code(200);
-    echo json_encode($results, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
-    exit;
+    ApiFunctions::printJson($results);
   }
 
-  public static function returnPersonPitchingTotals($playerID) {
-    $pitchingTotal = DB::getPersonPitchingTotals($playerID)->fetch(PDO::FETCH_ASSOC);
-    ApiFunctions::printJson($pitchingTotal);
-    exit;
-  }
 
   public static function returnInvalidUrl($message = 'Unrecoginzed parameter in the URL') {
     http_response_code(400);
@@ -175,23 +80,20 @@ class ApiFunctions {
     exit;
   }
 
-  public static function returnPersonBattingTotals($playerID) {
-    $battingTotal = DB::getPersonBattingTotals($playerID)->fetch(PDO::FETCH_ASSOC);
-    ApiFunctions::printJson($battingTotal);
-    exit;
+  public static function getPlayerModuleLinksArray($playerID) {
+    $urls = [];
+    $urls['Appearances']     = Constants::InternalUrls['Appearances'] . '/' . $playerID;
+    $urls['Batting']         = Constants::InternalUrls['Batting'] . '/' . $playerID;
+    $urls['Fielding']        = Constants::InternalUrls['Fielding'] . '/' . $playerID;
+    $urls['FieldingOF']      = Constants::InternalUrls['FieldingOF'] . '/' . $playerID;
+    $urls['FieldingOFSplit'] = Constants::InternalUrls['FieldingOFSplit'] . '/' . $playerID;
+    $urls['People']          = Constants::InternalUrls['People'] . '/' . $playerID;
+    $urls['Pitching']        = Constants::InternalUrls['Pitching'] . '/' . $playerID;
+    $urls['Salaries']        = Constants::InternalUrls['Salaries'] . '/' . $playerID;
+
+    return $urls;
   }
 
-  public static function returnPersonAppearancesTotals($playerID) {
-    $appearancesTotal = DB::getPersonAppearancesTotals($playerID)->fetch(PDO::FETCH_ASSOC);
-    ApiFunctions::printJson($appearancesTotal);
-    exit;
-  }
-
-  public static function returnPersonSalariesTotals($playerID) {
-    $salariesTotal = DB::getPersonSalariesTotals($playerID)->fetch(PDO::FETCH_ASSOC);
-    ApiFunctions::printJson($salariesTotal);
-    exit;
-  }
 }
 
 ?>
