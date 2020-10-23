@@ -970,16 +970,6 @@ class DB {
 
   public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
 
-    // create the module link variables
-    $moduleBatting         = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Batting']);
-    $modulePitching        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Pitching']);
-    $moduleAppearances     = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Appearances']);
-    $moduleFielding        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Fielding']);
-    $modulePeople          = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['People']);
-    $moduleFieldingOF      = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['FieldingOF']);
-    $moduleFieldingOFSplit = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['FieldingOFSplit']);
-    $moduleSalaries        = sprintf("CONCAT('/%s/', playerID)", Constants::Modules['Salaries']);
-
     $stmt = "
     SELECT    p.playerID as playerID,
               p.nameFirst as nameFirst,
@@ -987,15 +977,7 @@ class DB {
               p.birth_date as birthDate,
               p.debut_date as debutDate,
               p.finalgame_date as finalGameDate,
-              p.death_date as deathDate,
-              $moduleBatting as moduleBatting,
-              $modulePitching as modulePitching,
-              $moduleAppearances as moduleAppearances,
-              $moduleFielding as moduleFielding,
-              $modulePeople as modulePeople,
-              $moduleFieldingOF as moduleFieldingOF,
-              $moduleFieldingOFSplit as moduleFieldingOFSplit,
-              $moduleSalaries as moduleSalaries
+              p.death_date as deathDate
     FROM      people p 
     WHERE     MATCH(namefirst, namelast) against(:query IN boolean mode) > 0
     GROUP BY  playerID

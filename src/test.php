@@ -7,6 +7,9 @@ include_once('Parser.php');
 
 // $parser = new Parser();
 
+ApiFunctions::printJson(Constants::InternalUrls);
+exit;
+
 
 
 // $sort = null, 
@@ -31,10 +34,10 @@ include_once('Parser.php');
  // $result = DB::getFieldingAggregate('rosepe01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
  // $result = DB::getAppearancesAggregate('rosepe01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
  // $result = DB::getFieldingOFSplitAggregate('cordefr02', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
- $result = DB::getSalariesAggregate('lestejo01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+ // $result = DB::getSalariesAggregate('lestejo01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
 
 
-ApiFunctions::printJson($result);
+// ApiFunctions::printJson($result);
 
 
 

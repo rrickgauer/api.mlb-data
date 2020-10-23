@@ -280,7 +280,14 @@ class Search {
   }
 
   private function retrieveData() {
-    $this->dataSet = DB::getPeopleSearch($this->query, null, null, $this->perPage)->fetchAll(PDO::FETCH_ASSOC);
+    $data = DB::getPeopleSearch($this->query, null, null, $this->perPage)->fetchAll(PDO::FETCH_ASSOC);
+
+    // generate the player urls
+    for ($count = 0; $count < count($data); $count++) {
+      $data[$count]['urls'] = ApiFunctions::getPlayerModuleLinksArray($data[$count]['playerID']);
+    }
+
+    $this->dataSet = $data;
   }
 
   public function returnData() {
