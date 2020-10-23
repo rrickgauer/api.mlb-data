@@ -5,7 +5,7 @@ include_once('Modules.php'); // filters, sorts, sortType, perPage, page
 include_once('Parser.php');
 
 
-$parser = new Parser();
+// $parser = new Parser();
 
 
 
@@ -16,24 +16,25 @@ $parser = new Parser();
 // $playerID, 
 
 
-// $result = DB::getBatting(null, null, Constants::Defaults['PerPage'], 0, 'rosepe01')->fetchAll(PDO::FETCH_ASSOC);
-// $result = DB::getPitching(null, null, Constants::Defaults['PerPage'], 0, 'lestejo01')->fetchAll(PDO::FETCH_ASSOC);
-// $result = DB::getFielding(null, null, Constants::Defaults['PerPage'], 0, 'rosepe01')->fetchAll(PDO::FETCH_ASSOC);
-// $result = DB::getAppearances(null, null, Constants::Defaults['PerPage'], 0, 'rosepe01')->fetchAll(PDO::FETCH_ASSOC);
-// $result = DB::getFieldingOFSplit(null, null, Constants::Defaults['PerPage'], 0, 'cordefr02')->fetchAll(PDO::FETCH_ASSOC);
-// $result = DB::getSalaries(null, null, Constants::Defaults['PerPage'], 0, 'lestejo01')->fetchAll(PDO::FETCH_ASSOC);
-// $result = DB::getPeople(null, null, Constants::Defaults['PerPage'], 0, 'lestejo01')->fetchAll(PDO::FETCH_ASSOC);
+
+// $result = DB::getBatting('rosepe01', null, null, Constants::Defaults['PerPage'])->fetchAll(PDO::FETCH_ASSOC);
+// $result = DB::getPitching('lestejo01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+// $result = DB::getFielding('rosepe01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+// $result = DB::getAppearances('rosepe01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+// $result = DB::getFieldingOFSplit('cordefr02', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+// $result = DB::getSalaries('lestejo01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+// $result = DB::getPeople('lestejo01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
 
 
- // $result = DB::getBattingAggregate(null, null, Constants::Defaults['PerPage'], 0, 'rosepe01')->fetchAll(PDO::FETCH_ASSOC);
- // $result = DB::getPitchingAggregate(null, null, Constants::Defaults['PerPage'], 0, 'lestejo01')->fetchAll(PDO::FETCH_ASSOC);
- // $result = DB::getFieldingAggregate(null, null, Constants::Defaults['PerPage'], 0, 'rosepe01')->fetchAll(PDO::FETCH_ASSOC);
- // $result = DB::getAppearancesAggregate(null, null, Constants::Defaults['PerPage'], 0, 'rosepe01')->fetchAll(PDO::FETCH_ASSOC);
- // $result = DB::getFieldingOFSplitAggregate(null, null, Constants::Defaults['PerPage'], 0, 'cordefr02')->fetchAll(PDO::FETCH_ASSOC);
- // $result = DB::getSalariesAggregate(null, null, Constants::Defaults['PerPage'], 0, 'lestejo01')->fetchAll(PDO::FETCH_ASSOC);
+ // $result = DB::getBattingAggregate('rosepe01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+ // $result = DB::getPitchingAggregate('lestejo01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+ // $result = DB::getFieldingAggregate('rosepe01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+ // $result = DB::getAppearancesAggregate('rosepe01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+ // $result = DB::getFieldingOFSplitAggregate('cordefr02', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
+ $result = DB::getSalariesAggregate('lestejo01', null, null, Constants::Defaults['PerPage'], 0)->fetchAll(PDO::FETCH_ASSOC);
 
 
-// ApiFunctions::printJson($result);
+ApiFunctions::printJson($result);
 
 
 
