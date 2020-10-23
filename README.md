@@ -14,17 +14,17 @@ Restful API for historical MLB data.
 
 There are 9 modules (endpoints/resources) available:
 
-Module | Description | Relative Link
---- | --- | ---
-Appearances | Details on the positions a player appeared at | `/appearances{/playerID}{?sort,filter,aggregate,perPage}`
-Batting | Batting statistics | `/batting{/playerID}{?sort,filter,aggregate,perPage}`
-Fielding | Fielding statistics | `/fielding{/playerID}{?sort,filter,aggregate,perPage}`
-FieldingOF | Outfield position data | `/fielding-of{/playerID}{?sort,filter,aggregate,perPage}`
-FieldingOFSplit | LF/CF/RF splits | `/fielding-of-split{/playerID}{?sort,filter,aggregate,perPage}`
-People | Player names, DOB, and biographical info | `/people{/playerID}{?sort,filter,perPage}` 
-Pitching | Pitching statistics  | `/pitching{/playerID}{?sort,filter,aggregate,perPage}`
-Salaries | Player salary data | `/salaries{/playerID}{?sort,filter,aggregate,perPage}`
-Search | Search for a player via text query | `/search?q={query}`
+Module | Relative Link
+--- | ---
+Appearances | `/appearances{/playerID}{?sort,filter,aggregate,perPage}`
+Batting | `/batting{/playerID}{?sort,filter,aggregate,perPage}`
+Fielding | `/fielding{/playerID}{?sort,filter,aggregate,perPage}`
+FieldingOF | `/fielding-of{/playerID}{?sort,filter,aggregate,perPage}`
+FieldingOFSplit | `/fielding-of-split{/playerID}{?sort,filter,aggregate,perPage}`
+People | `/people{/playerID}{?sort,filter,perPage}` 
+Pitching | `/pitching{/playerID}{?sort,filter,aggregate,perPage}`
+Salaries | `/salaries{/playerID}{?sort,filter,aggregate,perPage}`
+Search | `/search?q={query}`
 
 You can read about the result fields returned in each module [here](docs/tables.md).
 
