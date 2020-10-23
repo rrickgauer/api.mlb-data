@@ -70,7 +70,7 @@ class DB {
     else return false;
   }
 
-  public static function getBatting($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getBatting($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      b.playerID,
                 p.nameFirst,
@@ -137,7 +137,7 @@ class DB {
     return $sql;
   }
 
-  public static function getBattingAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getBattingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      b.playerID,
                 p.nameFirst,
@@ -200,7 +200,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPitching($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getPitching($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -278,7 +278,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPitchingAggregate($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getPitchingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -351,7 +351,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFielding($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getFielding($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -414,7 +414,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingAggregate($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getFieldingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -470,7 +470,7 @@ class DB {
     return $sql;
   }
 
-  public static function getAppearances($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getAppearances($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      a.yearID,
                 a.teamID,
@@ -536,7 +536,7 @@ class DB {
     return $sql;
   }
 
-  public static function getAppearancesAggregate($sort, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getAppearancesAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      a.playerID,
                 p.nameFirst,
@@ -597,7 +597,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOF($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getFieldingOF($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -645,7 +645,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getFieldingOFAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT    f.playerID,
               p.nameFirst,
@@ -692,7 +692,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFSplit($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getFieldingOFSplit($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -755,7 +755,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFSplitAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getFieldingOFSplitAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -811,7 +811,7 @@ class DB {
     return $sql;
   }
 
-  public static function getSalaries($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getSalaries($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      s.playerID,
                 p.nameFirst,
@@ -862,7 +862,7 @@ class DB {
     return $sql;
   }
 
-  public static function getSalariesAggregate($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getSalariesAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      s.playerID,
                 p.nameFirst,
@@ -908,7 +908,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPeople($sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0, $playerID = null) {
+  public static function getPeople($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  p.playerID,
             p.birthCountry,

@@ -64,7 +64,7 @@ class Module {
   protected $aggregate;
   protected $playerID;
 
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     $this->setFilters($newFilters);
     $this->setSorts($newSorts);
     $this->setPerPage($newPerPage);
@@ -137,8 +137,8 @@ class Module {
 }
 
 class People extends Module {
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
-    parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID);
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
   }
 
@@ -148,8 +148,8 @@ class People extends Module {
 }
 
 class Pitching extends Module {
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
-    parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID);
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
   }
 
@@ -163,8 +163,8 @@ class Pitching extends Module {
 }
 
 class Batting extends Module {
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
-    parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID);
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
   }
 
@@ -178,8 +178,8 @@ class Batting extends Module {
 }
 
 class Fielding extends Module {
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
-    parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID);
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
   }
 
@@ -193,8 +193,8 @@ class Fielding extends Module {
 }
 
 class FieldingOF extends Module {
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
-    parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID);
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
   }
 
@@ -208,8 +208,8 @@ class FieldingOF extends Module {
 }
 
 class FieldingOFSplit extends Module {
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
-    parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID);
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
   }
 
@@ -223,8 +223,8 @@ class FieldingOFSplit extends Module {
 }
 
 class Appearances extends Module {
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
-    parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID);
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
   }
 
@@ -238,8 +238,8 @@ class Appearances extends Module {
 }
 
 class Salaries extends Module {
-  public function __construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID) {
-    parent::__construct($newFilters, $newSorts, $newPerPage, $newPage, $newAggregate, $newPlayerID);
+  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
+    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
   }
 
