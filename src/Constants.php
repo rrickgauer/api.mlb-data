@@ -131,25 +131,25 @@ class Constants {
   ];
 
   const People = [
-    "playerID"      => "playerID",
-    "birthCountry"  => "birthCountry",
-    "birthState"    => "birthState",
-    "birthCity"     => "birthCity",
-    "deathState"    => "deathState",
-    "deathCity"     => "deathCity",
-    "nameFirst"     => "nameFirst",
-    "nameLast"      => "nameLast",
-    "nameGiven"     => "nameGiven",
-    "weight"        => "weight",
-    "height"        => "height",
-    "bats"          => "bats",
-    "throws"        => "throws",
-    "retroID"       => "retroID",
-    "bbrefID"       => "bbrefID",
-    "birthDate"     => "birthDate",
-    "debutDate"     => "debutDate",
-    "finalGameDate" => "finalGameDate",
-    "deathDate"     => "deathDate",
+    "playerID"              => "playerID",
+    "birthCountry"          => "birthCountry",
+    "birthState"            => "birthState",
+    "birthCity"             => "birthCity",
+    "deathState"            => "deathState",
+    "deathCity"             => "deathCity",
+    "nameFirst"             => "nameFirst",
+    "nameLast"              => "nameLast",
+    "nameGiven"             => "nameGiven",
+    "weight"                => "weight",
+    "height"                => "height",
+    "bats"                  => "bats",
+    "throws"                => "throws",
+    "retroID"               => "retroID",
+    "baseballReferenceLink" => "baseballReferenceLink",
+    "birthDate"             => "birthDate",
+    "debutDate"             => "debutDate",
+    "finalGameDate"         => "finalGameDate",
+    "deathDate"             => "deathDate",
   ];
 
   const FieldingOF = [
@@ -233,6 +233,10 @@ class Constants {
     "LE" => "<=",   // less than or equal to
     "G"  => ">",    // greater than
     "L"  => "<",    // less than
+  ];
+
+  const ExternalUrls = [
+    "bbrefID" => "https://www.baseball-reference.com/players/",  // https://www.baseball-reference.com/players/b/bondsba01.shtml
   ];
 }
 

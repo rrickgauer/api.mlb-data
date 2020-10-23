@@ -925,7 +925,7 @@ class DB {
             p.bats,
             p.throws,
             p.retroID,
-            p.bbrefID,
+            CONCAT('https://www.baseball-reference.com/players/', SUBSTR(p.bbrefID, 1, 1), '/', p.bbrefID, '.shtml') as baseballReferenceLink,
             p.birth_date as birthDate,
             p.debut_date as debuteDate,
             p.finalgame_date as finalGameDate,
