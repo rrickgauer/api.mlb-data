@@ -298,7 +298,7 @@
 
 ---
 
-:baseball: **The year Jon Lester had the most strikeouts:** [/pitching/lestejo01?sort=SO:desc&perPage=1](https://api.mlb-data.ryanrickgauer.com/main.php)
+:baseball: **The year Jon Lester had the most strikeouts:** [/pitching/lestejo01?sort=SO:desc&perPage=1](https://api.mlb-data.ryanrickgauer.com/main.php/pitching/lestejo01?sort=SO:desc&perPage=1)
 
 
 <details><summary>Click to view results</summary>
@@ -346,5 +346,6 @@
 
 
 </details>
+
 
 
