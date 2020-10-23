@@ -34,6 +34,8 @@ class Parser {
   private $filterColumns;
   private $aggregate;
   private $playerID;
+  private $perPage;
+  private $page;
 
   public function __construct() {
 
@@ -50,6 +52,7 @@ class Parser {
     $this->setSorts();
     $this->setAggregate();
     $this->setPlayerID();
+    $this->setPerPage();
   }
 
   public function getModule() {
@@ -210,6 +213,32 @@ class Parser {
       return false;
     else
       return true;
+  }
+
+  private function setPerPage() {
+    if (!isset($_GET['perPage'])) {
+      $this->perPage = Constants::Defaults['PerPage'];
+    }
+
+    $perPage = $_GET['perPage'];
+
+    // ensure per page is greater than 1
+    if ($perPage < 1) {
+      ApiFunctions::returnBadRequest('Error. perPage needs to be greater than 0');
+      exit;
+    }
+
+    // ensure per page is less than max per page value
+    if ($perPage > Constants::Limits['PerPage']) {
+      ApiFunctions::returnBadRequest('Error. perPage cannot exceed ' . Constants::Limits['PerPage']);
+      exit;
+    }
+
+    $this->perPage = $perPage;
+  }
+
+  public function getPerPage() {
+    return $this->perPage;
   }
 }
 

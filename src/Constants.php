@@ -261,14 +261,14 @@ class Constants {
     "Api Home Page"      => "https://github.com/rrickgauer/api.mlb-data",
 
     "Resources" => [
-      "Appearances"     => 'https://api.mlb-data.ryanrickgauer.com/main.php/appearances{/playerID}{?sort,filter}',
-      "Batting"         => 'https://api.mlb-data.ryanrickgauer.com/main.php/batting{/playerID}{?sort,filter}',
-      "Fielding"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding{/playerID}{?sort,filter}',
-      "FieldingOF"      => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding-of{/playerID}{?sort,filter}',
-      "FieldingOFSplit" => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding-of-split{/playerID}{?sort,filter}',
+      "Appearances"     => 'https://api.mlb-data.ryanrickgauer.com/main.php/appearances{/playerID}{?sort,filter,aggregate}',
+      "Batting"         => 'https://api.mlb-data.ryanrickgauer.com/main.php/batting{/playerID}{?sort,filter,aggregate}',
+      "Fielding"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding{/playerID}{?sort,filter,aggregate}',
+      "FieldingOF"      => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding-of{/playerID}{?sort,filter,aggregate}',
+      "FieldingOFSplit" => 'https://api.mlb-data.ryanrickgauer.com/main.php/fielding-of-split{/playerID}{?sort,filter,aggregate}',
       "People"          => 'https://api.mlb-data.ryanrickgauer.com/main.php/people{/playerID}{?sort,filter}',
-      "Pitching"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/pitching{/playerID}{?sort,filter}',
-      "Salaries"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/salaries{/playerID}{?sort,filter}',
+      "Pitching"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/pitching{/playerID}{?sort,filter,aggregate}',
+      "Salaries"        => 'https://api.mlb-data.ryanrickgauer.com/main.php/salaries{/playerID}{?sort,filter,aggregate}',
       "Search"          => 'https://api.mlb-data.ryanrickgauer.com/main.php/search?q={query}',
     ],
 
