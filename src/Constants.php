@@ -117,6 +117,7 @@ class Constants {
     "stint"    => "stint",
     "teamID"   => "teamID",
     "team_ID"  => "team_ID",
+    "teamName" => "teamName",
     "lgID"     => "lgID",
     "POS"      => "POS",
     "G"        => "G",

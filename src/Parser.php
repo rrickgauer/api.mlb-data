@@ -218,6 +218,7 @@ class Parser {
   private function setPerPage() {
     if (!isset($_GET['perPage'])) {
       $this->perPage = Constants::Defaults['PerPage'];
+      return;
     }
 
     $perPage = $_GET['perPage'];

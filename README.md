@@ -1,55 +1,76 @@
-# mlb-api
+# api.mlb-data
 
-Restful API for MLB data
-
-**https://mlb.ryanrickgauer.com/api.mlb-data.php**
-
-
-<b><span style="color: red;">Warning! This documentation is outdated. Will be updating soon</span></b>
-
-
-## Resources
-
-* https://github.com/WebucatorTraining/lahman-baseball-mysql
-* http://www.seanlahman.com/files/database/readme2017.txt
+Restful API for historical MLB data.
 
 
 ## Overview
 
-Currently, there are 2 modules offered in the API:
-
-1. **people**
-2. **search**
-
-
-The **people** module, is where you obtain all the available information related to a person. Specifically, you can find a player's batting stats, pitching stats, annual salary, seasonal appearances, and more.
-
-The **search** module does exactly what it sounds like: *search* for a person. In order to retrieve any player data, you need to know the player's individual `playerID`. That is what the **search** module is for. You can search for a player by name, and it will return a list of `playerID`.
+* The root url for the API is **`https://api.mlb-data.ryanrickgauer.com/main.php`**
+* All of the data used in the database was obtained [here](https://github.com/WebucatorTraining/lahman-baseball-mysql)
+* Demo page coming soon!
 
 
-### People :smile:
+## Modules
 
-Submodule | Syntax
+There are 9 modules (endpoints/resources) available:
+
+Module | Relative Link
 --- | ---
-All people :family_man_man_boy_boy: | **`/people{?page}`**
-Biographical :man_health_worker:    | **`/people/{playerID}`**
-Salary info :heavy_dollar_sign:     | **`/people/{playerID}/salaries{?total}    `**
-Batting data :bat:                  | **`/people/{playerID}/batting{?total}`**
-Pitching data :punch:               | **`/people/{playerID}/pitching{?total}`**
-Appearances :clipboard:             | **`/people/{playerID}/appearances{?total}`**
-Schools :school:                    | **`/people/{playerID}/schools`**
+Appearances | `/appearances{/playerID}{?sort,filter,aggregate,perPage}`
+Batting | `/batting{/playerID}{?sort,filter,aggregate,perPage}`
+Fielding | `/fielding{/playerID}{?sort,filter,aggregate,perPage}`
+FieldingOF | `/fielding-of{/playerID}{?sort,filter,aggregate,perPage}`
+FieldingOFSplit | `/fielding-of-split{/playerID}{?sort,filter,aggregate,perPage}`
+People | `/people{/playerID}{?sort,filter,perPage}` 
+Pitching | `/pitching{/playerID}{?sort,filter,aggregate,perPage}`
+Salaries | `/salaries{/playerID}{?sort,filter,aggregate,perPage}`
+Search | `/search?q={query}`
 
+You can read about the result fields returned in each module [here](docs/tables.md).
 
-### Search :mag:
+### playerID
 
-* To search the database by first and last name: **`/search?q=`**
+All of the modules, *except Search* allow for you to send in a **playerID**. This will return that module's data for that player only. 
+
+This can be done by doing this: `/module/playerID`
+
+### Sorting
+
+Besides the playerID, you can also specify 1 sort column: `/module?sort=columnName:(asc,desc)`. You can sort by any of the returned fields in ascending or descending order. 
+
+* `/module/columnName:asc` - sort results by `columnName` ascending
+* `/module/columnName:desc` - sort results by `columnName` descending
+
+*Note:* Currently, the API only allows for 1 sort option. I plan on adding multiple sorting in the next release.
+
+### Filtering
+
+The API allows for filtering via: `/module?filter=columnName:conditional:qualifier`. 
+
+* `columnName` is the data field found in the results
+* `conditional` is one of the accepted filter conditionals:
+  * __=__
+  * __!=__
+  * __>=__
+  * __<=__
+  * __>__
+  * __<__
+* `qualifier` is the value that you want the data field to be compared againt
+
+To achieve multiple filters, just seperate them out by commas: `/module?filter=columnName:conditional:qualifier,columnName2:conditional2:qualifier2`
+
+### Per Page
+
+You can specify the number of records to return by setting the `perPage` option. Currently, the default is 100, and the maximum is 1000.
+
+### Aggregates
+
+The default data returned in the modules is seasonal. For instance, if you look at the batting data of Barry Bonds, the data returned is the batting stats season by season. If you want the data fields to be the sum of each field for the player's entire career, you can use the `aggregate` flag. 
+
+To get the aggregate results: `/module{/playerID}?aggregate=true`
 
 ## Examples
 
-Checkout our [examples document](docs/examples.md) to see several examples.
-
-## Complete Database Descriptions
-
-You can read about the full list of tables [here](docs/tables.md)
+To see some real examples of how to use the API, checkout the [examples page](docs/examples.md).
 
 
