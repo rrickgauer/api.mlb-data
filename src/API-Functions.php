@@ -52,25 +52,7 @@ class ApiFunctions {
 
 
   public static function returnDefaultDisplay() {
-
-    $projectInfo['author']         = 'Ryan Rickgauer';
-    $projectInfo['authorWebsite']  = 'https://www.ryanrickgauer.com/resume/index.html';
-    $projectInfo['projectWebsite'] = 'https://github.com/rrickgauer/mlb-api';
-    $results['projectInfo']        = $projectInfo;
-
-    $people['all']                 = '/people{?page}';
-    $people['biography']           = '/people/{playerID}';
-    $people['appearances']         = '/people/{playerID}/appearances{?total}';
-    $people['batting']             = '/people/{playerID}/batting{?total}';
-    $people['pitching']            = '/people/{playerID}/pitching{?total}';
-    $people['salaries']            = '/people/{playerID}/salaries{?total}';
-    $people['schools']             = '/people/{playerID}/schools';
-    $results['modules']['/people'] = $people;
-
-    $search['searchDatabase']      = '/search?q=';
-    $results['modules']['/search'] = $search;
-
-    ApiFunctions::printJson($results);
+    ApiFunctions::printJson(Constants::DefaultPageDisplay);
   }
 
 
