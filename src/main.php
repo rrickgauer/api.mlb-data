@@ -12,6 +12,7 @@ if (!isset($_SERVER['PATH_INFO'])) {
 
 $p1 = new Parser();
 
+header('Access-Control-Allow-Origin: *');
 
 // generate the results based on the specified module
 switch ($p1->getModule()) {
