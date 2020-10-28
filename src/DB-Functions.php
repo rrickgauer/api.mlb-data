@@ -298,7 +298,7 @@ class DB {
                 SUM(p.BB) AS BB,
                 SUM(p.SO) AS SO,
                 SUM(p.BAOpp) AS BAOpp,
-                SUM(p.ERA) AS ERA,
+                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA, 
                 SUM(p.IBB) AS IBB,
                 SUM(p.WP) AS WP,
                 SUM(p.HBP) AS HBP,
