@@ -75,10 +75,9 @@ class DB {
     SELECT      b.playerID,
                 p.nameFirst,
                 p.nameLast,
-                b.yearID,
+                b.yearID as year,
+                t.name as teamName,
                 b.stint,
-                b.teamID,
-                b.team_ID,
                 b.lgID,
                 b.G,
                 b.G_batting,
@@ -99,8 +98,8 @@ class DB {
                 b.SF,
                 b.GIDP
     FROM        batting b
-    LEFT JOIN   people p
-    ON          b.playerID = p.playerID";
+    LEFT JOIN   people p ON b.playerID = p.playerID
+    LEFT JOIN   teams t on b.team_ID = t.ID";
 
     $stmt .= DB::getFilterStmt($filters, '');
 
