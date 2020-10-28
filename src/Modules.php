@@ -143,7 +143,7 @@ class People extends Module {
   }
 
   private function retrieveData() {
-    $this->dataSet = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    $this->dataSet = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
   }
 }
 
@@ -155,7 +155,7 @@ class Pitching extends Module {
 
   private function retrieveData() {
     if ($this->aggregate == true) {
-      $this->dataSet = DB::getPitchingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+      $this->dataSet = DB::getPitchingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
     } else {
       $this->dataSet = DB::getPitching($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -170,7 +170,7 @@ class Batting extends Module {
 
   private function retrieveData() {
     if ($this->aggregate == true) {
-      $this->dataSet = DB::getBattingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+      $this->dataSet = DB::getBattingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
     } else {
       $this->dataSet = DB::getBatting($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -185,7 +185,7 @@ class Fielding extends Module {
 
   private function retrieveData() {
     if ($this->aggregate == true) {
-      $this->dataSet = DB::getFieldingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+      $this->dataSet = DB::getFieldingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
     } else {
       $this->dataSet = DB::getFielding($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -200,7 +200,7 @@ class FieldingOF extends Module {
 
   private function retrieveData() {
     if ($this->aggregate == true) {
-      $this->dataSet = DB::getFieldingOFAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+      $this->dataSet = DB::getFieldingOFAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
     } else {
       $this->dataSet = DB::getFieldingOF($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -215,7 +215,7 @@ class FieldingOFSplit extends Module {
 
   private function retrieveData() {
     if ($this->aggregate == true) {
-      $this->dataSet = DB::getFieldingOFSplitAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+      $this->dataSet = DB::getFieldingOFSplitAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
     } else {
       $this->dataSet = DB::getFieldingOFSplit($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -230,7 +230,7 @@ class Appearances extends Module {
 
   private function retrieveData() {
     if ($this->aggregate == true) {
-      $this->dataSet = DB::getAppearancesAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+      $this->dataSet = DB::getAppearancesAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
     } else {
       $this->dataSet = DB::getAppearances($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -245,7 +245,7 @@ class Salaries extends Module {
 
   private function retrieveData() {
     if ($this->aggregate == true) {
-      $this->dataSet = DB::getSalariesAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+      $this->dataSet = DB::getSalariesAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
     } else {
       $this->dataSet = DB::getSalaries($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
     }
