@@ -75,13 +75,11 @@ class DB {
     SELECT      b.playerID,
                 p.nameFirst,
                 p.nameLast,
-                b.yearID,
+                b.yearID as year,
+                t.name as teamName,
                 b.stint,
-                b.teamID,
-                b.team_ID,
                 b.lgID,
                 b.G,
-                b.G_batting,
                 b.AB,
                 b.R,
                 b.H,
@@ -99,8 +97,8 @@ class DB {
                 b.SF,
                 b.GIDP
     FROM        batting b
-    LEFT JOIN   people p
-    ON          b.playerID = p.playerID";
+    LEFT JOIN   people p ON b.playerID = p.playerID
+    LEFT JOIN   teams t on b.team_ID = t.ID";
 
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -144,7 +142,6 @@ class DB {
                 p.nameLast,
                 (SELECT COUNT(DISTINCT yearID) FROM batting b2 where b2.playerID = b.playerID) as years,
                 SUM(b.G) AS G,
-                SUM(b.G_batting) AS G_batting,
                 SUM(b.AB) AS AB,
                 SUM(b.R) AS R,
                 SUM(b.H) AS H,
@@ -207,7 +204,6 @@ class DB {
                 people.nameLast,
                 p.yearID as year,
                 p.stint,
-                p.team_ID,
                 t.name as teamName,
                 p.lgID,
                 p.W,
@@ -298,7 +294,7 @@ class DB {
                 SUM(p.BB) AS BB,
                 SUM(p.SO) AS SO,
                 SUM(p.BAOpp) AS BAOpp,
-                SUM(p.ERA) AS ERA,
+                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA, 
                 SUM(p.IBB) AS IBB,
                 SUM(p.WP) AS WP,
                 SUM(p.HBP) AS HBP,
@@ -356,10 +352,8 @@ class DB {
     SELECT      f.playerID,
                 p.nameFirst,
                 p.nameLast,
-                f.yearID,
+                f.yearID as year,
                 f.stint,
-                f.teamID,
-                f.team_ID,
                 t.name as teamName,
                 f.lgID,
                 f.POS,
@@ -472,10 +466,8 @@ class DB {
 
   public static function getAppearances($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
-    SELECT      a.yearID,
-                a.teamID,
-                a.team_ID,
-                t.name,
+    SELECT      a.yearID as year,
+                t.name as teamName,
                 a.lgID,
                 a.playerID,
                 p.nameFirst,
@@ -602,7 +594,7 @@ class DB {
     SELECT      f.playerID,
                 p.nameFirst,
                 p.nameLast,
-                f.yearID,
+                f.yearID as year,
                 f.stint,
                 f.Glf,
                 f.Gcf,
@@ -697,11 +689,9 @@ class DB {
     SELECT      f.playerID,
                 p.nameFirst,
                 p.nameLast,
-                f.yearID,
+                f.yearID as year,
                 f.stint,
-                f.teamID,
-                f.team_ID,
-                t.name,
+                t.name as teamName,
                 f.lgID,
                 f.POS,
                 f.G,
@@ -816,9 +806,7 @@ class DB {
     SELECT      s.playerID,
                 p.nameFirst,
                 p.nameLast,
-                s.yearID,
-                s.teamID,
-                s.team_ID,
+                s.yearID as year,
                 t.name as teamName,
                 s.lgID,
                 s.salary
@@ -925,7 +913,7 @@ class DB {
             p.bats,
             p.throws,
             p.retroID,
-            CONCAT('https://www.baseball-reference.com/players/', SUBSTR(p.bbrefID, 1, 1), '/', p.bbrefID, '.shtml') as baseballReferenceLink,
+            CONCAT('https://www.baseball-reference.com/players/', SUBSTR(p.bbrefID, 1, 1), '/', p.bbrefID, '.shtml') as bbrefLink,
             p.birth_date as birthDate,
             p.debut_date as debuteDate,
             p.finalgame_date as finalGameDate,
