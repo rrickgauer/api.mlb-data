@@ -143,7 +143,15 @@ class People extends Module {
   }
 
   private function retrieveData() {
-    $this->dataSet = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
+    if ($this->playerID == null) {
+      $results = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+      $results = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
+        $teams = DB::getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
+        $results['teamsPlayedFor'] = array_column($teams, 'name');
+    }
+
+    $this->dataSet = $results;
   }
 }
 

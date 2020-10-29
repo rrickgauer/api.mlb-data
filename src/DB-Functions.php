@@ -917,7 +917,8 @@ class DB {
             p.birth_date as birthDate,
             p.debut_date as debuteDate,
             p.finalgame_date as finalGameDate,
-            p.death_date as deathDate
+            p.death_date as deathDate,
+            (select t.name from appearances a left join teams t on a.team_ID = t.ID where a.playerID = p.playerID group by a.ID order by a.yearID desc limit 1) as team
     FROM    people p ";
 
     $stmt .= DB::getFilterStmt($filters, '');
@@ -990,6 +991,17 @@ class DB {
 
     $sql->execute();
 
+    return $sql;
+  }
+
+  public static function getTeamsPlayedFor($playerID) {
+    $stmt = 'SELECT distinct t.name from appearances a left join teams t on a.team_ID = t.ID where a.playerID = :playerID group by a.ID';
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+
+    $sql->execute();
     return $sql;
   }
 

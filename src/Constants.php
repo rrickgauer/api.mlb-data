@@ -154,6 +154,7 @@ class Constants {
     "debutDate"             => "debutDate",
     "finalGameDate"         => "finalGameDate",
     "deathDate"             => "deathDate",
+    "team"                  => "team",
   ];
 
   const FieldingOF = [
@@ -257,9 +258,9 @@ class Constants {
 
   const DefaultPageDisplay = [
 
-    "Author"        => "Ryan Rickgauer",
+    "Author"         => "Ryan Rickgauer",
     "Author Website" => "https://www.ryanrickgauer.com/resume/index.html",
-    "Api Home Page"      => "https://github.com/rrickgauer/api.mlb-data",
+    "Api Home Page"  => "https://github.com/rrickgauer/api.mlb-data",
 
     "Resources" => [
       "Appearances"     => 'https://api.mlb-data.ryanrickgauer.com/main.php/appearances{/playerID}{?sort,filter,aggregate}',
