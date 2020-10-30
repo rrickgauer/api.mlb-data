@@ -34,12 +34,6 @@ include_once ('Constants.php');
 
 class DB {
 
-  s
-
-  public function __construct() {
-
-  }
-
   public static function dbConnect() {
     include ('db-info.php');
 
