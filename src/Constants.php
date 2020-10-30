@@ -39,13 +39,16 @@ class Constants {
   ];
 
   const Defaults = [
-    "PerPage" => 100,
-    "Page"    => 1,
-    "Offset"  => 0,
+    "perPage"  => 100,
+    "page"     => 1,
+    "offset"   => 0,
+    "playerID" => null,
+    "sort"     => null,
+    "filters"  => null,
   ];
 
   const Limits = [
-    "PerPage" => 1000,
+    "perPage" => 1000,
   ];
 
   const Batting = [
@@ -247,8 +250,6 @@ class Constants {
     "source"    => "source",
   ];
 
-
-  // Batting post
 
   const BattingPost = [
     "playerID"  => "playerID",
