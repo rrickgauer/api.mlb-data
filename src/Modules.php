@@ -179,6 +179,14 @@ class Pitching extends Module {
   }
 }
 
+class PitchingPost extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getPitchingPostAggregate', 'DB::getPitchingPost');
+    $this->setDataSetSize('DB::getPitchingPostCount');
+  }
+}
+
 class Batting extends Module {
   public function __construct() {
     parent::__construct();
@@ -187,11 +195,27 @@ class Batting extends Module {
   }
 }
 
+class BattingPost extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getBattingPostAggregate', 'DB::getBattingPost');
+    $this->setDataSetSize('DB::getBattingPostCount');
+  }
+}
+
 class Fielding extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingAggregate', 'DB::getFielding');
     $this->setDataSetSize('DB::getFieldingCount');
+  }
+}
+
+class FieldingPost extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getFieldingPostAggregate', 'DB::getFieldingPost');
+    $this->setDataSetSize('DB::getFieldingPostCount');
   }
 }
 

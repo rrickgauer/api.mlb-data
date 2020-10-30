@@ -21,6 +21,32 @@ class Constants {
 
   const RootUrl = 'https://api.mlb-data.ryanrickgauer.com/main.php';
 
+  const Modules = [
+    "Batting"         => "batting",
+    "Pitching"        => "pitching",
+    "Appearances"     => "appearances",
+    "Fielding"        => "fielding",
+    "Images"          => "images",
+    "People"          => "people",
+    "FieldingOF"      => "fielding-of",
+    "FieldingOFSplit" => "fielding-of-split",
+    "Salaries"        => "salaries",
+    "Search"          => "search",
+    "BattingPost"     => "batting-post",
+    "PitchingPost"    => "pitching-post",
+    "FieldingPost"    => "fielding-post",
+  ];
+
+  const Defaults = [
+    "PerPage" => 100,
+    "Page"    => 1,
+    "Offset"  => 0,
+  ];
+
+  const Limits = [
+    "PerPage" => 1000,
+  ];
+
   const Batting = [
     "ID"        => "ID",
     "playerID"  => "playerID",
@@ -209,36 +235,97 @@ class Constants {
   ];
 
   const Images = [
-    "playerID" => "playerID",
+    "playerID"  => "playerID",
     "nameFirst" => "nameFirst",
-    "nameLast" => "nameLast",
-    "source" => "source",
+    "nameLast"  => "nameLast",
+    "source"    => "source",
   ];
 
 
-  const Modules = [
-    "Batting"         => "batting",
-    "Pitching"        => "pitching",
-    "Appearances"     => "appearances",
-    "Fielding"        => "fielding",
-    "Images"          => "images",
-    "People"          => "people",
-    "FieldingOF"      => "fielding-of",
-    "FieldingOFSplit" => "fielding-of-split",
-    "Salaries"        => "salaries",
-    "Search"          => "search",
+  // Batting post
+
+  const BattingPost = [
+    "playerID"  => "playerID",
+    "nameFirst" => "nameFirst",
+    "nameLast"  => "nameLast",
+    "year"      => "year",
+    "teamName"  => "teamName",
+    "round"     => "round",
+    "lgID"      => "lgID",
+    "G"         => "G",
+    "AB"        => "AB",
+    "R"         => "R",
+    "H"         => "H",
+    "2B"        => "2B",
+    "3B"        => "3B",
+    "HR"        => "HR",
+    "RBI"       => "RBI",
+    "SB"        => "SB",
+    "CS"        => "CS",
+    "BB"        => "BB",
+    "SO"        => "SO",
+    "IBB"       => "IBB",
+    "HBP"       => "HBP",
+    "SH"        => "SH",
+    "SF"        => "SF",
+    "GIDP"      => "GIDP",
   ];
 
-  const Defaults = [
-    "PerPage" => 100,
-    "Page"    => 1,
-    "Offset"  => 0,
+  const PitchingPost = [
+    "playerID"  => "playerID",
+    "nameFirst" => "nameFirst",
+    "nameLast"  => "nameLast",
+    "year"      => "year",
+    "round"     => "round",
+    "teamName"  => "teamName",
+    "lgID"      => "lgID",
+    "W"         => "W",
+    "L"         => "L",
+    "G"         => "G",
+    "GS"        => "GS",
+    "CG"        => "CG",
+    "SHO"       => "SHO",
+    "SV"        => "SV",
+    "IPouts"    => "IPouts",
+    "H"         => "H",
+    "ER"        => "ER",
+    "HR"        => "HR",
+    "BB"        => "BB",
+    "SO"        => "SO",
+    "BAOpp"     => "BAOpp",
+    "ERA"       => "ERA",
+    "IBB"       => "IBB",
+    "WP"        => "WP",
+    "HBP"       => "HBP",
+    "BK"        => "BK",
+    "BFP"       => "BFP",
+    "GF"        => "GF",
+    "R"         => "R",
+    "SH"        => "SH",
+    "SF"        => "SF",
+    "GIDP"      => "GIDP",
   ];
 
-  const Limits = [
-    "PerPage" => 1000,
+  const FieldingPost = [
+    "playerID"  => "playerID",
+    "nameFirst" => "nameFirst",
+    "nameLast"  => "nameLast",
+    "year"      => "year",
+    "round"     => "round",
+    "teamName"  => "teamName",
+    "lgID"      => "lgID",
+    "POS"       => "POS",
+    "G"         => "G",
+    "GS"        => "GS",
+    "InnOuts"   => "InnOuts",
+    "PO"        => "PO",
+    "A"         => "A",
+    "E"         => "E",
+    "DP"        => "DP",
+    "PB"        => "PB",
+    "SB"        => "SB",
+    "CS"        => "CS",
   ];
-
 
   const FilterConditionals = [
     "E"  => "=",    // equal to

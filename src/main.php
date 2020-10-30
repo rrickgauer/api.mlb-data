@@ -34,6 +34,12 @@ switch ($p1->getModule()) {
     $results = new People(); break;
   case Constants::Modules['Images']:
     $results = new Images(); break;
+  case Constants::Modules['BattingPost']:
+    $results = new BattingPost(); break;
+  case Constants::Modules['PitchingPost']:
+    $results = new PitchingPost(); break;
+  case Constants::Modules['FieldingPost']:
+    $results = new FieldingPost(); break;
   case Constants::Modules['Search']:
     // ensure the query paramter is set
     if (!isset($_GET['q'])) 
