@@ -224,6 +224,33 @@ class DB {
     return $sql;
   }
 
+  public static function getBattingAggregateCount($playerID = null, $sort = null, $filters = null) {
+    $stmt = "SELECT COUNT(DISTINCT b.playerID) as count FROM batting b ";
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE b.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND b.playerID = :playerID ';
+      }
+    }
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    $sql->execute();
+    $result = $sql->fetch(PDO::FETCH_ASSOC);
+    // echo
+    return $result['count'];
+  }
+
 
   public function getBattingPost($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
     $stmt = "

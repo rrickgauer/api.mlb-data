@@ -113,8 +113,11 @@ class Module {
     ApiFunctions::printJson($data);
   }
 
-  public function setDataSetSize($function) {
-    $this->dataSetSize = call_user_func($function, $this->playerID, $this->sorts, $this->filters);
+  public function setDataSetSize($functionAggregate, $function) {
+    if ($this->aggregate)
+      $this->dataSetSize = call_user_func($functionAggregate, $this->playerID, $this->sorts, $this->filters);
+    else
+      $this->dataSetSize = call_user_func($function, $this->playerID, $this->sorts, $this->filters);
   }
 
   public function getPagination() {
@@ -191,7 +194,7 @@ class Batting extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getBattingAggregate', 'DB::getBatting');
-    $this->setDataSetSize('DB::getBattingCount');
+    $this->setDataSetSize('DB::getBattingAggregateCount', 'DB::getBattingCount');
   }
 }
 
