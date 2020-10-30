@@ -1084,15 +1084,15 @@ class DB {
   public static function getPeople($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT  p.playerID,
+            p.nameFirst,
+            p.nameLast,
+            p.nameGiven,
             p.birthCountry,
             p.birthState,
             p.birthCity,
             p.deathCountry,
             p.deathState,
             p.deathCity,
-            p.nameFirst,
-            p.nameLast,
-            p.nameGiven,
             p.weight,
             p.height,
             p.bats,
@@ -1103,7 +1103,8 @@ class DB {
             p.debut_date as debuteDate,
             p.finalgame_date as finalGameDate,
             p.death_date as deathDate,
-            (select t.name from appearances a left join teams t on a.team_ID = t.ID where a.playerID = p.playerID group by a.ID order by a.yearID desc limit 1) as team
+            (select t.name from appearances a left join teams t on a.team_ID = t.ID where a.playerID = p.playerID group by a.ID order by a.yearID desc limit 1) as team,
+            (select i.source from images i where i.playerID = p.playerID limit 1) as image
     FROM    people p ";
 
     $stmt .= DB::getFilterStmt($filters, '');
@@ -1310,7 +1311,23 @@ class DB {
     return $results['count'];
   }
 
+  public static function getImagesPlayer($playerID) {
 
+    $stmt = '
+    SELECT    i.source 
+    FROM      images i 
+    WHERE     i.playerID = :playerID
+    GROUP BY  i.ID';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind player ID
+    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    
+    $sql->execute();
+    return $sql;
+  }
 
 
   public static function getFilterStmt($filters, $tableName) {
