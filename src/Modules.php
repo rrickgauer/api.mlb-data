@@ -178,7 +178,7 @@ class Pitching extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getPitchingAggregate', 'DB::getPitching');
-    $this->setDataSetSize('DB::getPitchingCount');
+    $this->setDataSetSize('DB::getPitchingAggregateCount', 'DB::getPitchingCount');
   }
 }
 
