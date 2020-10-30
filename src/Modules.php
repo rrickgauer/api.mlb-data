@@ -158,7 +158,7 @@ class People extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getPeople', 'DB::getPeople');
-    $this->setDataSetSize('DB::getPeopleCount');
+    $this->setDataSetSize('DB::getPeopleCount', 'DB::getPeopleCount');
 
     // add additional info if playerID is specified
     if ($this->playerID != null) {
