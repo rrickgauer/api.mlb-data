@@ -21,6 +21,30 @@ class Constants {
 
   const RootUrl = 'https://api.mlb-data.ryanrickgauer.com/main.php';
 
+  const Modules = [
+    "Batting"         => "batting",
+    "Pitching"        => "pitching",
+    "Appearances"     => "appearances",
+    "Fielding"        => "fielding",
+    "Images"          => "images",
+    "People"          => "people",
+    "FieldingOF"      => "fielding-of",
+    "FieldingOFSplit" => "fielding-of-split",
+    "Salaries"        => "salaries",
+    "Search"          => "search",
+    "BattingPost"     => "batting-post",
+  ];
+
+  const Defaults = [
+    "PerPage" => 100,
+    "Page"    => 1,
+    "Offset"  => 0,
+  ];
+
+  const Limits = [
+    "PerPage" => 1000,
+  ];
+
   const Batting = [
     "ID"        => "ID",
     "playerID"  => "playerID",
@@ -214,31 +238,6 @@ class Constants {
     "nameLast" => "nameLast",
     "source" => "source",
   ];
-
-
-  const Modules = [
-    "Batting"         => "batting",
-    "Pitching"        => "pitching",
-    "Appearances"     => "appearances",
-    "Fielding"        => "fielding",
-    "Images"          => "images",
-    "People"          => "people",
-    "FieldingOF"      => "fielding-of",
-    "FieldingOFSplit" => "fielding-of-split",
-    "Salaries"        => "salaries",
-    "Search"          => "search",
-  ];
-
-  const Defaults = [
-    "PerPage" => 100,
-    "Page"    => 1,
-    "Offset"  => 0,
-  ];
-
-  const Limits = [
-    "PerPage" => 1000,
-  ];
-
 
   const FilterConditionals = [
     "E"  => "=",    // equal to

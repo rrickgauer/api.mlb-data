@@ -226,6 +226,162 @@ class DB {
     return $sql;
   }
 
+
+  public function getBattingPost($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+    $stmt = "
+    SELECT      b.playerID as playerID,
+                p.nameFirst as nameFirst,
+                p.nameLast as nameLast,
+                b.yearID as year,
+                t.name as teamName,
+                b.round as round,
+                b.lgID as lgID,
+                b.G as G,
+                b.AB as AB,
+                b.R as R,
+                b.H as H,
+                b.2B as 2B,
+                b.3B as 3B,
+                b.HR as HR,
+                b.RBI as RBI,
+                b.SB as SB,
+                b.CS as CS,
+                b.BB as BB,
+                b.SO as SO,
+                b.IBB as IBB,
+                b.HBP as HBP,
+                b.SH as SH,
+                b.SF as SF,
+                b.GIDP as GIDP
+    FROM        battingpost b
+    LEFT JOIN   people p ON b.playerID = p.playerID
+    LEFT JOIN   teams t on b.team_ID = t.ID";
+
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE b.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND b.playerID = :playerID ';
+      }
+    }
+
+    $stmt .= " GROUP  BY b.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
+  public static function getBattingPostCount($playerID = null, $sort = null, $filters = null) {
+    $stmt = 'SELECT count(b.ID) as  count from battingpost b ';
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE b.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND b.playerID = :playerID ';
+      }
+    }
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    $sql->execute();
+    $results = $sql->fetch(PDO::FETCH_ASSOC);
+    return $results['count'];
+  }
+
+
+  public static function getBattingPostAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+    $stmt = "
+    SELECT      b.playerID as playerID,
+                p.nameFirst as nameFirst,
+                p.nameLast as nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM batting b2 where b2.playerID = b.playerID) as years,
+                SUM(b.G) AS G,
+                SUM(b.AB) AS AB,
+                SUM(b.R) AS R,
+                SUM(b.H) AS H,
+                SUM(b.2B) AS 2B,
+                SUM(b.3B) AS 3B,
+                SUM(b.HR) AS HR,
+                SUM(b.RBI) AS RBI,
+                SUM(b.SB) AS SB,
+                SUM(b.CS) AS CS,
+                SUM(b.BB) AS BB,
+                SUM(b.SO) AS SO,
+                SUM(b.IBB) AS IBB,
+                SUM(b.HBP) AS HBP,
+                SUM(b.SH) AS SH,
+                SUM(b.SF) AS SF,
+                SUM(b.GIDP) AS GIDP
+    FROM        battingpost b
+    LEFT JOIN   people p
+    ON          b.playerID = p.playerID";
+
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE b.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND b.playerID = :playerID ';
+      }
+    }
+
+    $stmt .= " GROUP  BY b.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
   public static function getPitching($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      p.playerID,

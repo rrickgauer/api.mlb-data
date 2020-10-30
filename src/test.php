@@ -14,9 +14,13 @@ require_once('Pagination.php');
 $p1 = new Parser();
 
 
-$imgs = DB::getImages('lestejo01')->fetchAll(PDO::FETCH_ASSOC);
+// $results = DB::getBattingPost()->fetchAll(PDO::FETCH_ASSOC);
+$results = DB::getBattingPostAggregate('jeterde01')->fetchAll(PDO::FETCH_ASSOC);
 
-ApiFunctions::printJson($imgs);
+
+
+
+ApiFunctions::printJson($results);
 
 
 
