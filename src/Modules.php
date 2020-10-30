@@ -68,16 +68,21 @@ class Module {
   protected $playerID;
   protected $offset;
   protected $dataSetSize;
+  protected $parser;
 
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    $this->setFilters($newFilters);
-    $this->setSorts($newSorts);
-    $this->setPerPage($newPerPage);
-    $this->setPage($newPage);
-    $this->dataSet = null;
-    $this->setAggregate($newAggregate);
-    $this->setPlayerID($newPlayerID);
+  public function __construct() {
+    $this->parser = new Parser();
+
+    $this->filters   = $this->parser->getFilters();
+    $this->sorts     = $this->parser->getSorts();
+    $this->perPage   = $this->parser->getPerPage();
+    $this->page      = $this->parser->getPage();
+    $this->aggregate = $this->parser->getAggregate();
+    $this->playerID  = $this->parser->getPlayerID();
+
+
     $this->setOffset();
+    $this->dataSet = null;
     $this->setDataSetSize = 1;    // this will get changed later in each of the sub modules
   }
 
@@ -85,53 +90,16 @@ class Module {
     return $this->filters;
   }
 
-  public function setFilters($newFilters) {
-    $this->filters = $newFilters;
-  }
-
   public function getSorts() {
     return $this->sorts;
-  }
-
-  public function setSorts($newSorts) {
-    $this->sorts = $newSorts;
-  }
-
-  public function setAggregate($newAggregate) {
-    if ($newAggregate == 'true') 
-      $this->aggregate = true;
-    else 
-      $this->aggregate = false;
   }
 
   public function getPerPage() {
     return $this->perPage;
   }
 
-  public function setPerPage($newPerPage) {
-    if ($newPerPage < 0) {
-      $newPerPage = Constants::Defaults['PerPage'];
-    } else if ($newPerPage > Constants::Limits['PerPage']) {
-      $newPerPage = Constants::Limits['PerPage'];
-    } else {
-      $this->perPage = $newPerPage;
-    }
-  }
-
   public function getPage() {
     return $this->page;
-  }
-
-  public function setPage($newPage) {
-    if ($newPage > 0) {
-      $this->page = $newPage;
-    } else {
-      $this->page = Constants::Defaults['Page'];
-    }
-  }
-
-  public function setPlayerID($newPlayerID) {
-    $this->playerID = $newPlayerID;
   }
 
   public function getPlayerID() {
@@ -180,14 +148,12 @@ class Module {
       $this->dataSet = $dataset->fetch(PDO::FETCH_ASSOC);
     else 
       $this->dataSet = $dataset->fetchAll(PDO::FETCH_ASSOC);
-    
-
   }
 }
 
 class People extends Module {
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+  public function __construct() {
+    parent::__construct();
     $this->retrieveData('DB::getPeople', 'DB::getPeople');
     $this->setDataSetSize('DB::getPeopleCount');
 
@@ -201,56 +167,56 @@ class People extends Module {
 }
 
 class Pitching extends Module {
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+  public function __construct() {
+    parent::__construct();
     $this->retrieveData('DB::getPitchingAggregate', 'DB::getPitching');
     $this->setDataSetSize('DB::getPitchingCount');
   }
 }
 
 class Batting extends Module {
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+  public function __construct() {
+    parent::__construct();
     $this->retrieveData('DB::getBattingAggregate', 'DB::getBatting');
     $this->setDataSetSize('DB::getBattingCount');
   }
 }
 
 class Fielding extends Module {
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+  public function __construct() {
+    parent::__construct();
     $this->retrieveData('DB::getFieldingAggregate', 'DB::getFielding');
     $this->setDataSetSize('DB::getFieldingCount');
   }
 }
 
 class FieldingOF extends Module {
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+  public function __construct() {
+    parent::__construct();
     $this->retrieveData('DB::getFieldingOFAggregate', 'DB::getFieldingOF');
     $this->setDataSetSize('DB::getFieldingOFCount');
   }
 }
 
 class FieldingOFSplit extends Module {
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+  public function __construct() {
+    parent::__construct();
     $this->retrieveData('DB::getFieldingOFSplitAggregate', 'DB::getFieldingOFSplit');
     $this->setDataSetSize('DB::getFieldingOFSplitCount');
   }
 }
 
 class Appearances extends Module {
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+  public function __construct() {
+    parent::__construct();
     $this->retrieveData('DB::getAppearancesAggregate', 'DB::getAppearances');
     $this->setDataSetSize('DB::getAppearancesCount');
   }
 }
 
 class Salaries extends Module {
-  public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
-    parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
+  public function __construct() {
+    parent::__construct();
     $this->retrieveData('DB::getSalariesAggregate', 'DB::getSalaries');
     $this->setDataSetSize('DB::getSalariesCount');
   }
@@ -263,11 +229,13 @@ class Search {
   private $dataSetSize;
   private $page;
   private $offset;
+  private $parser;
 
-  public function __construct($newQuery, $newPerPage, $newPage) {
-    $this->setQuery($newQuery);
-    $this->setPerPage($newPerPage);
-    $this->page = $newPage;
+  public function __construct($newQuery) {
+    $this->query = $newQuery;
+    $this->parser = new Parser();
+    $this->perPage = $this->parser->getPerPage();
+    $this->page = $this->parser->getPage();
     $this->setOffset();
     $this->retrieveData();
     $this->setDataSetSize();
@@ -283,14 +251,6 @@ class Search {
 
   public function getPage() {
     return $this->page;
-  }
-
-  public function setQuery($newQuery) {
-    $this->query = $newQuery;
-  }
-
-  public function setPerPage($newPerPage) {
-    $this->perPage = $newPerPage;
   }
 
   private function retrieveData() {
