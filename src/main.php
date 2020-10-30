@@ -40,6 +40,8 @@ switch ($p1->getModule()) {
     $results = new PitchingPost(); break;
   case Constants::Modules['FieldingPost']:
     $results = new FieldingPost(); break;
+  case Constants::Modules['Colleges']:
+    $results = new Colleges(); break;
   case Constants::Modules['Search']:
     // ensure the query paramter is set
     if (!isset($_GET['q'])) 

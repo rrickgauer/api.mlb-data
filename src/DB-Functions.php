@@ -1803,6 +1803,83 @@ class DB {
   }
 
 
+  public static function getColleges($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+    $stmt = '
+    SELECT      cp.playerID as playerID,
+                p.nameFirst as nameFirst,
+                p.nameLast as nameLast,
+                cp.yearID as year,
+                s.name_full as schoolName,
+                s.city as schoolCity,
+                s.state as schoolState,
+                s.country as schoolCountry
+    from        collegeplaying cp
+    LEFT JOIN   people p on cp.playerID = p.playerID 
+    LEFT JOIN   schools s on cp.schoolID = s.schoolID';
+
+
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE cp.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND cp.playerID = :playerID ';
+      }
+    }   
+
+    $stmt .= " GROUP  BY cp.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+
+    return $sql;
+  }
+
+  public static function getCollegesCount($playerID = null, $sort = null, $filters = null) {
+    $stmt = 'SELECT count(cp.ID) as  count from collegeplaying cp ';
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE cp.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND cp.playerID = :playerID ';
+      }
+    }
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    $sql->execute();
+    $results = $sql->fetch(PDO::FETCH_ASSOC);
+    return $results['count'];
+  }
+
   public static function getFilterStmt($filters, $tableName) {
     //return empty string if null
     if ($filters == null) {
