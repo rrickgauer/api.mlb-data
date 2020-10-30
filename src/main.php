@@ -17,21 +17,21 @@ header('Access-Control-Allow-Origin: *');
 // generate the results based on the specified module
 switch ($p1->getModule()) {
   case Constants::Modules['Pitching']:
-    $results = new Pitching($p1->getPlayerID(), $p1->getFilters(), $p1->getSorts(), $p1->getPerPage(), $p1->getPage(), $p1->getAggregate()); break;
+    $results = new Pitching(); break;
   case Constants::Modules['Batting']:
-    $results = new Batting($p1->getPlayerID(), $p1->getFilters(), $p1->getSorts(), $p1->getPerPage(), $p1->getPage(), $p1->getAggregate()); break;
+    $results = new Batting(); break;
   case Constants::Modules['Fielding']:
-    $results = new Fielding($p1->getPlayerID(), $p1->getFilters(), $p1->getSorts(), $p1->getPerPage(), $p1->getPage(), $p1->getAggregate()); break;
+    $results = new Fielding(); break;
   case Constants::Modules['Appearances']:
-    $results = new Appearances($p1->getPlayerID(), $p1->getFilters(), $p1->getSorts(), $p1->getPerPage(), $p1->getPage(), $p1->getAggregate()); break;
+    $results = new Appearances(); break;
   case Constants::Modules['FieldingOF']:
-    $results = new FieldingOF($p1->getPlayerID(), $p1->getFilters(), $p1->getSorts(), $p1->getPerPage(), $p1->getPage(), $p1->getAggregate()); break;
+    $results = new FieldingOF(); break;
   case Constants::Modules['FieldingOFSplit']:
-    $results = new FieldingOFSplit($p1->getPlayerID(), $p1->getFilters(), $p1->getSorts(), $p1->getPerPage(), $p1->getPage(), $p1->getAggregate()); break;
+    $results = new FieldingOFSplit(); break;
   case Constants::Modules['Salaries']:
-    $results = new Salaries($p1->getPlayerID(), $p1->getFilters(), $p1->getSorts(), $p1->getPerPage(), $p1->getPage(), $p1->getAggregate()); break;
+    $results = new Salaries(); break;
   case Constants::Modules['People']:
-    $results = new People($p1->getPlayerID(), $p1->getFilters(), $p1->getSorts(), $p1->getPerPage(), $p1->getPage(), $p1->getAggregate()); break;
+    $results = new People(); break;
   case Constants::Modules['Search']:
     // ensure the query paramter is set
     if (!isset($_GET['q'])) 
