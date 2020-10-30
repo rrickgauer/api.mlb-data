@@ -37,7 +37,7 @@ switch ($p1->getModule()) {
     if (!isset($_GET['q'])) 
       ApiFunctions::returnBadRequest('You need to specify a search query!');
       
-    $results = new Search($_GET['q'], $p1->getPerPage()); break;
+    $results = new Search($_GET['q'], $p1->getPerPage(), $p1->getPage()); break;
   default:
     ApiFunctions::returnBadRequest('Module does not exist!');
     exit;
