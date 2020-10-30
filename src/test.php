@@ -15,7 +15,9 @@ $p1 = new Parser();
 
 
 // $results = DB::getBattingPost()->fetchAll(PDO::FETCH_ASSOC);
-$results = DB::getBattingPostAggregate('jeterde01')->fetchAll(PDO::FETCH_ASSOC);
+// $results = DB::getBattingPostAggregate('jeterde01')->fetchAll(PDO::FETCH_ASSOC);
+$results = DB::getColleges()->fetchAll(PDO::FETCH_ASSOC);
+// $results = DB::getCollegesCount();
 
 
 

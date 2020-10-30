@@ -259,6 +259,14 @@ class Images extends Module {
   }
 }
 
+Class Colleges extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getColleges', 'DB::getColleges');
+    $this->setDataSetSize('DB::getCollegesCount');
+  }
+}
+
 class Search {
   private $query;
   private $perPage;

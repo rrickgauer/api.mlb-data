@@ -35,6 +35,7 @@ class Constants {
     "BattingPost"     => "batting-post",
     "PitchingPost"    => "pitching-post",
     "FieldingPost"    => "fielding-post",
+    "Colleges"        => "colleges",
   ];
 
   const Defaults = [
@@ -327,6 +328,17 @@ class Constants {
     "CS"        => "CS",
   ];
 
+  const Colleges = [
+    "playerID"      => "playerID",
+    "nameFirst"     => "nameFirst",
+    "nameLast"      => "nameLast",
+    "year"          => "year",
+    "schoolName"    => "schoolName",
+    "schoolCity"    => "schoolCity",
+    "schoolState"   => "schoolState",
+    "schoolCountry" => "schoolCountry",
+  ];
+
   const FilterConditionals = [
     "E"  => "=",    // equal to
     "NE" => "!=",   // not equal to
@@ -351,6 +363,10 @@ class Constants {
     "Salaries"        => Constants::RootUrl . "/salaries",
     "Search"          => Constants::RootUrl . "/search",
     "Images"          => Constants::RootUrl . "/images",
+    "BattingPost"     => Constants::RootUrl . "/batting-post",
+    "FieldingPost"    => Constants::RootUrl . "/fielding-post",
+    "PitchingPost"    => Constants::RootUrl . "/pitching-post",
+    "Colleges"        => Constants::RootUrl . "/colleges",
   ];
 
   const DefaultPageDisplay = [
