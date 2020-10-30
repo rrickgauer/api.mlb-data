@@ -13,19 +13,10 @@ require_once('Pagination.php');
 
 $p1 = new Parser();
 
-$yo = new Pagination(53);
 
-echo $yo->getPageFirst() . '<br>';
-echo $yo->getPageLast() . '<br>';
-echo $yo->getPageNext() . '<br>';
+$imgs = DB::getImages('lestejo01')->fetchAll(PDO::FETCH_ASSOC);
 
-// echo $_SERVER['PATH_INFO'] . '<br>';
-// echo $_SERVER['QUERY_STRING'] . '<br>';
-// echo $_SERVER['PHP_SELF'] . '<br>';
-
-
-
-
+ApiFunctions::printJson($imgs);
 
 
 

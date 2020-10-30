@@ -157,10 +157,15 @@ class People extends Module {
     $this->retrieveData('DB::getPeople', 'DB::getPeople');
     $this->setDataSetSize('DB::getPeopleCount');
 
-    // add teams played for if playerID is specified
+    // add additional info if playerID is specified
     if ($this->playerID != null) {
+      // teams played for
       $teams = DB::getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
       $this->dataSet['teamsPlayedFor'] = array_column($teams, 'name');
+
+      // images
+      $images = DB::getImagesPlayer($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
+      $this->dataSet['images'] = array_column($images, 'source');
     }
 
   }
@@ -222,6 +227,14 @@ class Salaries extends Module {
   }
 }
 
+class Images extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getImages', 'DB::getImages');
+    $this->setDataSetSize('DB::getImagesCount');
+  }
+}
+
 class Search {
   private $query;
   private $perPage;
@@ -269,7 +282,6 @@ class Search {
   }
 
   public function returnData() {
-
     $data = [];
     $data['pagination'] = $this->getPagination();
     $data['results'] = $this->dataSet;

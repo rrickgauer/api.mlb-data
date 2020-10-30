@@ -71,6 +71,9 @@ class ApiFunctions {
     $urls['Fielding']        = Constants::InternalUrls['Fielding'] . '/' . $playerID;
     $urls['FieldingOF']      = Constants::InternalUrls['FieldingOF'] . '/' . $playerID;
     $urls['FieldingOFSplit'] = Constants::InternalUrls['FieldingOFSplit'] . '/' . $playerID;
+
+    $urls['Images']          = Constants::InternalUrls['Images'] . '/' . $playerID;
+
     $urls['People']          = Constants::InternalUrls['People'] . '/' . $playerID;
     $urls['Pitching']        = Constants::InternalUrls['Pitching'] . '/' . $playerID;
     $urls['Salaries']        = Constants::InternalUrls['Salaries'] . '/' . $playerID;
