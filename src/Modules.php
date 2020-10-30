@@ -222,6 +222,14 @@ class Salaries extends Module {
   }
 }
 
+class Images extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getImages', 'DB::getImages');
+    $this->setDataSetSize('DB::getImagesCount');
+  }
+}
+
 class Search {
   private $query;
   private $perPage;
@@ -268,8 +276,7 @@ class Search {
     $this->dataSetSize = DB::getPeopleSearchCount($this->query);
   }
 
-  public function returnData() {
-
+  public function returnData() {d
     $data = [];
     $data['pagination'] = $this->getPagination();
     $data['results'] = $this->dataSet;

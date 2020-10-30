@@ -32,12 +32,14 @@ switch ($p1->getModule()) {
     $results = new Salaries(); break;
   case Constants::Modules['People']:
     $results = new People(); break;
+  case Constants::Modules['Images']:
+    $results = new Images(); break;
   case Constants::Modules['Search']:
     // ensure the query paramter is set
     if (!isset($_GET['q'])) 
       ApiFunctions::returnBadRequest('You need to specify a search query!');
       
-    $results = new Search($_GET['q'], $p1->getPerPage(), $p1->getPage()); break;
+    $results = new Search($_GET['q']); break;
   default:
     ApiFunctions::returnBadRequest('Module does not exist!');
     exit;

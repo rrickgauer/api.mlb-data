@@ -208,12 +208,20 @@ class Constants {
     "urls"          => "urls",
   ];
 
+  const Images = [
+    "playerID" => "playerID",
+    "nameFirst" => "nameFirst",
+    "nameLast" => "nameLast",
+    "source" => "source",
+  ];
+
 
   const Modules = [
     "Batting"         => "batting",
     "Pitching"        => "pitching",
     "Appearances"     => "appearances",
     "Fielding"        => "fielding",
+    "Images"          => "images",
     "People"          => "people",
     "FieldingOF"      => "fielding-of",
     "FieldingOFSplit" => "fielding-of-split",
