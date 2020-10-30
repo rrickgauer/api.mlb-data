@@ -930,7 +930,7 @@ class DB {
       } else {
         $stmt .= ' AND p.playerID = :playerID ';
       }
-    }
+    }   
 
     $stmt .= " GROUP  BY p.playerID ";
     $stmt .= DB::getOrderStmt($sort);
@@ -955,6 +955,32 @@ class DB {
     $sql->execute();
 
     return $sql;
+  }
+
+  public function getPeopleCount($playerID = null, $sort = null, $filters = null) {
+    $stmt = 'SELECT count(*) as count from people p ';
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE p.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND p.playerID = :playerID ';
+      }
+    }
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    $sql->execute();
+    $results = $sql->fetch(PDO::FETCH_ASSOC);
+    return $results['count'];
   }
 
   public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {

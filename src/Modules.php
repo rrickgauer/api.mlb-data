@@ -53,16 +53,19 @@
 //////////////////////////////////////
 
 include_once ('Constants.php');
+require_once('Pagination.php');
 
 class Module {
 
-  protected $filters; // array of filters
-  protected $sorts; // array of sorts
-  protected $perPage; // int - number of items in data set
-  protected $page; // int - offset
+  protected $filters;   // array of filters
+  protected $sorts;     // array of sorts
+  protected $perPage;   // int - number of items in data set
+  protected $page;      // int - offset
   protected $dataSet;
   protected $aggregate;
   protected $playerID;
+  protected $offset;
+  protected $dataSetSize;
 
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     $this->setFilters($newFilters);
@@ -72,6 +75,8 @@ class Module {
     $this->dataSet = null;
     $this->setAggregate($newAggregate);
     $this->setPlayerID($newPlayerID);
+    $this->setOffset();
+    $this->setDataSetSize = 1;    // this will get changed later in each of the sub modules
   }
 
   public function getFilters() {
@@ -116,10 +121,10 @@ class Module {
   }
 
   public function setPage($newPage) {
-    if ($newPage < 0) {
-      $newPage = Constants::Defaults['Page'];
-    } else {
+    if ($newPage > 0) {
       $this->page = $newPage;
+    } else {
+      $this->page = Constants::Defaults['Page'];
     }
   }
 
@@ -132,7 +137,32 @@ class Module {
   }
 
   public function returnData() {
-    ApiFunctions::printJson($this->dataSet);
+    $data = [];
+    $data['pagination'] = $this->getPagination();    
+    $data['results'] = $this->dataSet;
+    ApiFunctions::printJson($data);
+  }
+
+  public function setDataSetSize($function) {
+    $this->dataSetSize = call_user_func($function, $this->playerID, $this->filters, $this->sorts);
+  }
+
+  public function getPagination() {
+    $pagination         = new Pagination($this->dataSetSize);
+    $links              = [];
+    $links['first']     = $pagination->getPageFirst();
+    $links['last']      = $pagination->getPageLast();
+    $links['next']      = $pagination->getPageNext();
+
+    return $links;
+  }
+
+  public function setOffset() {
+    $this->offset = ($this->perPage) * ($this->page - 1);
+  }
+
+  public function getOffset() {
+    return $this->offset;
   }
 }
 
@@ -140,15 +170,16 @@ class People extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
+    $this->setDataSetSize('DB::getPeopleCount');
   }
 
   private function retrieveData() {
     if ($this->playerID == null) {
-      $results = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetchAll(PDO::FETCH_ASSOC);
+      $results = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
     } else {
-      $results = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->page)->fetch(PDO::FETCH_ASSOC);
-        $teams = DB::getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
-        $results['teamsPlayedFor'] = array_column($teams, 'name');
+      $results = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, 0)->fetch(PDO::FETCH_ASSOC);
+      $teams = DB::getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
+      $results['teamsPlayedFor'] = array_column($teams, 'name');
     }
 
     $this->dataSet = $results;
