@@ -1249,6 +1249,33 @@ class DB {
     return $sql;
   }
 
+  public static function getAppearancesAggregateCount($playerID = null, $sort = null, $filters = null) {
+    $stmt = "SELECT COUNT(DISTINCT a.playerID) as count FROM appearances a ";
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE a.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND a.playerID = :playerID ';
+      }
+    }
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    $sql->execute();
+    $result = $sql->fetch(PDO::FETCH_ASSOC);
+    // echo
+    return $result['count'];
+  }
+
   public static function getFieldingOF($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      f.playerID,

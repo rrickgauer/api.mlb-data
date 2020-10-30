@@ -242,7 +242,7 @@ class Appearances extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getAppearancesAggregate', 'DB::getAppearances');
-    $this->setDataSetSize('DB::getAppearancesCount');
+    $this->setDataSetSize('DB::getAppearancesAggregateCount', 'DB::getAppearancesCount');
   }
 }
 
