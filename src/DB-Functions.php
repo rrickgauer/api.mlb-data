@@ -1168,7 +1168,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
 
     $stmt = "
     SELECT    p.playerID as playerID,
@@ -1203,6 +1203,24 @@ class DB {
     $sql->execute();
 
     return $sql;
+  }
+
+  public static function getPeopleSearchCount($query = '') {
+    $stmt = '
+    SELECT    count(p.playerID) as count from people p 
+    WHERE     MATCH(namefirst, namelast) against(:query IN boolean mode) > 0';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter and bind query
+    $query = '(' . $query . '*)';
+    $query = filter_var($query, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':query', $query, PDO::PARAM_STR);
+
+    $sql->execute();
+
+    $count = $sql->fetch(PDO::FETCH_ASSOC);
+    return $count['count'];
   }
 
   public static function getTeamsPlayedFor($playerID) {

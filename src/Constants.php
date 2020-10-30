@@ -224,6 +224,7 @@ class Constants {
   const Defaults = [
     "PerPage" => 100,
     "Page"    => 1,
+    "Offset"  => 0,
   ];
 
   const Limits = [

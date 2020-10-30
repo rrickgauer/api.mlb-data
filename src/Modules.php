@@ -260,11 +260,17 @@ class Search {
   private $query;
   private $perPage;
   private $dataSet;
+  private $dataSetSize;
+  private $page;
+  private $offset;
 
-  public function __construct($newQuery, $newPerPage) {
+  public function __construct($newQuery, $newPerPage, $newPage) {
     $this->setQuery($newQuery);
     $this->setPerPage($newPerPage);
+    $this->page = $newPage;
+    $this->setOffset();
     $this->retrieveData();
+    $this->setDataSetSize();
   }
 
   public function getQuery() {
@@ -273,6 +279,10 @@ class Search {
 
   public function getPerPage() {
     return $this->perPage;
+  }
+
+  public function getPage() {
+    return $this->page;
   }
 
   public function setQuery($newQuery) {
@@ -284,7 +294,7 @@ class Search {
   }
 
   private function retrieveData() {
-    $data = DB::getPeopleSearch($this->query, null, null, $this->perPage)->fetchAll(PDO::FETCH_ASSOC);
+    $data = DB::getPeopleSearch($this->query, null, null, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
 
     // generate the player urls
     for ($count = 0; $count < count($data); $count++) {
@@ -294,8 +304,35 @@ class Search {
     $this->dataSet = $data;
   }
 
+  private function setDataSetSize() {
+    $this->dataSetSize = DB::getPeopleSearchCount($this->query);
+  }
+
   public function returnData() {
-    ApiFunctions::printJson($this->dataSet);
+
+    $data = [];
+    $data['pagination'] = $this->getPagination();
+    $data['results'] = $this->dataSet;
+
+    ApiFunctions::printJson($data);
+  }
+
+  public function getPagination() {
+    $pagination         = new Pagination($this->dataSetSize);
+    $links              = [];
+    $links['first']     = $pagination->getPageFirst();
+    $links['last']      = $pagination->getPageLast();
+    $links['next']      = $pagination->getPageNext();
+
+    return $links;
+  }
+
+  public function setOffset() {
+    $this->offset = ($this->perPage) * ($this->page - 1);
+  }
+
+  public function getOffset() {
+    return $this->offset;
   }
 }
 
