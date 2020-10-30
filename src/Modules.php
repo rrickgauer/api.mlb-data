@@ -211,6 +211,14 @@ class Fielding extends Module {
   }
 }
 
+class FieldingPost extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getFieldingPostAggregate', 'DB::getFieldingPost');
+    $this->setDataSetSize('DB::getFieldingPostCount');
+  }
+}
+
 class FieldingOF extends Module {
   public function __construct() {
     parent::__construct();

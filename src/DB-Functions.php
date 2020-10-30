@@ -877,6 +877,146 @@ class DB {
     return $sql;
   }
 
+  public static function getFieldingPost($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+    $stmt = "
+    SELECT      f.playerID as playerID,
+                p.nameFirst as nameFirst,
+                p.nameLast as nameLast,
+                f.yearID as year,
+                f.round as round,
+                t.name as teamName,
+                f.lgID as lgID,
+                f.POS as POS,
+                f.G as G,
+                f.GS as GS,
+                f.InnOuts as InnOuts,
+                f.PO as PO,
+                f.A as A,
+                f.E as E,
+                f.DP as DP,
+                f.PB as PB,
+                f.SB as SB,
+                f.CS as CS
+    FROM        fieldingpost f 
+    LEFT JOIN   people p ON f.playerID = p.playerID
+    LEFT JOIN   teams t on f.team_ID = t.ID ";
+
+    $stmt .= DB::getFilterStmt($filters, 'f.');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE f.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND f.playerID = :playerID ';
+      }
+    }
+
+    $stmt .= " GROUP  BY f.ID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+  public static function getFieldingPostCount($playerID = null, $sort = null, $filters = null) {
+    $stmt = 'SELECT count(f.ID) as  count from fieldingpost f ';
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE f.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND f.playerID = :playerID ';
+      }
+    }
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    $sql->execute();
+    $results = $sql->fetch(PDO::FETCH_ASSOC);
+    return $results['count'];
+  }
+
+  public static function getFieldingPostAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+    $stmt = "
+    SELECT      f.playerID as playerID,
+                p.nameFirst as nameFirst,
+                p.nameLast as nameLast,
+                (SELECT COUNT(DISTINCT yearID) FROM fielding f2 where f2.playerID = f.playerID) as years,
+                SUM(f.G) as G,
+                SUM(f.GS) as GS,
+                SUM(f.InnOuts) as InnOuts,
+                SUM(f.PO) as PO,
+                SUM(f.A) as A,
+                SUM(f.E) as E,
+                SUM(f.DP) as DP,
+                SUM(f.PB) as PB,
+                SUM(f.SB) as SB,
+                SUM(f.CS) as CS
+    FROM        fieldingpost f 
+    LEFT JOIN   people p ON f.playerID = p.playerID";
+
+    $stmt .= DB::getFilterStmt($filters, 'f.');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE f.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND f.playerID = :playerID ';
+      }
+    }
+
+    $stmt .= " GROUP  BY f.playerID ";
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit offset :offset";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+
   public static function getAppearances($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      a.yearID as year,
