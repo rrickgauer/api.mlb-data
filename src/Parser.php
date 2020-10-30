@@ -169,6 +169,16 @@ class Parser {
         $this->filterColumns = Constants::FieldingOFSplit; break;
       case Constants::Modules['Salaries']:
         $this->filterColumns = Constants::Salaries; break;
+      case Constants::Modules['Colleges']:
+        $this->filterColumns = Constants::Colleges; break;
+      case Constants::Modules['Images']:
+        $this->filterColumns = Constants::Images; break;
+      case Constants::Modules['BattingPost']:
+        $this->filterColumns = Constants::BattingPost; break;
+      case Constants::Modules['PitchingPost']:
+        $this->filterColumns = Constants::PitchingPost; break;
+      case Constants::Modules['FieldingPost']:
+        $this->filterColumns = Constants::FieldingPost; break;
       default:
         $this->filterColumns = null; break;
     }
