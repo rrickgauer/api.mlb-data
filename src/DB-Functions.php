@@ -252,7 +252,7 @@ class DB {
   }
 
 
-  public function getBattingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public function getBattingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -345,7 +345,7 @@ class DB {
   }
 
 
-  public static function getBattingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getBattingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -638,7 +638,7 @@ class DB {
   }
 
 
-  public static function getPitchingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getPitchingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      p.playerID as playerID,
                 people.nameFirst as nameFirst,
@@ -741,7 +741,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getPitchingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getPitchingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -1011,7 +1011,7 @@ class DB {
     return $result['count'];
   }
 
-  public static function getFieldingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getFieldingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1096,7 +1096,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getFieldingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getFieldingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1911,7 +1911,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
 
     $stmt = "
     SELECT    p.playerID as playerID,
@@ -1978,7 +1978,7 @@ class DB {
   }
 
 
-  public static function getImages($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getImages($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
 
     $stmt = '
     SELECT      i.playerID as playerID,
@@ -2072,7 +2072,7 @@ class DB {
   }
 
 
-  public static function getColleges($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getColleges($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = '
     SELECT      cp.playerID as playerID,
                 p.nameFirst as nameFirst,

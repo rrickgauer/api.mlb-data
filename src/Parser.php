@@ -220,7 +220,7 @@ class Parser {
 
   private function setPerPage() {
     if (!isset($_GET['perPage'])) {
-      $this->perPage = Constants::Defaults['PerPage'];
+      $this->perPage = Constants::Defaults['perPage'];
       return;
     }
 
@@ -233,8 +233,8 @@ class Parser {
     }
 
     // ensure per page is less than max per page value
-    if ($perPage > Constants::Limits['PerPage']) {
-      ApiFunctions::returnBadRequest('Error. perPage cannot exceed ' . Constants::Limits['PerPage']);
+    if ($perPage > Constants::Limits['perPage']) {
+      ApiFunctions::returnBadRequest('Error. perPage cannot exceed ' . Constants::Limits['perPage']);
       exit;
     }
 
@@ -249,7 +249,7 @@ class Parser {
     if (isset($_GET['page']))
       $this->page = $_GET['page'];
     else
-      $this->page = Constants::Defaults['Page'];
+      $this->page = Constants::Defaults['page'];
 
     // echo $this->page;
   }
