@@ -36,6 +36,7 @@ class Parser {
   private $playerID;
   private $perPage;
   private $page;
+  private $currentUrl;
 
   public function __construct() {
 
@@ -52,8 +53,10 @@ class Parser {
     $this->setSorts();
     $this->setAggregate();
     $this->setPlayerID();
+    $this->setPage();
     $this->setPerPage();
-  }
+    $this->setCurrentUrl();
+}
 
   public function getModule() {
     return $this->module;
@@ -240,6 +243,27 @@ class Parser {
 
   public function getPerPage() {
     return $this->perPage;
+  }
+
+  private function setPage() {
+    if (isset($_GET['page']))
+      $this->page = $_GET['page'];
+    else
+      $this->page = Constants::Defaults['Page'];
+
+    // echo $this->page;
+  }
+
+  public function getPage() {
+    return $this->page;
+  }
+
+  private function setCurrentUrl() {
+    $this->currentUrl = Constants::RootUrl . $_SERVER['PATH_INFO'] . '?' . $_SERVER['QUERY_STRING'];
+  }
+
+  public function getCurrentUrl() {
+    return $this->currentUrl;
   }
 }
 

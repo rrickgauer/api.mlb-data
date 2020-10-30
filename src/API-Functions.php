@@ -30,6 +30,8 @@ class ApiFunctions {
   public static function printJson($data) {
     // return response
     header('Content-Type: application/json');
+    header('Cache-Control: public');
+
     http_response_code(200);
     echo json_encode($data, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
     exit;

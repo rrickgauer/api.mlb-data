@@ -3,6 +3,7 @@
 include_once('includes.php');
 include_once('Modules.php'); // filters, sorts, sortType, perPage, page
 include_once('Parser.php');
+require_once('Pagination.php');
 
 // // display default return if no module is specified
 // if (!isset($_SERVER['PATH_INFO'])) {
@@ -10,16 +11,23 @@ include_once('Parser.php');
 //   exit;
 // }
 
-// $p1 = new Parser();
+$p1 = new Parser();
+
+$yo = new Pagination(53);
+
+echo $yo->getPageFirst() . '<br>';
+echo $yo->getPageLast() . '<br>';
+echo $yo->getPageNext() . '<br>';
+
+// echo $_SERVER['PATH_INFO'] . '<br>';
+// echo $_SERVER['QUERY_STRING'] . '<br>';
+// echo $_SERVER['PHP_SELF'] . '<br>';
 
 
-$teams = DB::getTeamsPlayedFor('lestejo01')->fetchAll(PDO::FETCH_ASSOC);
 
-// ApiFunctions::printJson($teams);
 
-$results['teamsPlayedFor'] = array_column($teams, 'name');
 
-ApiFunctions::printJson($results);
+
 
 
 // // generate the results based on the specified module
