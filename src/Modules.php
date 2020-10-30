@@ -54,6 +54,7 @@
 
 include_once ('Constants.php');
 require_once('Pagination.php');
+require_once('Api-Functions.php');
 
 class Module {
 
@@ -77,6 +78,8 @@ class Module {
     $this->setPlayerID($newPlayerID);
     $this->setOffset();
     $this->setDataSetSize = 1;    // this will get changed later in each of the sub modules
+
+    echo var_dump($this->filters);
   }
 
   public function getFilters() {
@@ -144,9 +147,7 @@ class Module {
   }
 
   public function setDataSetSize($function) {
-    $this->dataSetSize = call_user_func($function, $this->playerID, $this->filters, $this->sorts);
-
-    echo $this->dataSetSize;
+    $this->dataSetSize = call_user_func($function, $this->playerID, $this->sorts, $this->filters);
   }
 
   public function getPagination() {

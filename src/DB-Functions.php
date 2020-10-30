@@ -744,7 +744,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFCountCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingOFCount($playerID = null, $sort = null, $filters = null) {
       $stmt = 'SELECT count(f.ID) as  count from fieldingof f ';
       $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1223,9 +1223,14 @@ class DB {
       return '';
     }
 
+    // echo var_dump($filters);
+
     $stmt = ' WHERE ';
 
+    // echo var_dump($filters);
+
     for ($count = 0; $count < count($filters); $count++) {
+
       $filter      = $filters[$count];
       $column      = $filter['column'];
       $conditional = $filter['conditional'];
@@ -1236,6 +1241,8 @@ class DB {
       else
         $stmt = $stmt . " $tableName$column $conditional $qualifier";
     }
+
+
 
     return $stmt;
   }
