@@ -210,7 +210,7 @@ class Fielding extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingAggregate', 'DB::getFielding');
-    $this->setDataSetSize('DB::getFieldingCount');
+    $this->setDataSetSize('DB::getFieldingAggregateCount', 'DB::getFieldingCount');
   }
 }
 
