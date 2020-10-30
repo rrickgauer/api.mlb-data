@@ -1576,7 +1576,8 @@ class DB {
             p.finalgame_date as finalGameDate,
             p.death_date as deathDate,
             (select t.name from appearances a left join teams t on a.team_ID = t.ID where a.playerID = p.playerID group by a.ID order by a.yearID desc limit 1) as team,
-            (select i.source from images i where i.playerID = p.playerID limit 1) as image
+            (select i.source from images i where i.playerID = p.playerID limit 1) as image,
+            if ((select h.inducted from halloffame h where h.playerID = p.playerID limit 1) = 'Y', 'y', 'n') as hallOfFame
     FROM    people p ";
 
     $stmt .= DB::getFilterStmt($filters, '');
