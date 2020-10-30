@@ -113,7 +113,7 @@ class Constants {
   const Fielding = [
     "ID"       => "ID",
     "playerID" => "playerID",
-    "yearID"   => "yearID",
+    "year"     => "year",
     "stint"    => "stint",
     "teamID"   => "teamID",
     "team_ID"  => "team_ID",

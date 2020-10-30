@@ -145,6 +145,8 @@ class Module {
 
   public function setDataSetSize($function) {
     $this->dataSetSize = call_user_func($function, $this->playerID, $this->filters, $this->sorts);
+
+    echo $this->dataSetSize;
   }
 
   public function getPagination() {
@@ -190,6 +192,7 @@ class Pitching extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
+    $this->setDataSetSize('DB::getPitchingCount');
   }
 
   private function retrieveData() {
@@ -205,6 +208,7 @@ class Batting extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
+    $this->setDataSetSize('DB::getBattingCount');
   }
 
   private function retrieveData() {
@@ -220,6 +224,7 @@ class Fielding extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
+    $this->setDataSetSize('DB::getFieldingCount');
   }
 
   private function retrieveData() {
@@ -235,6 +240,7 @@ class FieldingOF extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
+    $this->setDataSetSize('DB::getFieldingOFCount');
   }
 
   private function retrieveData() {
@@ -250,6 +256,7 @@ class FieldingOFSplit extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
+    $this->setDataSetSize('DB::getFieldingOFSplitCount');
   }
 
   private function retrieveData() {
@@ -265,6 +272,7 @@ class Appearances extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
+    $this->setDataSetSize('DB::getAppearancesCount');
   }
 
   private function retrieveData() {
@@ -280,6 +288,7 @@ class Salaries extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
     $this->retrieveData();
+    $this->setDataSetSize('DB::getSalariesCount');
   }
 
   private function retrieveData() {

@@ -135,6 +135,35 @@ class DB {
     return $sql;
   }
 
+
+  public static function getBattingCount($playerID = null, $sort = null, $filters = null) {
+    $stmt = 'SELECT count(b.ID) as  count from batting b ';
+    $stmt .= DB::getFilterStmt($filters, '');
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) {
+      if ($filters == null) {
+        $stmt .= ' WHERE b.playerID = :playerID ';
+      } else {
+        $stmt .= ' AND b.playerID = :playerID ';
+      }
+    }
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    $sql->execute();
+    $results = $sql->fetch(PDO::FETCH_ASSOC);
+    return $results['count'];
+  }
+
+
+
   public static function getBattingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      b.playerID,
@@ -274,6 +303,32 @@ class DB {
     return $sql;
   }
 
+  public static function getPitchingCount($playerID = null, $sort = null, $filters = null) {
+      $stmt = 'SELECT count(p.ID) as  count from pitching p ';
+      $stmt .= DB::getFilterStmt($filters, '');
+
+      // playerID is included and only want data for that player
+      if ($playerID != null) {
+        if ($filters == null) {
+          $stmt .= ' WHERE p.playerID = :playerID ';
+        } else {
+          $stmt .= ' AND p.playerID = :playerID ';
+        }
+      }
+
+      $sql = DB::dbConnect()->prepare($stmt);
+
+      // filter/bind playerID if it is set
+      if ($playerID != null) {
+        $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+        $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+      }
+
+      $sql->execute();
+      $results = $sql->fetch(PDO::FETCH_ASSOC);
+      return $results['count'];
+  }
+
   public static function getPitchingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      p.playerID,
@@ -408,6 +463,32 @@ class DB {
     return $sql;
   }
 
+  public static function getFieldingCount($playerID = null, $sort = null, $filters = null) {
+      $stmt = 'SELECT count(f.ID) as  count from fielding f ';
+      $stmt .= DB::getFilterStmt($filters, '');
+
+      // playerID is included and only want data for that player
+      if ($playerID != null) {
+        if ($filters == null) {
+          $stmt .= ' WHERE f.playerID = :playerID ';
+        } else {
+          $stmt .= ' AND f.playerID = :playerID ';
+        }
+      }
+
+      $sql = DB::dbConnect()->prepare($stmt);
+
+      // filter/bind playerID if it is set
+      if ($playerID != null) {
+        $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+        $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+      }
+
+      $sql->execute();
+      $results = $sql->fetch(PDO::FETCH_ASSOC);
+      return $results['count'];
+  }
+
   public static function getFieldingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      f.playerID as playerID,
@@ -528,6 +609,32 @@ class DB {
     return $sql;
   }
 
+  public static function getAppearancesCount($playerID = null, $sort = null, $filters = null) {
+      $stmt = 'SELECT count(a.ID) as  count from appearances a ';
+      $stmt .= DB::getFilterStmt($filters, '');
+
+      // playerID is included and only want data for that player
+      if ($playerID != null) {
+        if ($filters == null) {
+          $stmt .= ' WHERE p.playerID = :playerID ';
+        } else {
+          $stmt .= ' AND p.playerID = :playerID ';
+        }
+      }
+
+      $sql = DB::dbConnect()->prepare($stmt);
+
+      // filter/bind playerID if it is set
+      if ($playerID != null) {
+        $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+        $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+      }
+
+      $sql->execute();
+      $results = $sql->fetch(PDO::FETCH_ASSOC);
+      return $results['count'];
+  }
+
   public static function getAppearancesAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      a.playerID,
@@ -635,6 +742,32 @@ class DB {
 
     $sql->execute();
     return $sql;
+  }
+
+  public static function getFieldingOFCountCount($playerID = null, $sort = null, $filters = null) {
+      $stmt = 'SELECT count(f.ID) as  count from fieldingof f ';
+      $stmt .= DB::getFilterStmt($filters, '');
+
+      // playerID is included and only want data for that player
+      if ($playerID != null) {
+        if ($filters == null) {
+          $stmt .= ' WHERE f.playerID = :playerID ';
+        } else {
+          $stmt .= ' AND f.playerID = :playerID ';
+        }
+      }
+
+      $sql = DB::dbConnect()->prepare($stmt);
+
+      // filter/bind playerID if it is set
+      if ($playerID != null) {
+        $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+        $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+      }
+
+      $sql->execute();
+      $results = $sql->fetch(PDO::FETCH_ASSOC);
+      return $results['count'];
   }
 
   public static function getFieldingOFAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
@@ -745,6 +878,32 @@ class DB {
     return $sql;
   }
 
+  public static function getFieldingOFSplitCount($playerID = null, $sort = null, $filters = null) {
+      $stmt = 'SELECT count(f.ID) as  count from fieldingofsplit f ';
+      $stmt .= DB::getFilterStmt($filters, '');
+
+      // playerID is included and only want data for that player
+      if ($playerID != null) {
+        if ($filters == null) {
+          $stmt .= ' WHERE f.playerID = :playerID ';
+        } else {
+          $stmt .= ' AND f.playerID = :playerID ';
+        }
+      }
+
+      $sql = DB::dbConnect()->prepare($stmt);
+
+      // filter/bind playerID if it is set
+      if ($playerID != null) {
+        $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+        $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+      }
+
+      $sql->execute();
+      $results = $sql->fetch(PDO::FETCH_ASSOC);
+      return $results['count'];
+  }
+
   public static function getFieldingOFSplitAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
     $stmt = "
     SELECT      f.playerID,
@@ -848,6 +1007,32 @@ class DB {
     $sql->execute();
 
     return $sql;
+  }
+
+  public static function getSalariesCount($playerID = null, $sort = null, $filters = null) {
+      $stmt = 'SELECT count(s.ID) as  count from salaries s ';
+      $stmt .= DB::getFilterStmt($filters, '');
+
+      // playerID is included and only want data for that player
+      if ($playerID != null) {
+        if ($filters == null) {
+          $stmt .= ' WHERE s.playerID = :playerID ';
+        } else {
+          $stmt .= ' AND s.playerID = :playerID ';
+        }
+      }
+
+      $sql = DB::dbConnect()->prepare($stmt);
+
+      // filter/bind playerID if it is set
+      if ($playerID != null) {
+        $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+        $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+      }
+
+      $sql->execute();
+      $results = $sql->fetch(PDO::FETCH_ASSOC);
+      return $results['count'];
   }
 
   public static function getSalariesAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
@@ -957,7 +1142,7 @@ class DB {
     return $sql;
   }
 
-  public function getPeopleCount($playerID = null, $sort = null, $filters = null) {
+  public static function getPeopleCount($playerID = null, $sort = null, $filters = null) {
     $stmt = 'SELECT count(*) as count from people p ';
     $stmt .= DB::getFilterStmt($filters, '');
 
