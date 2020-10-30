@@ -186,7 +186,7 @@ class PitchingPost extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getPitchingPostAggregate', 'DB::getPitchingPost');
-    $this->setDataSetSize('DB::getPitchingPostCount');
+    $this->setDataSetSize('DB::getPitchingPostAggregateCount', 'DB::getPitchingPostCount');
   }
 }
 
@@ -202,7 +202,7 @@ class BattingPost extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getBattingPostAggregate', 'DB::getBattingPost');
-    $this->setDataSetSize('DB::getBattingPostCount');
+    $this->setDataSetSize('DB::getBattingPostAggregateCount', 'DB::getBattingPostCount');
   }
 }
 
@@ -218,7 +218,7 @@ class FieldingPost extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingPostAggregate', 'DB::getFieldingPost');
-    $this->setDataSetSize('DB::getFieldingPostCount');
+    $this->setDataSetSize('DB::getFieldingPostAggregateCount', 'DB::getFieldingPostCount');
   }
 }
 
@@ -226,7 +226,7 @@ class FieldingOF extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingOFAggregate', 'DB::getFieldingOF');
-    $this->setDataSetSize('DB::getFieldingOFCount');
+    $this->setDataSetSize('DB::getFieldingOFAggregateCount', 'DB::getFieldingOFCount');
   }
 }
 
@@ -234,7 +234,7 @@ class FieldingOFSplit extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingOFSplitAggregate', 'DB::getFieldingOFSplit');
-    $this->setDataSetSize('DB::getFieldingOFSplitCount');
+    $this->setDataSetSize('DB::getFieldingOFSplitAggregateCount', 'DB::getFieldingOFSplitCount');
   }
 }
 
@@ -250,7 +250,7 @@ class Salaries extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getSalariesAggregate', 'DB::getSalaries');
-    $this->setDataSetSize('DB::getSalariesCount');
+    $this->setDataSetSize('DB::getSalariesAggregateCount', 'DB::getSalariesCount');
   }
 }
 
@@ -258,7 +258,7 @@ class Images extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getImages', 'DB::getImages');
-    $this->setDataSetSize('DB::getImagesCount');
+    $this->setDataSetSize('DB::getImagesCount', 'DB::getImagesCount');
   }
 }
 
@@ -266,7 +266,7 @@ Class Colleges extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getColleges', 'DB::getColleges');
-    $this->setDataSetSize('DB::getCollegesCount');
+    $this->setDataSetSize('DB::getCollegesCount', 'DB::getCollegesCount');
   }
 }
 
