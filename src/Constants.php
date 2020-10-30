@@ -263,6 +263,7 @@ class Constants {
     "FieldingOFSplit" => Constants::RootUrl . "/fielding-of-split",
     "Salaries"        => Constants::RootUrl . "/salaries",
     "Search"          => Constants::RootUrl . "/search",
+    "Images"          => Constants::RootUrl . "/images",
   ];
 
   const DefaultPageDisplay = [
