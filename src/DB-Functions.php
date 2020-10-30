@@ -70,7 +70,7 @@ class DB {
     else return false;
   }
 
-  public static function getBatting($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getBatting($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      b.playerID,
                 p.nameFirst,
@@ -136,7 +136,7 @@ class DB {
   }
 
 
-  public static function getBattingCount($playerID = null, $sort = null, $filters = null) {
+  public static function getBattingCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(b.ID) as  count from batting b ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -162,7 +162,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getBattingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getBattingAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      b.playerID,
                 p.nameFirst,
@@ -224,7 +224,7 @@ class DB {
     return $sql;
   }
 
-  public static function getBattingAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getBattingAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT b.playerID) as count FROM batting b ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -252,7 +252,7 @@ class DB {
   }
 
 
-  public function getBattingPost($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public function getBattingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -318,7 +318,7 @@ class DB {
   }
 
 
-  public static function getBattingPostCount($playerID = null, $sort = null, $filters = null) {
+  public static function getBattingPostCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(b.ID) as  count from battingpost b ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -345,7 +345,7 @@ class DB {
   }
 
 
-  public static function getBattingPostAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getBattingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -407,7 +407,7 @@ class DB {
     return $sql;
   }
 
-  public static function getBattingPostAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getBattingPostAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT b.playerID) as count FROM battingpost b ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -434,7 +434,7 @@ class DB {
     return $result['count'];
   }
 
-  public static function getPitching($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getPitching($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -511,7 +511,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPitchingCount($playerID = null, $sort = null, $filters = null) {
+  public static function getPitchingCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(p.ID) as  count from pitching p ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -537,7 +537,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getPitchingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getPitchingAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -610,7 +610,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPitchingAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getPitchingAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT p.playerID) as count FROM pitching p ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -638,7 +638,7 @@ class DB {
   }
 
 
-  public static function getPitchingPost($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getPitchingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      p.playerID as playerID,
                 people.nameFirst as nameFirst,
@@ -715,7 +715,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPitchingPostCount($playerID = null, $sort = null, $filters = null) {
+  public static function getPitchingPostCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(p.ID) as  count from pitchingpost p ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -741,7 +741,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getPitchingPostAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getPitchingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -814,7 +814,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPitchingPostAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getPitchingPostAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT p.playerID) as count FROM pitchingpost p ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -841,7 +841,7 @@ class DB {
     return $result['count'];
   }
 
-  public static function getFielding($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getFielding($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -902,7 +902,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(f.ID) as  count from fielding f ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -928,7 +928,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getFieldingAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getFieldingAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -984,7 +984,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT f.playerID) as count FROM fielding f ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1011,7 +1011,7 @@ class DB {
     return $result['count'];
   }
 
-  public static function getFieldingPost($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getFieldingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1070,7 +1070,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingPostCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingPostCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(f.ID) as  count from fieldingpost f ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1096,7 +1096,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getFieldingPostAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getFieldingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1150,7 +1150,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingPostAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingPostAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT f.playerID) as count FROM fieldingpost f ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1178,7 +1178,7 @@ class DB {
   }
 
 
-  public static function getAppearances($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getAppearances($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      a.yearID as year,
                 t.name as teamName,
@@ -1242,7 +1242,7 @@ class DB {
     return $sql;
   }
 
-  public static function getAppearancesCount($playerID = null, $sort = null, $filters = null) {
+  public static function getAppearancesCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(a.ID) as  count from appearances a ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1268,7 +1268,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getAppearancesAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getAppearancesAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      a.playerID,
                 p.nameFirst,
@@ -1329,7 +1329,7 @@ class DB {
     return $sql;
   }
 
-  public static function getAppearancesAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getAppearancesAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT a.playerID) as count FROM appearances a ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1356,7 +1356,7 @@ class DB {
     return $result['count'];
   }
 
-  public static function getFieldingOF($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getFieldingOF($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1404,7 +1404,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingOFCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(f.ID) as  count from fieldingof f ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1430,7 +1430,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getFieldingOFAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getFieldingOFAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT    f.playerID,
               p.nameFirst,
@@ -1477,7 +1477,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingOFAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT f.playerID) as count FROM fieldingof f ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1504,7 +1504,7 @@ class DB {
     return $result['count'];
   }
 
-  public static function getFieldingOFSplit($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getFieldingOFSplit($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1565,7 +1565,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFSplitCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingOFSplitCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(f.ID) as  count from fieldingofsplit f ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1591,7 +1591,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getFieldingOFSplitAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getFieldingOFSplitAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1647,7 +1647,7 @@ class DB {
     return $sql;
   }
 
-  public static function getFieldingOFSplitAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getFieldingOFSplitAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT f.playerID) as count FROM fieldingofsplit f ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1674,7 +1674,7 @@ class DB {
     return $result['count'];
   }
 
-  public static function getSalaries($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getSalaries($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      s.playerID,
                 p.nameFirst,
@@ -1723,7 +1723,7 @@ class DB {
     return $sql;
   }
 
-  public static function getSalariesCount($playerID = null, $sort = null, $filters = null) {
+  public static function getSalariesCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(s.ID) as  count from salaries s ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1749,7 +1749,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getSalariesAggregate($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getSalariesAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT      s.playerID,
                 p.nameFirst,
@@ -1795,7 +1795,7 @@ class DB {
     return $sql;
   }
 
-  public static function getSalariesAggregateCount($playerID = null, $sort = null, $filters = null) {
+  public static function getSalariesAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = "SELECT COUNT(DISTINCT s.playerID) as count FROM salaries s ";
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1822,7 +1822,7 @@ class DB {
     return $result['count'];
   }
 
-  public static function getPeople($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = 0) {
+  public static function getPeople($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = "
     SELECT  p.playerID,
             p.nameFirst,
@@ -1885,7 +1885,7 @@ class DB {
     return $sql;
   }
 
-  public static function getPeopleCount($playerID = null, $sort = null, $filters = null) {
+  public static function getPeopleCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(*) as count from people p ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -1911,7 +1911,7 @@ class DB {
     return $results['count'];
   }
 
-  public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
 
     $stmt = "
     SELECT    p.playerID as playerID,
@@ -1978,7 +1978,7 @@ class DB {
   }
 
 
-  public static function getImages($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getImages($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
 
     $stmt = '
     SELECT      i.playerID as playerID,
@@ -2027,7 +2027,7 @@ class DB {
     return $sql;
   }
 
-  public static function getImagesCount($playerID = null, $sort = null, $filters = null) {
+  public static function getImagesCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(i.ID) as  count from images i ';
     $stmt .= DB::getFilterStmt($filters, '');
 
@@ -2072,7 +2072,7 @@ class DB {
   }
 
 
-  public static function getColleges($playerID = null, $sort = null, $filters = null, $limit = Constants::Defaults['PerPage'], $offset = Constants::Defaults['Offset']) {
+  public static function getColleges($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
     $stmt = '
     SELECT      cp.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -2123,7 +2123,7 @@ class DB {
     return $sql;
   }
 
-  public static function getCollegesCount($playerID = null, $sort = null, $filters = null) {
+  public static function getCollegesCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
     $stmt = 'SELECT count(cp.ID) as  count from collegeplaying cp ';
     $stmt .= DB::getFilterStmt($filters, '');
 

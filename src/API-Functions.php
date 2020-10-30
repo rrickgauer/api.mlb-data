@@ -66,17 +66,20 @@ class ApiFunctions {
 
   public static function getPlayerModuleLinksArray($playerID) {
     $urls = [];
+
     $urls['Appearances']     = Constants::InternalUrls['Appearances'] . '/' . $playerID;
     $urls['Batting']         = Constants::InternalUrls['Batting'] . '/' . $playerID;
     $urls['Fielding']        = Constants::InternalUrls['Fielding'] . '/' . $playerID;
     $urls['FieldingOF']      = Constants::InternalUrls['FieldingOF'] . '/' . $playerID;
     $urls['FieldingOFSplit'] = Constants::InternalUrls['FieldingOFSplit'] . '/' . $playerID;
-
     $urls['Images']          = Constants::InternalUrls['Images'] . '/' . $playerID;
-
     $urls['People']          = Constants::InternalUrls['People'] . '/' . $playerID;
     $urls['Pitching']        = Constants::InternalUrls['Pitching'] . '/' . $playerID;
     $urls['Salaries']        = Constants::InternalUrls['Salaries'] . '/' . $playerID;
+    $urls['Colleges']        = Constants::InternalUrls['Colleges'] . '/' . $playerID;
+    $urls['BattingPost']     = Constants::InternalUrls['BattingPost'] . '/' . $playerID;
+    $urls['FieldingPost']    = Constants::InternalUrls['FieldingPost'] . '/' . $playerID;
+    $urls['PitchingPost']    = Constants::InternalUrls['PitchingPost'] . '/' . $playerID;
 
     return $urls;
   }
