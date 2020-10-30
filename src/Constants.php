@@ -33,6 +33,7 @@ class Constants {
     "Salaries"        => "salaries",
     "Search"          => "search",
     "BattingPost"     => "batting-post",
+    "PitchingPost"    => "pitching-post",
   ];
 
   const Defaults = [

@@ -179,6 +179,14 @@ class Pitching extends Module {
   }
 }
 
+class PitchingPost extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getPitchingPostAggregate', 'DB::getPitchingPost');
+    $this->setDataSetSize('DB::getPitchingPostCount');
+  }
+}
+
 class Batting extends Module {
   public function __construct() {
     parent::__construct();
