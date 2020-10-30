@@ -24,11 +24,13 @@ class Pagination
     else
       $this->isGetSet = true;
 
-    $this->page = $this->parser->getPage();
+    
 
     $this->setBaseUrl();
     $this->setPageFirst();
     $this->setPageLast();
+    // $this->page = $this->parser->getPage();
+    $this->setPage();
     $this->setPageNext();
     
   }
@@ -55,10 +57,10 @@ class Pagination
   }
 
   private function setPageNext() {
-    if ($this->page == $this->pageLast - 1)
-      $this->pageNext = $this->pageLast;
-    else
+    if ($this->page + 1 < $this->pageLast)
       $this->pageNext = $this->page + 1;
+    else
+      $this->pageNext = $this->pageLast;
   }
 
   private function setBaseUrl() {
@@ -95,6 +97,16 @@ class Pagination
 
   private function setPageLast() {
     $this->pageLast  = ceil($this->recordCount / $this->parser->getPerPage());
+  }
+
+  private function setPage() {
+    $page = $this->parser->getPage();
+
+    if ($page > $this->pageLast) {
+      ApiFunctions::returnRequestNotFound('This page does not exist');
+    } else {
+      $this->page = $page;
+    }
   }
 }
 
