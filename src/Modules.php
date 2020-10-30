@@ -55,6 +55,7 @@
 include_once ('Constants.php');
 require_once('Pagination.php');
 require_once('Api-Functions.php');
+require_once('Parser.php');
 
 class Module {
 
@@ -165,137 +166,93 @@ class Module {
   public function getOffset() {
     return $this->offset;
   }
+
+  protected function retrieveData($aggregateFunction, $function) {
+    if ($this->aggregate == true)
+      $dataset = call_user_func($aggregateFunction, $this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset);
+    else 
+      $dataset = call_user_func($function, $this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset);
+    
+    $parser = new Parser(); // need this to get the module
+
+    // if there is only 1 row for the results, then just fetch the first row
+    if ($this->playerID != null && ($this->aggregate || $parser->getModule() == Constants::Modules['People']))
+      $this->dataSet = $dataset->fetch(PDO::FETCH_ASSOC);
+    else 
+      $this->dataSet = $dataset->fetchAll(PDO::FETCH_ASSOC);
+    
+
+  }
 }
 
 class People extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
-    $this->retrieveData();
+    $this->retrieveData('DB::getPeople', 'DB::getPeople');
     $this->setDataSetSize('DB::getPeopleCount');
-  }
 
-  private function retrieveData() {
-    if ($this->playerID == null) {
-      $results = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-      $results = DB::getPeople($this->playerID, $this->sorts, $this->filters, $this->perPage, 0)->fetch(PDO::FETCH_ASSOC);
+    // add teams played for if playerID is specified
+    if ($this->playerID != null) {
       $teams = DB::getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
-      $results['teamsPlayedFor'] = array_column($teams, 'name');
+      $this->dataSet['teamsPlayedFor'] = array_column($teams, 'name');
     }
 
-    $this->dataSet = $results;
   }
 }
 
 class Pitching extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
-    $this->retrieveData();
+    $this->retrieveData('DB::getPitchingAggregate', 'DB::getPitching');
     $this->setDataSetSize('DB::getPitchingCount');
-  }
-
-  private function retrieveData() {
-    if ($this->aggregate == true) {
-      $this->dataSet = DB::getPitchingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetch(PDO::FETCH_ASSOC);
-    } else {
-      $this->dataSet = DB::getPitching($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
-    }
   }
 }
 
 class Batting extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
-    $this->retrieveData();
+    $this->retrieveData('DB::getBattingAggregate', 'DB::getBatting');
     $this->setDataSetSize('DB::getBattingCount');
-  }
-
-  private function retrieveData() {
-    if ($this->aggregate == true) {
-      $this->dataSet = DB::getBattingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetch(PDO::FETCH_ASSOC);
-    } else {
-      $this->dataSet = DB::getBatting($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
-    }
   }
 }
 
 class Fielding extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
-    $this->retrieveData();
+    $this->retrieveData('DB::getFieldingAggregate', 'DB::getFielding');
     $this->setDataSetSize('DB::getFieldingCount');
-  }
-
-  private function retrieveData() {
-    if ($this->aggregate == true) {
-      $this->dataSet = DB::getFieldingAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetch(PDO::FETCH_ASSOC);
-    } else {
-      $this->dataSet = DB::getFielding($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
-    }
   }
 }
 
 class FieldingOF extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
-    $this->retrieveData();
+    $this->retrieveData('DB::getFieldingOFAggregate', 'DB::getFieldingOF');
     $this->setDataSetSize('DB::getFieldingOFCount');
-  }
-
-  private function retrieveData() {
-    if ($this->aggregate == true) {
-      $this->dataSet = DB::getFieldingOFAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetch(PDO::FETCH_ASSOC);
-    } else {
-      $this->dataSet = DB::getFieldingOF($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
-    }
   }
 }
 
 class FieldingOFSplit extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
-    $this->retrieveData();
+    $this->retrieveData('DB::getFieldingOFSplitAggregate', 'DB::getFieldingOFSplit');
     $this->setDataSetSize('DB::getFieldingOFSplitCount');
-  }
-
-  private function retrieveData() {
-    if ($this->aggregate == true) {
-      $this->dataSet = DB::getFieldingOFSplitAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetch(PDO::FETCH_ASSOC);
-    } else {
-      $this->dataSet = DB::getFieldingOFSplit($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
-    }
   }
 }
 
 class Appearances extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
-    $this->retrieveData();
+    $this->retrieveData('DB::getAppearancesAggregate', 'DB::getAppearances');
     $this->setDataSetSize('DB::getAppearancesCount');
-  }
-
-  private function retrieveData() {
-    if ($this->aggregate == true) {
-      $this->dataSet = DB::getAppearancesAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetch(PDO::FETCH_ASSOC);
-    } else {
-      $this->dataSet = DB::getAppearances($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
-    }
   }
 }
 
 class Salaries extends Module {
   public function __construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate) {
     parent::__construct($newPlayerID, $newFilters, $newSorts, $newPerPage, $newPage, $newAggregate);
-    $this->retrieveData();
+    $this->retrieveData('DB::getSalariesAggregate', 'DB::getSalaries');
     $this->setDataSetSize('DB::getSalariesCount');
-  }
-
-  private function retrieveData() {
-    if ($this->aggregate == true) {
-      $this->dataSet = DB::getSalariesAggregate($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetch(PDO::FETCH_ASSOC);
-    } else {
-      $this->dataSet = DB::getSalaries($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset)->fetchAll(PDO::FETCH_ASSOC);
-    }
   }
 }
 
