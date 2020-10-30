@@ -113,8 +113,11 @@ class Module {
     ApiFunctions::printJson($data);
   }
 
-  public function setDataSetSize($function) {
-    $this->dataSetSize = call_user_func($function, $this->playerID, $this->sorts, $this->filters);
+  public function setDataSetSize($functionAggregate, $function) {
+    if ($this->aggregate)
+      $this->dataSetSize = call_user_func($functionAggregate, $this->playerID, $this->sorts, $this->filters);
+    else
+      $this->dataSetSize = call_user_func($function, $this->playerID, $this->sorts, $this->filters);
   }
 
   public function getPagination() {
@@ -175,7 +178,7 @@ class Pitching extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getPitchingAggregate', 'DB::getPitching');
-    $this->setDataSetSize('DB::getPitchingCount');
+    $this->setDataSetSize('DB::getPitchingAggregateCount', 'DB::getPitchingCount');
   }
 }
 
@@ -183,7 +186,7 @@ class PitchingPost extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getPitchingPostAggregate', 'DB::getPitchingPost');
-    $this->setDataSetSize('DB::getPitchingPostCount');
+    $this->setDataSetSize('DB::getPitchingPostAggregateCount', 'DB::getPitchingPostCount');
   }
 }
 
@@ -191,7 +194,7 @@ class Batting extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getBattingAggregate', 'DB::getBatting');
-    $this->setDataSetSize('DB::getBattingCount');
+    $this->setDataSetSize('DB::getBattingAggregateCount', 'DB::getBattingCount');
   }
 }
 
@@ -199,7 +202,7 @@ class BattingPost extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getBattingPostAggregate', 'DB::getBattingPost');
-    $this->setDataSetSize('DB::getBattingPostCount');
+    $this->setDataSetSize('DB::getBattingPostAggregateCount', 'DB::getBattingPostCount');
   }
 }
 
@@ -207,7 +210,7 @@ class Fielding extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingAggregate', 'DB::getFielding');
-    $this->setDataSetSize('DB::getFieldingCount');
+    $this->setDataSetSize('DB::getFieldingAggregateCount', 'DB::getFieldingCount');
   }
 }
 
@@ -215,7 +218,7 @@ class FieldingPost extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingPostAggregate', 'DB::getFieldingPost');
-    $this->setDataSetSize('DB::getFieldingPostCount');
+    $this->setDataSetSize('DB::getFieldingPostAggregateCount', 'DB::getFieldingPostCount');
   }
 }
 
@@ -223,7 +226,7 @@ class FieldingOF extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingOFAggregate', 'DB::getFieldingOF');
-    $this->setDataSetSize('DB::getFieldingOFCount');
+    $this->setDataSetSize('DB::getFieldingOFAggregateCount', 'DB::getFieldingOFCount');
   }
 }
 
@@ -231,7 +234,7 @@ class FieldingOFSplit extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getFieldingOFSplitAggregate', 'DB::getFieldingOFSplit');
-    $this->setDataSetSize('DB::getFieldingOFSplitCount');
+    $this->setDataSetSize('DB::getFieldingOFSplitAggregateCount', 'DB::getFieldingOFSplitCount');
   }
 }
 
@@ -239,7 +242,7 @@ class Appearances extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getAppearancesAggregate', 'DB::getAppearances');
-    $this->setDataSetSize('DB::getAppearancesCount');
+    $this->setDataSetSize('DB::getAppearancesAggregateCount', 'DB::getAppearancesCount');
   }
 }
 
@@ -247,7 +250,7 @@ class Salaries extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getSalariesAggregate', 'DB::getSalaries');
-    $this->setDataSetSize('DB::getSalariesCount');
+    $this->setDataSetSize('DB::getSalariesAggregateCount', 'DB::getSalariesCount');
   }
 }
 
@@ -255,7 +258,7 @@ class Images extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getImages', 'DB::getImages');
-    $this->setDataSetSize('DB::getImagesCount');
+    $this->setDataSetSize('DB::getImagesCount', 'DB::getImagesCount');
   }
 }
 
@@ -263,7 +266,7 @@ Class Colleges extends Module {
   public function __construct() {
     parent::__construct();
     $this->retrieveData('DB::getColleges', 'DB::getColleges');
-    $this->setDataSetSize('DB::getCollegesCount');
+    $this->setDataSetSize('DB::getCollegesCount', 'DB::getCollegesCount');
   }
 }
 
