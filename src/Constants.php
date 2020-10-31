@@ -260,6 +260,7 @@ class Constants {
     "debutDate"     => "debutDate",
     "finalGameDate" => "finalGameDate",
     "deathDate"     => "deathDate",
+    "score"         => "score",
   ];
 
   const Images = [

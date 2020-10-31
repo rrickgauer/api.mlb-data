@@ -1496,7 +1496,8 @@ class DB {
   public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
 
     $stmt = "
-    SELECT    p.playerID as playerID,
+    SELECT    MATCH(nameFirst, nameLast) against(:query IN boolean mode) as score,
+              p.playerID as playerID,
               p.nameFirst as nameFirst,
               p.nameLast as nameLast,
               p.birth_date as birthDate,
@@ -1506,7 +1507,8 @@ class DB {
     FROM      people p 
     WHERE     MATCH(nameFirst, nameLast) against(:query IN boolean mode) > 0
     GROUP BY  playerID
-    ORDER BY  nameLast ASC, nameFirst ASC, playerID ASC, birthDate ASC
+    HAVING    score > 0
+    ORDER BY  score DESC, playerID ASC
     LIMIT     :limit
     OFFSET    :offset";
 
