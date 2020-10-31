@@ -1,21 +1,40 @@
 <?php
-
-//////////////////////////
-// Groups:              //
-// - Batting            //
-// - Pitching           //
-// - Appearances        //
-// - Fielding           //
-// - People             //
-// - FieldingOF         //
-// - FieldingOFSplit    //
-// - Salaries           //
-// - Search             //
-// - Modules            //
-// - Defaults           //
-// - Limits             //
-// - FilterConditionals //
-//////////////////////////
+/**
+ * This class holds the constants used throughout the API.
+ * 
+ * RootUrl
+ * Modules
+ * Defaults
+ * Limits
+ * Batting
+ * Pitching
+ * Appearances
+ * Fielding
+ * People
+ * FieldingOF
+ * FieldingOFSPlit
+ * Salaries
+ * Search
+ * Images
+ * BattingPost
+ * PitchingPost
+ * FieldingPost
+ * Colleges
+ * BattingAggregate
+ * PitchingAggregate
+ * AppearancesAggregate
+ * FieldingAggregate
+ * FieldingOFAggregate
+ * FieldingOFSplitAggregate
+ * SalariesAggregate
+ * BattingPostAggregate
+ * PitchingPostAggregate
+ * FieldingPostAggregate
+ * FilterConditionals
+ * ExternalUrls
+ * InternalUrls
+ * DefaultPageDisplay
+ */
  
 class Constants {
 

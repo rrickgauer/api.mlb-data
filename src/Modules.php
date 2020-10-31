@@ -1,56 +1,66 @@
 <?php
-
-//////////////////////////////////////
-// Class and Function List:         //
-//                                  //
-// Function list:                   //
-// - __construct()                  //
-// - getFilters()                   //
-// - setFilters()                   //
-// - getSorts()                     //
-// - setSorts()                     //
-// - setAggregate()                 //
-// - getPerPage()                   //
-// - setPerPage()                   //
-// - getPage()                      //
-// - setPage()                      //
-// - returnData()                   //
-// - __construct()                  //
-// - __construct()                  //
-// - retrieveData()                 //
-// - __construct()                  //
-// - retrieveData()                 //
-// - __construct()                  //
-// - retrieveData()                 //
-// - __construct()                  //
-// - retrieveData()                 //
-// - __construct()                  //
-// - retrieveData()                 //
-// - __construct()                  //
-// - retrieveData()                 //
-// - __construct()                  //
-// - retrieveData()                 //
-// - __construct()                  //
-// - getQuery()                     //
-// - getPerPage()                   //
-// - setQuery()                     //
-// - setPerPage()                   //
-// - retrieveData()                 //
-// - returnData()                   //
-//                                  //
-// Classes list:                    //
-// - Module                         //
-// - People extends Module          //
-// - Pitching extends Module        //
-// - Batting extends Module         //
-// - Fielding extends Module        //
-// - FieldingOF extends Module      //
-// - FieldingOFSplit extends Module //
-// - Appearances extends Module     //
-// - Salaries extends Module        //
-// - Search                         //
-//                                  //
-//////////////////////////////////////
+/******************************************************************************
+ *
+ * Here is where the base module class, and the module sub classes are 
+ * contained. Based on the subclass, it gets its dataset from the corresponding
+ * DB function
+ *
+ * 
+ * Class and Function List:
+ * Function list:
+ * - __construct()
+ * - getFilters()
+ * - getSorts()
+ * - getPerPage()
+ * - getPage()
+ * - getPlayerID()
+ * - returnData()
+ * - setDataSetSize()
+ * - getPagination()
+ * - setOffset()
+ * - getOffset()
+ * - retrieveData()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - __construct()
+ * - getQuery()
+ * - getPerPage()
+ * - getPage()
+ * - retrieveData()
+ * - setDataSetSize()
+ * - returnData()
+ * - getPagination()
+ * - setOffset()
+ * - getOffset()
+ * Classes list:
+ * - Module
+ * - People extends Module
+ * - Pitching extends Module
+ * - PitchingPost extends Module
+ * - Batting extends Module
+ * - BattingPost extends Module
+ * - Fielding extends Module
+ * - FieldingPost extends Module
+ * - FieldingOF extends Module
+ * - FieldingOFSplit extends Module
+ * - Appearances extends Module
+ * - Salaries extends Module
+ * - Images extends Module
+ * - Colleges extends Module
+ * - Search
+ * 
+******************************************************************************/
 
 include_once ('Constants.php');
 require_once('Pagination.php');
@@ -71,18 +81,15 @@ class Module {
   protected $parser;
 
   public function __construct() {
-    $this->parser = new Parser();
-
-    $this->filters   = $this->parser->getFilters();
-    $this->sorts     = $this->parser->getSorts();
-    $this->perPage   = $this->parser->getPerPage();
-    $this->page      = $this->parser->getPage();
-    $this->aggregate = $this->parser->getAggregate();
-    $this->playerID  = $this->parser->getPlayerID();
-
-
+    $this->parser         = new Parser();
+    $this->filters        = $this->parser->getFilters();
+    $this->sorts          = $this->parser->getSorts();
+    $this->perPage        = $this->parser->getPerPage();
+    $this->page           = $this->parser->getPage();
+    $this->aggregate      = $this->parser->getAggregate();
+    $this->playerID       = $this->parser->getPlayerID();
     $this->setOffset();
-    $this->dataSet = null;
+    $this->dataSet        = null;
     $this->setDataSetSize = 1;    // this will get changed later in each of the sub modules
   }
 
@@ -107,9 +114,9 @@ class Module {
   }
 
   public function returnData() {
-    $data = [];
+    $data               = [];
     $data['pagination'] = $this->getPagination();    
-    $data['results'] = $this->dataSet;
+    $data['results']    = $this->dataSet;
     ApiFunctions::printJson($data);
   }
 
@@ -124,9 +131,8 @@ class Module {
     $pagination         = new Pagination($this->dataSetSize);
     $links              = [];
     $links['first']     = $pagination->getPageFirst();
-    $links['last']      = $pagination->getPageLast();
     $links['next']      = $pagination->getPageNext();
-
+    $links['last']      = $pagination->getPageLast();
     return $links;
   }
 

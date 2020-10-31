@@ -1,26 +1,19 @@
 <?php
 /**
 * Class and Function List:
+* 
 * Function list:
 * - printJson()
 * - returnBadRequest()
-* - returnPeople()
-* - returnPerson()
-* - returnPersonBatting()
-* - returnPersonPitching()
-* - returnPersonSalaries()
-* - returnPersonAppearances()
-* - returnPersonSchools()
-* - getPaginationResults()
+* - returnRequestNotFound()
 * - returnDefaultDisplay()
-* - returnPersonPitchingTotals()
 * - returnInvalidUrl()
-* - returnPersonBattingTotals()
-* - returnPersonAppearancesTotals()
-* - returnPersonSalariesTotals()
+* - getPlayerModuleLinksArray()
+* 
 * Classes list:
 * - ApiFunctions
 */
+
 include_once ('DB-Functions.php');
 
 class ApiFunctions {
