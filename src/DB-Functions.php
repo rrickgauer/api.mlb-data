@@ -1,35 +1,70 @@
 <?php
-
-///////////////////////////////////////////////////////////////////////////////////////
-// Class and Function List:                                                          //
-//                                                                                   //
-// Function list:                  Description:                                      //
-// - dbConnect()                   return a connection to the db                     //
-// - doesPlayerExist()             returns if a player exists in the database        //
-// - getBatting()                  seasonal batting stats                            //
-// - getBattingAggregate()         aggregate batting stats                           //
-// - getPitching()                 seasonal pitching stats                           //
-// - getPitchingAggregate()        aggregate pitching stats                          //
-// - getFielding()                 seasonal fielding stats                           //
-// - getFieldingAggregate()        aggregate fielding stats                          //
-// - getAppearances()              seasonal appearances stats                        //
-// - getAppearancesAggregate()     aggregate appearances stats                       //
-// - getFieldingOF()               seasonal fieldingOF stats                         //
-// - getFieldingOFAggregate()      aggregate fieldingOF stats                        //
-// - getFieldingOFSplit()          seasonal fieldingOFSplit stats                    //
-// - getFieldingOFSplitAggregate() aggregate fieldingOFSplit stats                   //
-// - getSalaries()                 seasonal salary stats                             //
-// - getSalariesAggregate()        aggregate salary stats                            //
-// - getPeople()                   player bio info                                   //
-// - getPeopleSearch()             results for database player search query          //
-// - getFilterStmt()               creates the filter statement for queries          //
-// - getOrderStmt()                creates the order by statement for queries        //
-//                                                                                   //
-// Classes list:                                                                     //
-// - DB                                                                              //
-//                                                                                   //
-///////////////////////////////////////////////////////////////////////////////////////
-
+/******************************************************************************************
+ * This class contains all the functions that interact with the database.
+ * 
+ * All the functions are static.
+ * 
+ * Eventually, I would like to turn it into a non-static class so I dont have to pass in
+ * the same parms every time
+ *
+ * Function list:
+ * - dbConnect()
+ * - getSqlStmt()
+ * - getSqlStmtNoLimit()
+ * - getFilterStmt()
+ * - getOrderStmt()
+ * - doesPlayerExist()
+ * - getBatting()
+ * - getBattingCount()
+ * - getBattingAggregate()
+ * - getBattingAggregateCount()
+ * - getBattingPost()
+ * - getBattingPostCount()
+ * - getBattingPostAggregate()
+ * - getBattingPostAggregateCount()
+ * - getPitching()
+ * - getPitchingCount()
+ * - getPitchingAggregate()
+ * - getPitchingAggregateCount()
+ * - getPitchingPost()
+ * - getPitchingPostCount()
+ * - getPitchingPostAggregate()
+ * - getPitchingPostAggregateCount()
+ * - getFielding()
+ * - getFieldingCount()
+ * - getFieldingAggregate()
+ * - getFieldingAggregateCount()
+ * - getFieldingPost()
+ * - getFieldingPostCount()
+ * - getFieldingPostAggregate()
+ * - getFieldingPostAggregateCount()
+ * - getAppearances()
+ * - getAppearancesCount()
+ * - getAppearancesAggregate()
+ * - getAppearancesAggregateCount()
+ * - getFieldingOF()
+ * - getFieldingOFCount()
+ * - getFieldingOFAggregate()
+ * - getFieldingOFAggregateCount()
+ * - getFieldingOFSplit()
+ * - getFieldingOFSplitCount()
+ * - getFieldingOFSplitAggregate()
+ * - getFieldingOFSplitAggregateCount()
+ * - getSalaries()
+ * - getSalariesCount()
+ * - getSalariesAggregate()
+ * - getSalariesAggregateCount()
+ * - getPeople()
+ * - getPeopleCount()
+ * - getPeopleSearch()
+ * - getPeopleSearchCount()
+ * - getTeamsPlayedFor()
+ * - getImages()
+ * - getImagesCount()
+ * - getImagesPlayer()
+ * - getColleges()
+ * - getCollegesCount()
+*******************************************************************************/
 include_once ('Constants.php');
 
 class DB {

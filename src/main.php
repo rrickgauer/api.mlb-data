@@ -1,5 +1,8 @@
 <?php
-
+/******************************************************************************
+ * This is the main file for the API. It is responsible for displaying the 
+ * requested module. 
+ *****************************************************************************/
 include_once('includes.php');
 include_once('Modules.php'); // filters, sorts, sortType, perPage, page
 include_once('Parser.php');

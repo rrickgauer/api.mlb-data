@@ -1,4 +1,25 @@
 <?php
+/******************************************************************************
+ *
+ * This is the class that handles the pagination. It returns the first, next,
+ * and last page URL for the entire dataset requested.
+ * 
+ * Class and Function List:
+ * Function list:
+ * - __construct()
+ * - getPage()
+ * - getPageFirst()
+ * - getPageLast()
+ * - getPageNext()
+ * - getBaseUrl()
+ * - setPageNext()
+ * - setBaseUrl()
+ * - setPageFirst()
+ * - setPageLast()
+ * - setPage()
+ * Classes list:
+ * - Pagination
+******************************************************************************/
 
 require_once('Parser.php');
 require_once('Constants.php');

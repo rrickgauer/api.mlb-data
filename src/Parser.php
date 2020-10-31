@@ -1,25 +1,34 @@
 <?php
-
-///////////////////////////////
-// Class and Function List:  //
-//                           //
-// Function list:            //
-// - __construct()           //
-// - getModule()             //
-// - getSorts()              //
-// - getFilters()            //
-// - setModule()             //
-// - setSorts()              //
-// - setFilters()            //
-// - parseFilter()           //
-// - retrieveFilterColumns() //
-// - setAggregate()          //
-// - getAggregate()          //
-//                           //
-// Classes list:             //
-// - Parser                  //
-//                           //
-///////////////////////////////
+/******************************************************************************
+ *
+ * This class is responsible for parsing the request url. It returns the sort,
+ * filters, playerID, aggregate, and module.
+ * 
+ * Class and Function List:
+ * Function list:
+ * - __construct()
+ * - getModule()
+ * - getSorts()
+ * - getFilters()
+ * - setModule()
+ * - setSorts()
+ * - setFilters()
+ * - parseFilter()
+ * - retrieveFilterColumns()
+ * - setAggregate()
+ * - getAggregate()
+ * - setPlayerID()
+ * - getPlayerID()
+ * - isPlayerIDSet()
+ * - setPerPage()
+ * - getPerPage()
+ * - setPage()
+ * - getPage()
+ * - setCurrentUrl()
+ * - getCurrentUrl()
+ * Classes list:
+ * - Parser
+*******************************************************************************/
 
 include_once ('DB-Functions.php');
 include_once ('Constants.php');
