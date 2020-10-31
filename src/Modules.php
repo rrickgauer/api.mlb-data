@@ -64,7 +64,7 @@
 
 include_once ('Constants.php');
 require_once('Pagination.php');
-require_once('Api-Functions.php');
+require_once('API-Functions.php');
 require_once('Parser.php');
 
 class Module {
