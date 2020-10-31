@@ -1504,7 +1504,7 @@ class DB {
               p.finalgame_date as finalGameDate,
               p.death_date as deathDate
     FROM      people p 
-    WHERE     MATCH(namefirst, namelast) against(:query IN boolean mode) > 0
+    WHERE     MATCH(nameFirst, nameLast) against(:query IN boolean mode) > 0
     GROUP BY  playerID
     ORDER BY  nameLast ASC, nameFirst ASC, playerID ASC, birthDate ASC
     LIMIT     :limit
@@ -1532,9 +1532,9 @@ class DB {
 
   public static function getPeopleSearchCount($query = '') {
     $stmt = "SELECT COUNT(*) as count FROM (
-    SELECT    p.playerID as playerID,
+    SELECT    p.playerID as playerID
     FROM      people p 
-    WHERE     MATCH(namefirst, namelast) against(:query IN boolean mode) > 0
+    WHERE     MATCH(nameFirst, nameLast) against(:query IN boolean mode) > 0
     GROUP BY  playerID) table1";
 
     $sql = DB::dbConnect()->prepare($stmt);
