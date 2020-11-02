@@ -115,7 +115,8 @@ class Module {
 
   public function returnData() {
     $data               = [];
-    $data['pagination'] = $this->getPagination();    
+    $data['pagination'] = $this->getPagination(); 
+    $data['resultsCount'] = $this->dataSetSize;   
     $data['results']    = $this->dataSet;
     ApiFunctions::printJson($data);
   }
@@ -131,7 +132,9 @@ class Module {
     $pagination         = new Pagination($this->dataSetSize);
     $links              = [];
     $links['first']     = $pagination->getPageFirst();
+    $links['current']   = $pagination->getPageCurrent();
     $links['next']      = $pagination->getPageNext();
+    $links['previous']  = $pagination->getPagePrevious();
     $links['last']      = $pagination->getPageLast();
     return $links;
   }

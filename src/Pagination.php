@@ -31,6 +31,7 @@ class Pagination
   private $pageFirst;
   private $pageLast;
   private $pageNext;
+  private $pagePrevious;
   private $recordCount;
   private $parser;
   private $baseUrl;
@@ -40,19 +41,18 @@ class Pagination
     $this->recordCount = $recordCount;
     $this->parser      = new Parser();
 
+    // check if any url parameters are set
     if (count($_GET) == 0)
       $this->isGetSet = false;
     else
       $this->isGetSet = true;
 
-    
-
     $this->setBaseUrl();
     $this->setPageFirst();
     $this->setPageLast();
-    // $this->page = $this->parser->getPage();
     $this->setPage();
     $this->setPageNext();
+    $this->setPagePrevious();
     
   }
 
@@ -75,6 +75,21 @@ class Pagination
 
   public function getBaseUrl() {
     return $this->baseUrl;
+  }
+
+  public function getPagePrevious() {
+    if ($this->pagePrevious == null)
+      return null;
+    else
+      return $this->baseUrl . 'page=' . $this->pagePrevious;
+  }
+
+  public function getPageCurrent() {
+    return $this->baseUrl . 'page=' . $this->page;
+  }
+
+  public function getRecordCount() {
+    return $this->recordCount;
   }
 
   private function setPageNext() {
@@ -128,6 +143,13 @@ class Pagination
     } else {
       $this->page = $page;
     }
+  }
+
+  private function setPagePrevious() {
+    if ($this->page < 2)
+      $this->pagePrevious = null;
+    else
+      $this->pagePrevious = $this->page - 1;
   }
 }
 
