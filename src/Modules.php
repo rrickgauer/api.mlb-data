@@ -115,7 +115,8 @@ class Module {
 
   public function returnData() {
     $data               = [];
-    $data['pagination'] = $this->getPagination();    
+    $data['pagination'] = $this->getPagination(); 
+    $data['resultsCount'] = $this->dataSetSize;   
     $data['results']    = $this->dataSet;
     ApiFunctions::printJson($data);
   }

@@ -47,8 +47,6 @@ class Pagination
     else
       $this->isGetSet = true;
 
-    
-
     $this->setBaseUrl();
     $this->setPageFirst();
     $this->setPageLast();
@@ -88,6 +86,10 @@ class Pagination
 
   public function getPageCurrent() {
     return $this->baseUrl . 'page=' . $this->page;
+  }
+
+  public function getRecordCount() {
+    return $this->recordCount;
   }
 
   private function setPageNext() {
