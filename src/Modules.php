@@ -131,7 +131,9 @@ class Module {
     $pagination         = new Pagination($this->dataSetSize);
     $links              = [];
     $links['first']     = $pagination->getPageFirst();
+    $links['current']   = $pagination->getPageCurrent();
     $links['next']      = $pagination->getPageNext();
+    $links['previous']  = $pagination->getPagePrevious();
     $links['last']      = $pagination->getPageLast();
     return $links;
   }
