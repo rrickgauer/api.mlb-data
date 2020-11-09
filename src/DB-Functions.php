@@ -147,10 +147,11 @@ class DB {
       $conditional = $filter['conditional'];
       $qualifier   = $filter['qualifier'];
 
+      // if there is more than 1 filter, add an AND
       if ($count > 0) 
         $stmt .= ' AND';
-      else
-        $stmt = $stmt . " $tableName$column $conditional $qualifier";
+     
+      $stmt = $stmt . " $tableName$column $conditional $qualifier";
     }
 
     return $stmt;
