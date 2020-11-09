@@ -763,7 +763,7 @@ class DB {
                 SUM(p.SH) AS SH,
                 SUM(p.SF) AS SF,
                 SUM(p.GIDP) AS GIDP
-    FROM        pitching p
+    FROM        pitchingpost p
     LEFT JOIN   people on p.playerID = people.playerID";
 
     $sql = DB::getSqlStmt($stmt, 'p', 'playerID', $playerID, $sort, $filters, $limit, $offset);
@@ -802,7 +802,7 @@ class DB {
                 SUM(p.SH) AS SH,
                 SUM(p.SF) AS SF,
                 SUM(p.GIDP) AS GIDP
-    FROM        pitching p
+    FROM        pitchingpost p
     LEFT JOIN   people on p.playerID = people.playerID";
 
     $sql = DB::getSqlStmtNoLimit($stmt, 'p', 'playerID', $playerID, $sort, $filters);
