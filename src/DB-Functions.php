@@ -1661,10 +1661,10 @@ class DB {
   {
 
     $stmt = '
-    SELECT t.name           AS teamName, 
+    SELECT t.teamID         AS teamID,  
+           t.name           AS teamName, 
            t.yearID         AS year, 
            t.lgID           AS lgID, 
-           t.teamID         AS teamID, 
            t.franchID       AS franchID, 
            t.divID          AS divID, 
            t.div_ID         AS div_ID, 
@@ -1775,6 +1775,118 @@ class DB {
     FROM   teams t ';
 
     $sql = DB::getSqlStmtNoLimit($stmt, 't', 'ID', $teamID, $sort, $filters);
+    $sql->execute();
+    $results = $sql->fetch(); 
+    return $results['count'];
+  }
+
+
+  public static function getTeamsAggregate(
+    $teamID  = Constants::Defaults['playerID'], 
+    $sort    = Constants::Defaults['sort'], 
+    $filters = Constants::Defaults['filters'], 
+    $limit   = Constants::Defaults['perPage'], 
+    $offset  = Constants::Defaults['offset']) 
+  { 
+
+    $stmt = '
+    SELECT t.teamID              AS teamID, 
+    (SELECT name FROM teams t2 WHERE t2.teamID = t.teamID ORDER BY t2.yearID DESC LIMIT 1) as teamName,
+    (SELECT COUNT(DISTINCT yearID) FROM teams t2 where t2.teamID = t.teamID) as years,
+    SUM(t.G)              AS G, 
+    SUM(t.Ghome)          AS Ghome, 
+    SUM(t.W)              AS W, 
+    SUM(t.L)              AS L, 
+    (SELECT COUNT(ID) FROM teams t2 where t2.DivWin = "Y" and t2.teamID = t.teamID) AS DivWin, 
+    (SELECT COUNT(ID) FROM teams t2 where t2.WCWin =  "Y" and t2.teamID = t.teamID) AS WCWin, 
+    (SELECT COUNT(ID) FROM teams t2 where t2.LgWin =  "Y" and t2.teamID = t.teamID) AS LgWin, 
+    (SELECT COUNT(ID) FROM teams t2 where t2.WSWin =  "Y" and t2.teamID = t.teamID) AS WSWin, 
+    SUM(t.R)              AS R, 
+    SUM(t.AB)             AS AB, 
+    SUM(t.H)              AS H, 
+    SUM(t.2B)             AS 2B, 
+    SUM(t.3B)             AS 3B, 
+    SUM(t.HR)             AS HR, 
+    SUM(t.BB)             AS BB, 
+    SUM(t.SO)             AS SO, 
+    SUM(t.SB)             AS SB, 
+    SUM(t.CS)             AS CS, 
+    SUM(t.HBP)            AS HBP, 
+    SUM(t.SF)             AS SF, 
+    SUM(t.RA)             AS RA, 
+    SUM(t.ER)             AS ER, 
+    SUM(t.ERA)            AS ERA, 
+    SUM(t.CG)             AS CG, 
+    SUM(t.SHO)            AS SHO, 
+    SUM(t.SV)             AS SV, 
+    SUM(t.IPouts)         AS IPouts, 
+    SUM(t.HA)             AS HA, 
+    SUM(t.HRA)            AS HRA, 
+    SUM(t.BBA)            AS BBA, 
+    SUM(t.SOA)            AS SOA, 
+    SUM(t.E)              AS E, 
+    SUM(t.DP)             AS DP, 
+    SUM(t.FP)             AS FP, 
+    SUM(t.park)           AS park, 
+    SUM(t.attendance)     AS attendance, 
+    SUM(t.BPF)            AS BPF, 
+    SUM(t.PPF)            AS PPF 
+    FROM   teams t ';
+
+
+    $sql = DB::getSqlStmt($stmt, 't', 'teamID', $teamID, $sort, $filters, $limit, $offset);
+    $sql->execute();
+
+    return $sql;
+
+  }
+
+  public static function getTeamsAggregateCount($teamID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+    $stmt = 'SELECT COUNT(*) as count FROM (
+    SELECT t.teamID       AS teamID, 
+    (SELECT name FROM teams t2 WHERE t2.teamID = t.teamID ORDER BY t2.yearID DESC LIMIT 1) as teamName,
+    (SELECT COUNT(DISTINCT yearID) FROM teams t2 WHERE t2.teamID = t.teamID) as years,
+    SUM(t.G)              AS G, 
+    SUM(t.Ghome)          AS Ghome, 
+    SUM(t.W)              AS W, 
+    SUM(t.L)              AS L, 
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.DivWin = "Y" and t2.teamID = t.teamID) AS DivWin, 
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.WCWin =  "Y" and t2.teamID = t.teamID) AS WCWin, 
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.LgWin =  "Y" and t2.teamID = t.teamID) AS LgWin, 
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.WSWin =  "Y" and t2.teamID = t.teamID) AS WSWin, 
+    SUM(t.R)              AS R, 
+    SUM(t.AB)             AS AB, 
+    SUM(t.H)              AS H, 
+    SUM(t.2B)             AS 2B, 
+    SUM(t.3B)             AS 3B, 
+    SUM(t.HR)             AS HR, 
+    SUM(t.BB)             AS BB, 
+    SUM(t.SO)             AS SO, 
+    SUM(t.SB)             AS SB, 
+    SUM(t.CS)             AS CS, 
+    SUM(t.HBP)            AS HBP, 
+    SUM(t.SF)             AS SF, 
+    SUM(t.RA)             AS RA, 
+    SUM(t.ER)             AS ER, 
+    SUM(t.ERA)            AS ERA, 
+    SUM(t.CG)             AS CG, 
+    SUM(t.SHO)            AS SHO, 
+    SUM(t.SV)             AS SV, 
+    SUM(t.IPouts)         AS IPouts, 
+    SUM(t.HA)             AS HA, 
+    SUM(t.HRA)            AS HRA, 
+    SUM(t.BBA)            AS BBA, 
+    SUM(t.SOA)            AS SOA, 
+    SUM(t.E)              AS E, 
+    SUM(t.DP)             AS DP, 
+    SUM(t.FP)             AS FP, 
+    SUM(t.park)           AS park, 
+    SUM(t.attendance)     AS attendance, 
+    SUM(t.BPF)            AS BPF, 
+    SUM(t.PPF)            AS PPF 
+    FROM   teams t ';
+
+    $sql = DB::getSqlStmtNoLimit($stmt, 't', 'teamID', $teamID, $sort, $filters);
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];

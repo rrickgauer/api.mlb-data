@@ -283,8 +283,8 @@ Class Colleges extends Module {
 Class Teams extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('DB::getTeams', 'DB::getTeams');
-    $this->setDataSetSize('DB::getTeamsCount', 'DB::getTeamsCount');
+    $this->retrieveData('DB::getTeamsAggregate', 'DB::getTeams');
+    $this->setDataSetSize('DB::getTeamsAggregateCount', 'DB::getTeamsCount');
   }
 
 
