@@ -69,8 +69,30 @@ include_once ('Constants.php');
 
 class DB {
 
-  public static function dbConnect() {
-    include ('db-info.php');
+  private $playerID;
+  private $sort;
+  private $filters;
+  private $limit;
+  private $offset;
+
+  public function __construct(
+    $playerID = Constants::Defaults['playerID'], 
+    $sort     = Constants::Defaults['sort'], 
+    $filters  = Constants::Defaults['filters'], 
+    $limit    = Constants::Defaults['perPage'], 
+    $offset   = Constants::Defaults['offset']) 
+  {
+    $this->playerID = $playerID;
+    $this->sort     = $sort;
+    $this->filters  = $filters;
+    $this->limit    = $limit;
+    $this->offset   = $offset;
+  }
+
+
+
+  private function dbConnect() {
+    include('db-info.php');
 
     try {
       // connect to database
@@ -85,64 +107,64 @@ class DB {
     }
   }
 
-  public static function getSqlStmt($stmt, $table, $groupByColumn, $playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getSqlStmt($stmt, $table, $groupByColumn) {
 
 
     // playerID is included and only want data for that player
-    if ($playerID != null) 
+    if ($this->playerID != null) 
       $stmt .= " WHERE $table.playerID = :playerID ";
 
     $stmt .= " GROUP  BY $table.$groupByColumn ";
-    $stmt .= DB::getFilterStmt($filters);
-    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= $this->getFilterStmt();
+    $stmt .= $this->getOrderStmt();
     $stmt .= " LIMIT  :limit OFFSET :offset ";
 
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
     // filter/bind playerID if it is set
-    if ($playerID != null) {
-      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    if ($this->playerID != null) {
+      $this->playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $this->playerID, PDO::PARAM_STR);
     }
 
     // limit
-    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
-    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $this->limit = filter_var($this->limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $this->limit, PDO::PARAM_INT);
 
     // offset
-    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
-    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $this->offset = filter_var($this->offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $this->offset, PDO::PARAM_INT);
 
     return $sql;
   }
 
-  public static function getSqlStmtNoLimit($stmt, $table, $groupByColumn, $playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
-    if ($playerID != null) 
+  public function getSqlStmtNoLimit($stmt, $table, $groupByColumn) {
+    if ($this->playerID != null) 
       $stmt .= " WHERE $table.playerID = :playerID ";
 
     $stmt .= " GROUP  BY $table.$groupByColumn ";
-    $stmt .= DB::getFilterStmt($filters);
+    $stmt .= $this->getFilterStmt();
     $stmt .= " ) table1 ";
-    $sql  = DB::dbConnect()->prepare($stmt);
+    $sql  = $this->dbConnect()->prepare($stmt);
 
     // filter/bind playerID if it is set
-    if ($playerID != null) {
-      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
-      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    if ($this->playerID != null) {
+      $this->playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $this->playerID, PDO::PARAM_STR);
     }
     return $sql;
   }
 
-  public static function getFilterStmt($filters, $tableName = '') {
+  public function getFilterStmt($tableName = '') {
     //return empty string if null
-    if ($filters == null) {
+    if ($this->filters == null) {
       return '';
     }
 
     $stmt = ' HAVING ';
 
-    for ($count = 0; $count < count($filters); $count++) {
-      $filter      = $filters[$count];
+    for ($count = 0; $count < count($this->filters); $count++) {
+      $filter      = $this->filters[$count];
       $column      = $filter['column'];
       $conditional = $filter['conditional'];
       $qualifier   = $filter['qualifier'];
@@ -157,49 +179,52 @@ class DB {
     return $stmt;
   }
 
-  public static function getOrderStmt($sort) {
-    if ($sort == null) return '';
+  public function getOrderStmt() {
+    if ($this->sort == null) 
+      return '';
 
     // build order by statement
     $orderStmt  = '';
-    // $sortColumn = filter_var($sort['column'], FILTER_SANITIZE_STRING);
-    $sortColumn = $sort['column'];
+    // $this->sortColumn = filter_var($this->sort['column'], FILTER_SANITIZE_STRING);
+    $this->sortColumn = $this->sort['column'];
 
     // determine asc or desc
-    $sortType = strtoupper($sort['type']);
-    if ($sortType != 'ASC') 
-      $sortType = 'DESC';
+    $this->sortType = strtoupper($this->sort['type']);
+    if ($this->sortType != 'ASC') 
+      $this->sortType = 'DESC';
 
     // clean it
-    $sortType = filter_var($sortType, FILTER_SANITIZE_STRING);
+    $this->sortType = filter_var($this->sortType, FILTER_SANITIZE_STRING);
 
-    $orderStmt = " ORDER BY $sortColumn $sortType ";
+    $orderStmt = " ORDER BY $this->sortColumn $this->sortType ";
 
     return $orderStmt;
   }
 
 
-  public static function doesPlayerExist($playerID) {
+  public function doesPlayerExist() {
     $stmt = '
     SELECT playerID
     FROM   people
     WHERE  playerID = :playerID
     LIMIT  1';
 
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
 
     $sql->execute();
 
     $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-    if (count($result) == 1) return true;
-    else return false;
+    if (count($result) == 1) 
+      return true;
+    else 
+      return false;
   }
 
-  public static function getBatting($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getBatting() {
     $stmt = "
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -229,13 +254,13 @@ class DB {
     LEFT JOIN   people p ON b.playerID = p.playerID
     LEFT JOIN   teams t on b.team_ID = t.ID";
 
-    $sql = DB::getSqlStmt($stmt, 'b', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'b', 'ID');
     $sql->execute();
     return $sql;
   }
 
 
-  public static function getBattingCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getBattingCount() {
     $stmt = "
     SELECT count(*) as count FROM (
       SELECT      b.playerID as playerID,
@@ -266,13 +291,13 @@ class DB {
       LEFT JOIN   people p ON b.playerID = p.playerID
       LEFT JOIN   teams t on b.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'b', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getBattingAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getBattingAggregate() {
     $stmt = "
     SELECT      b.playerID,
                 p.nameFirst,
@@ -299,12 +324,12 @@ class DB {
     LEFT JOIN   people p
     ON          b.playerID = p.playerID";
 
-    $sql = DB::getSqlStmt($stmt, 'b', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'b', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getBattingAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getBattingAggregateCount() {
 
     $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT      b.playerID,
@@ -332,14 +357,14 @@ class DB {
     LEFT JOIN   people p
     ON          b.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'b', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
 
-  public function getBattingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getBattingPost() {
     $stmt = "
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -369,13 +394,13 @@ class DB {
     LEFT JOIN   people p ON b.playerID = p.playerID
     LEFT JOIN   teams t on b.team_ID = t.ID";
 
-    $sql = DB::getSqlStmt($stmt, 'b', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'b', 'ID');
     $sql->execute();
     return $sql;
   }
 
 
-  public static function getBattingPostCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getBattingPostCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -405,14 +430,14 @@ class DB {
     LEFT JOIN   people p ON b.playerID = p.playerID
     LEFT JOIN   teams t on b.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'b', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
 
-  public static function getBattingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getBattingPostAggregate() {
     $stmt = "
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -439,12 +464,12 @@ class DB {
     LEFT JOIN   people p
     ON          b.playerID = p.playerID";
 
-    $sql = DB::getSqlStmt($stmt, 'b', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'b', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getBattingPostAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getBattingPostAggregateCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT      b.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -471,14 +496,14 @@ class DB {
     LEFT JOIN   people p
     ON          b.playerID = p.playerID";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'b', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
 
   }
 
-  public static function getPitching($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getPitching() {
     $stmt = "
     SELECT      p.playerID as playerID,
                 people.nameFirst as nameFirst,
@@ -516,12 +541,12 @@ class DB {
     LEFT JOIN   people on p.playerID = people.playerID
     LEFT JOIN   teams t on p.team_ID = t.ID";
 
-    $sql = DB::getSqlStmt($stmt, 'p', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'p', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getPitchingCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getPitchingCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT      p.playerID as playerID,
                 people.nameFirst as nameFirst,
@@ -559,13 +584,13 @@ class DB {
     LEFT JOIN   people on p.playerID = people.playerID
     LEFT JOIN   teams t on p.team_ID = t.ID";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'p', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getPitchingAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getPitchingAggregate() {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -599,12 +624,12 @@ class DB {
     FROM        pitching p
     LEFT JOIN   people on p.playerID = people.playerID ";
 
-    $sql = DB::getSqlStmt($stmt, 'p', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'p', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getPitchingAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getPitchingAggregateCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT      p.playerID,
                 people.nameFirst,
@@ -638,14 +663,14 @@ class DB {
     FROM        pitching p
     LEFT JOIN   people on p.playerID = people.playerID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'p', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
 
-  public static function getPitchingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getPitchingPost() {
     $stmt = "
     SELECT      p.playerID as playerID,
                 people.nameFirst as nameFirst,
@@ -683,12 +708,12 @@ class DB {
     LEFT JOIN   people on p.playerID = people.playerID
     LEFT JOIN   teams t on p.team_ID = t.ID";
 
-    $sql = DB::getSqlStmt($stmt, 'p', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'p', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getPitchingPostCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getPitchingPostCount() {
     $stmt = " SELECT count(*) as count from (
     SELECT      p.playerID as playerID,
                 people.nameFirst as nameFirst,
@@ -726,13 +751,13 @@ class DB {
     LEFT JOIN   people on p.playerID = people.playerID
     LEFT JOIN   teams t on p.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'p', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getPitchingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getPitchingPostAggregate() {
     $stmt = "
     SELECT      p.playerID,
                 people.nameFirst,
@@ -766,12 +791,12 @@ class DB {
     FROM        pitchingpost p
     LEFT JOIN   people on p.playerID = people.playerID";
 
-    $sql = DB::getSqlStmt($stmt, 'p', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'p', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getPitchingPostAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getPitchingPostAggregateCount() {
     $stmt = " SELECT count(*) as count from (
     SELECT      p.playerID,
                 people.nameFirst,
@@ -805,13 +830,13 @@ class DB {
     FROM        pitchingpost p
     LEFT JOIN   people on p.playerID = people.playerID";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'p', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getFielding($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getFielding() {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -837,13 +862,13 @@ class DB {
     LEFT JOIN   people p ON f.playerID = p.playerID
     LEFT JOIN   teams t on f.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmt($stmt, 'f', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'f', 'ID');
 
     $sql->execute();
     return $sql;
   }
 
-  public static function getFieldingCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getFieldingCount() {
     $stmt = " SELECT count(*) as count from (
     SELECT      f.playerID,
                 p.nameFirst,
@@ -869,13 +894,13 @@ class DB {
     LEFT JOIN   people p ON f.playerID = p.playerID
     LEFT JOIN   teams t on f.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'f', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getFieldingAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getFieldingAggregate() {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -896,12 +921,12 @@ class DB {
     FROM        fielding f 
     LEFT JOIN   people p ON f.playerID = p.playerID";
 
-    $sql = DB::getSqlStmt($stmt, 'f', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'f', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getFieldingAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getFieldingAggregateCount() {
 
     $stmt = " SELECT COUNT(*) as count FROM (
     SELECT      f.playerID as playerID,
@@ -923,14 +948,14 @@ class DB {
     FROM        fielding f 
     LEFT JOIN   people p ON f.playerID = p.playerID";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'f', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
 
   }
 
-  public static function getFieldingPost($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getFieldingPost() {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -954,12 +979,12 @@ class DB {
     LEFT JOIN   people p ON f.playerID = p.playerID
     LEFT JOIN   teams t on f.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmt($stmt, 'f', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'f', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getFieldingPostCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getFieldingPostCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -983,13 +1008,13 @@ class DB {
     LEFT JOIN   people p ON f.playerID = p.playerID
     LEFT JOIN   teams t on f.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'f', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getFieldingPostAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getFieldingPostAggregate() {
     $stmt = "
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1008,12 +1033,12 @@ class DB {
     FROM        fieldingpost f 
     LEFT JOIN   people p ON f.playerID = p.playerID";
 
-    $sql = DB::getSqlStmt($stmt, 'f', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'f', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getFieldingPostAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getFieldingPostAggregateCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
     SELECT      f.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1032,14 +1057,14 @@ class DB {
     FROM        fieldingpost f 
     LEFT JOIN   people p ON f.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'f', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
 
-  public static function getAppearances($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getAppearances() {
     $stmt = "
     SELECT      a.yearID as year,
                 t.name as teamName,
@@ -1068,12 +1093,12 @@ class DB {
     LEFT JOIN   people p ON a.playerID = p.playerID
     LEFT JOIN   teams t on a.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmt($stmt, 'a', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'a', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getAppearancesCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getAppearancesCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
     SELECT      a.yearID as year,
                 t.name as teamName,
@@ -1102,13 +1127,13 @@ class DB {
     LEFT JOIN   people p ON a.playerID = p.playerID
     LEFT JOIN   teams t on a.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'a', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'a', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getAppearancesAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getAppearancesAggregate() {
     $stmt = "
     SELECT      a.playerID,
                 p.nameFirst,
@@ -1134,12 +1159,12 @@ class DB {
     FROM        appearances a 
     LEFT JOIN   people p ON a.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmt($stmt, 'a', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'a', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getAppearancesAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getAppearancesAggregateCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
     SELECT      a.playerID,
                 p.nameFirst,
@@ -1165,13 +1190,13 @@ class DB {
     FROM        appearances a 
     LEFT JOIN   people p ON a.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'a', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'a', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getFieldingOF($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getFieldingOF() {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1184,12 +1209,12 @@ class DB {
     FROM        fieldingof f 
     LEFT JOIN   people p ON f.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmt($stmt, 'f', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'f', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getFieldingOFCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getFieldingOFCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1202,14 +1227,14 @@ class DB {
     FROM        fieldingof f 
     LEFT JOIN   people p ON f.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'f', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
 
   }
 
-  public static function getFieldingOFAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getFieldingOFAggregate() {
     $stmt = "
     SELECT    f.playerID,
               p.nameFirst,
@@ -1221,12 +1246,12 @@ class DB {
     FROM      fieldingof f 
     LEFT JOIN people p ON f.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmt($stmt, 'f', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'f', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getFieldingOFAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getFieldingOFAggregateCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT    f.playerID,
               p.nameFirst,
@@ -1238,13 +1263,13 @@ class DB {
     FROM      fieldingof f 
     LEFT JOIN people p ON f.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'f', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getFieldingOFSplit($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getFieldingOFSplit() {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1270,12 +1295,12 @@ class DB {
     LEFT JOIN   people p ON f.playerID = p.playerID
     LEFT JOIN   teams t on f.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmt($stmt, 'f', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'f', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getFieldingOFSplitCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getFieldingOFSplitCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1301,14 +1326,14 @@ class DB {
     LEFT JOIN   people p ON f.playerID = p.playerID
     LEFT JOIN   teams t on f.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'f', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
 
   }
 
-  public static function getFieldingOFSplitAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getFieldingOFSplitAggregate() {
     $stmt = "
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1329,12 +1354,12 @@ class DB {
     FROM        fieldingofsplit f 
     LEFT JOIN   people p ON f.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmt($stmt, 'f', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'f', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getFieldingOFSplitAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getFieldingOFSplitAggregateCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT      f.playerID,
                 p.nameFirst,
@@ -1355,13 +1380,13 @@ class DB {
     FROM        fieldingofsplit f 
     LEFT JOIN   people p ON f.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'f', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getSalaries($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getSalaries() {
     $stmt = "
     SELECT      s.playerID,
                 p.nameFirst,
@@ -1374,12 +1399,12 @@ class DB {
     LEFT JOIN   people p ON s.playerID = p.playerID
     LEFT JOIN   teams t on s.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmt($stmt, 's', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 's', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getSalariesCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getSalariesCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT      s.playerID,
                 p.nameFirst,
@@ -1392,13 +1417,13 @@ class DB {
     LEFT JOIN   people p ON s.playerID = p.playerID
     LEFT JOIN   teams t on s.team_ID = t.ID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 's', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 's', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getSalariesAggregate($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getSalariesAggregate() {
     $stmt = "
     SELECT      s.playerID,
                 p.nameFirst,
@@ -1408,12 +1433,12 @@ class DB {
     FROM        salaries s 
     LEFT JOIN   people p ON s.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmt($stmt, 's', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 's', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getSalariesAggregateCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getSalariesAggregateCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT      s.playerID,
                 p.nameFirst,
@@ -1423,13 +1448,13 @@ class DB {
     FROM        salaries s 
     LEFT JOIN   people p ON s.playerID = p.playerID ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 's', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 's', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getPeople($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getPeople() {
     $stmt = "
     SELECT  p.playerID,
             p.nameFirst,
@@ -1456,12 +1481,12 @@ class DB {
             if ((select h.inducted from halloffame h where h.playerID = p.playerID limit 1) = 'Y', 'y', 'n') as hallOfFame
     FROM    people p ";
 
-    $sql = DB::getSqlStmt($stmt, 'p', 'playerID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'p', 'playerID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getPeopleCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getPeopleCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT  p.playerID,
             p.nameFirst,
@@ -1488,13 +1513,13 @@ class DB {
             if ((select h.inducted from halloffame h where h.playerID = p.playerID limit 1) = 'Y', 'y', 'n') as hallOfFame
     FROM    people p ";
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'p', 'playerID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'playerID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getPeopleSearch($query = '', $sort = null, $filters = null, $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getPeopleSearch($query = '') {
 
     $stmt = "
     SELECT    MATCH(nameFirst, nameLast) against(:query IN boolean mode) as score,
@@ -1513,7 +1538,7 @@ class DB {
     LIMIT     :limit
     OFFSET    :offset";
 
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
     // filter and bind query
     $query = '(' . $query . '*)';
@@ -1521,11 +1546,11 @@ class DB {
     $sql->bindParam(':query', $query, PDO::PARAM_STR);
 
     // limit
-    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $limit = filter_var($this->limit, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
 
     // offset
-    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $offset = filter_var($this->offset, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     $sql->execute();
@@ -1533,14 +1558,14 @@ class DB {
     return $sql;
   }
 
-  public static function getPeopleSearchCount($query = '') {
+  public function getPeopleSearchCount($query = '') {
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT    p.playerID as playerID
     FROM      people p 
     WHERE     MATCH(nameFirst, nameLast) against(:query IN boolean mode) > 0
     GROUP BY  playerID) table1";
 
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
     // filter and bind query
     $query = '(' . $query . '*)';
@@ -1552,11 +1577,11 @@ class DB {
     return $results['count'];
   }
 
-  public static function getTeamsPlayedFor($playerID) {
+  public function getTeamsPlayedFor() {
     $stmt = 'SELECT distinct t.name from appearances a left join teams t on a.team_ID = t.ID where a.playerID = :playerID group by a.ID';
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
 
     $sql->execute();
@@ -1564,7 +1589,7 @@ class DB {
   }
 
 
-  public static function getImages($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getImages() {
 
     $stmt = '
     SELECT      i.playerID as playerID,
@@ -1574,12 +1599,12 @@ class DB {
     FROM        images i 
     LEFT JOIN   people p on i.playerID = p.playerID ';
 
-    $sql = DB::getSqlStmt($stmt, 'i', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'i', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getImagesCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getImagesCount() {
     $stmt = 'SELECT COUNT(*) as count FROM (
     SELECT      i.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1588,13 +1613,13 @@ class DB {
     FROM        images i 
     LEFT JOIN   people p on i.playerID = p.playerID ';
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'i', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'i', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getImagesPlayer($playerID) {
+  public function getImagesPlayer() {
 
     $stmt = '
     SELECT    i.source 
@@ -1602,10 +1627,10 @@ class DB {
     WHERE     i.playerID = :playerID
     GROUP BY  i.ID';
 
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
     // filter and bind player ID
-    $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    $playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
     
     $sql->execute();
@@ -1613,7 +1638,7 @@ class DB {
   }
 
 
-  public static function getColleges($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getColleges() {
     $stmt = '
     SELECT      cp.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1627,12 +1652,12 @@ class DB {
     LEFT JOIN   people p on cp.playerID = p.playerID 
     LEFT JOIN   schools s on cp.schoolID = s.schoolID';
 
-    $sql = DB::getSqlStmt($stmt, 'cp', 'ID', $playerID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmt($stmt, 'cp', 'ID');
     $sql->execute();
     return $sql;
   }
 
-  public static function getCollegesCount($playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getCollegesCount() {
     $stmt = 'SELECT COUNT(*) as count FROM (
     SELECT      cp.playerID as playerID,
                 p.nameFirst as nameFirst,
@@ -1646,19 +1671,13 @@ class DB {
     LEFT JOIN   people p on cp.playerID = p.playerID 
     LEFT JOIN   schools s on cp.schoolID = s.schoolID ';
 
-    $sql = DB::getSqlStmtNoLimit($stmt, 'cp', 'ID', $playerID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimit($stmt, 'cp', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
-  public static function getTeams(
-    $teamID  = Constants::Defaults['playerID'], 
-    $sort    = Constants::Defaults['sort'], 
-    $filters = Constants::Defaults['filters'], 
-    $limit   = Constants::Defaults['perPage'], 
-    $offset  = Constants::Defaults['offset']) 
-  {
+  public function getTeams() {
 
     $stmt = '
     SELECT t.teamID         AS teamID,  
@@ -1713,7 +1732,7 @@ class DB {
     FROM   teams t ';
 
 
-    $sql = DB::getSqlStmtTeams($stmt, 't', 'ID', $teamID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmtTeams($stmt, 't', 'ID');
     $sql->execute();
 
     return $sql;
@@ -1721,7 +1740,7 @@ class DB {
   }
 
 
-  public static function getTeamsCount($teamID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getTeamsCount() {
     $stmt = 'SELECT COUNT(*) as count FROM (
     SELECT t.name           AS teamName, 
            t.yearID         AS year, 
@@ -1774,20 +1793,14 @@ class DB {
            t.teamIDretro    AS teamIDretro 
     FROM   teams t ';
 
-    $sql = DB::getSqlStmtNoLimitTeams($stmt, 't', 'ID', $teamID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimitTeams($stmt, 't', 'ID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
 
-  public static function getTeamsAggregate(
-    $teamID  = Constants::Defaults['playerID'], 
-    $sort    = Constants::Defaults['sort'], 
-    $filters = Constants::Defaults['filters'], 
-    $limit   = Constants::Defaults['perPage'], 
-    $offset  = Constants::Defaults['offset']) 
-  { 
+  public function getTeamsAggregate() { 
 
     $stmt = '
     SELECT t.teamID              AS teamID, 
@@ -1834,14 +1847,14 @@ class DB {
     FROM   teams t ';
 
 
-    $sql = DB::getSqlStmtTeams($stmt, 't', 'teamID', $teamID, $sort, $filters, $limit, $offset);
+    $sql = $this->getSqlStmtTeams($stmt, 't', 'teamID');
     $sql->execute();
 
     return $sql;
 
   }
 
-  public static function getTeamsAggregateCount($teamID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+  public function getTeamsAggregateCount() {
     $stmt = 'SELECT COUNT(*) as count FROM (
     SELECT t.teamID       AS teamID, 
     (SELECT name FROM teams t2 WHERE t2.teamID = t.teamID ORDER BY t2.yearID DESC LIMIT 1) as teamName,
@@ -1886,63 +1899,63 @@ class DB {
     SUM(t.PPF)            AS PPF 
     FROM   teams t ';
 
-    $sql = DB::getSqlStmtNoLimitTeams($stmt, 't', 'teamID', $teamID, $sort, $filters);
+    $sql = $this->getSqlStmtNoLimitTeams($stmt, 't', 'teamID');
     $sql->execute();
     $results = $sql->fetch(); 
     return $results['count'];
   }
 
 
-  public static function getSqlStmtTeams($stmt, $table, $groupByColumn, $playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+  public function getSqlStmtTeams($stmt, $table, $groupByColumn) {
 
 
     // playerID is included and only want data for that player
-    if ($playerID != null) 
+    if ($this->playerID != null) 
       $stmt .= " WHERE $table.teamID = :playerID ";
 
     $stmt .= " GROUP  BY $table.$groupByColumn ";
-    $stmt .= DB::getFilterStmt($filters);
-    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= $this->getFilterStmt();
+    $stmt .= $this->getOrderStmt();
     $stmt .= " LIMIT  :limit OFFSET :offset ";
 
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
     // filter/bind playerID if it is set
-    if ($playerID != null) {
-      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    if ($this->playerID != null) {
+      $playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
       $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
     }
 
     // limit
-    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $limit = filter_var($this->limit, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
 
     // offset
-    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $offset = filter_var($this->offset, FILTER_SANITIZE_NUMBER_INT);
     $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     return $sql;
   }
 
-  public static function getSqlStmtNoLimitTeams($stmt, $table, $groupByColumn, $playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
-    if ($playerID != null) 
+  public function getSqlStmtNoLimitTeams($stmt, $table, $groupByColumn) {
+    if ($this->playerID != null) 
       $stmt .= " WHERE $table.teamID = :playerID ";
 
     $stmt .= " GROUP  BY $table.$groupByColumn ";
-    $stmt .= DB::getFilterStmt($filters);
+    $stmt .= $this->getFilterStmt();
     $stmt .= " ) table1 ";
-    $sql  = DB::dbConnect()->prepare($stmt);
+    $sql  = $this->dbConnect()->prepare($stmt);
 
     // filter/bind playerID if it is set
-    if ($playerID != null) {
-      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+    if ($this->playerID != null) {
+      $playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
       $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
     }
     return $sql;
   }
 
 
-   public static function getTeamYear($teamID, $year) {
+   public function getTeamYear($year) {
 
     $stmt = '
     SELECT t.teamID         AS teamID,  
@@ -1998,9 +2011,9 @@ class DB {
     WHERE t.teamID = :teamID
     AND   t.yearID = :yearID ';
 
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
-    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
+    $teamID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
 
     $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
@@ -2010,7 +2023,7 @@ class DB {
     return $sql;
    }
 
-  public static function getTeamYearPlayers($teamID, $year) {
+  public function getTeamYearPlayers($year) {
 
     $stmt = "
     SELECT a.playerID  AS playerID,
@@ -2045,9 +2058,9 @@ class DB {
               nameFirst ASC ";
 
 
-    $sql = DB::dbConnect()->prepare($stmt);
+    $sql = $this->dbConnect()->prepare($stmt);
 
-    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
+    $teamID = filter_var($this->$playerID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
 
     $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
@@ -2057,7 +2070,7 @@ class DB {
     return $sql;
   }
 
-  public static function getTeamYearPlayersCount($teamID, $year) {
+  public function getTeamYearPlayersCount($year) {
 
     $stmt = "SELECT COUNT(*) as count FROM (
     SELECT a.playerID  AS playerID,
@@ -2091,11 +2104,9 @@ class DB {
     ORDER  BY nameLast ASC,
               nameFirst ASC) tbl2";
 
+    $sql = $this->dbConnect()->prepare($stmt);
 
-
-    $sql = DB::dbConnect()->prepare($stmt);
-
-    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
+    $teamID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
 
     $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
