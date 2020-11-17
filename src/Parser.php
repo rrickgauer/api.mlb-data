@@ -188,6 +188,8 @@ class Parser {
         $this->filterColumns = Constants::PitchingPost; break;
       case Constants::Modules['FieldingPost']:
         $this->filterColumns = Constants::FieldingPost; break;
+      case Constants::Modules['Teams']:
+        $this->filterColumns = Constants::Teams; break;
       default:
         $this->filterColumns = null; break;
     }
