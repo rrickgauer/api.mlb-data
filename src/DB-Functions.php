@@ -1651,6 +1651,464 @@ class DB {
     $results = $sql->fetch(); 
     return $results['count'];
   }
+
+  public static function getTeams(
+    $teamID  = Constants::Defaults['playerID'], 
+    $sort    = Constants::Defaults['sort'], 
+    $filters = Constants::Defaults['filters'], 
+    $limit   = Constants::Defaults['perPage'], 
+    $offset  = Constants::Defaults['offset']) 
+  {
+
+    $stmt = '
+    SELECT t.teamID         AS teamID,  
+           t.name           AS teamName, 
+           t.yearID         AS year, 
+           t.lgID           AS lgID, 
+           t.franchID       AS franchID, 
+           t.divID          AS divID, 
+           t.div_ID         AS div_ID, 
+           t.teamRank       AS teamRank, 
+           t.G              AS G, 
+           t.Ghome          AS Ghome, 
+           t.W              AS W, 
+           t.L              AS L, 
+           t.DivWin         AS DivWin, 
+           t.WCWin          AS WCWin, 
+           t.LgWin          AS LgWin, 
+           t.WSWin          AS WSWin, 
+           t.R              AS R, 
+           t.AB             AS AB, 
+           t.H              AS H, 
+           t.2B             AS 2B, 
+           t.3B             AS 3B, 
+           t.HR             AS HR, 
+           t.BB             AS BB, 
+           t.SO             AS SO, 
+           t.SB             AS SB, 
+           t.CS             AS CS, 
+           t.HBP            AS HBP, 
+           t.SF             AS SF, 
+           t.RA             AS RA, 
+           t.ER             AS ER, 
+           t.ERA            AS ERA, 
+           t.CG             AS CG, 
+           t.SHO            AS SHO, 
+           t.SV             AS SV, 
+           t.IPouts         AS IPouts, 
+           t.HA             AS HA, 
+           t.HRA            AS HRA, 
+           t.BBA            AS BBA, 
+           t.SOA            AS SOA, 
+           t.E              AS E, 
+           t.DP             AS DP, 
+           t.FP             AS FP, 
+           t.park           AS park, 
+           t.attendance     AS attendance, 
+           t.BPF            AS BPF, 
+           t.PPF            AS PPF, 
+           t.teamIDBR       AS teamIDBR, 
+           t.teamIDlahman45 AS teamIDlahman45, 
+           t.teamIDretro    AS teamIDretro 
+    FROM   teams t ';
+
+
+    $sql = DB::getSqlStmtTeams($stmt, 't', 'ID', $teamID, $sort, $filters, $limit, $offset);
+    $sql->execute();
+
+    return $sql;
+
+  }
+
+
+  public static function getTeamsCount($teamID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+    $stmt = 'SELECT COUNT(*) as count FROM (
+    SELECT t.name           AS teamName, 
+           t.yearID         AS year, 
+           t.lgID           AS lgID, 
+           t.teamID         AS teamID, 
+           t.franchID       AS franchID, 
+           t.divID          AS divID, 
+           t.div_ID         AS div_ID, 
+           t.teamRank       AS teamRank, 
+           t.G              AS G, 
+           t.Ghome          AS Ghome, 
+           t.W              AS W, 
+           t.L              AS L, 
+           t.DivWin         AS DivWin, 
+           t.WCWin          AS WCWin, 
+           t.LgWin          AS LgWin, 
+           t.WSWin          AS WSWin, 
+           t.R              AS R, 
+           t.AB             AS AB, 
+           t.H              AS H, 
+           t.2B             AS 2B, 
+           t.3B             AS 3B, 
+           t.HR             AS HR, 
+           t.BB             AS BB, 
+           t.SO             AS SO, 
+           t.SB             AS SB, 
+           t.CS             AS CS, 
+           t.HBP            AS HBP, 
+           t.SF             AS SF, 
+           t.RA             AS RA, 
+           t.ER             AS ER, 
+           t.ERA            AS ERA, 
+           t.CG             AS CG, 
+           t.SHO            AS SHO, 
+           t.SV             AS SV, 
+           t.IPouts         AS IPouts, 
+           t.HA             AS HA, 
+           t.HRA            AS HRA, 
+           t.BBA            AS BBA, 
+           t.SOA            AS SOA, 
+           t.E              AS E, 
+           t.DP             AS DP, 
+           t.FP             AS FP, 
+           t.park           AS park, 
+           t.attendance     AS attendance, 
+           t.BPF            AS BPF, 
+           t.PPF            AS PPF, 
+           t.teamIDBR       AS teamIDBR, 
+           t.teamIDlahman45 AS teamIDlahman45, 
+           t.teamIDretro    AS teamIDretro 
+    FROM   teams t ';
+
+    $sql = DB::getSqlStmtNoLimitTeams($stmt, 't', 'ID', $teamID, $sort, $filters);
+    $sql->execute();
+    $results = $sql->fetch(); 
+    return $results['count'];
+  }
+
+
+  public static function getTeamsAggregate(
+    $teamID  = Constants::Defaults['playerID'], 
+    $sort    = Constants::Defaults['sort'], 
+    $filters = Constants::Defaults['filters'], 
+    $limit   = Constants::Defaults['perPage'], 
+    $offset  = Constants::Defaults['offset']) 
+  { 
+
+    $stmt = '
+    SELECT t.teamID              AS teamID, 
+    (SELECT name FROM teams t2 WHERE t2.teamID = t.teamID ORDER BY t2.yearID DESC LIMIT 1) as teamName,
+    (SELECT COUNT(DISTINCT yearID) FROM teams t2 where t2.teamID = t.teamID) as years,
+    SUM(t.G)              AS G, 
+    SUM(t.Ghome)          AS Ghome, 
+    SUM(t.W)              AS W, 
+    SUM(t.L)              AS L, 
+    (SELECT COUNT(ID) FROM teams t2 where t2.DivWin = "Y" and t2.teamID = t.teamID) AS DivWin, 
+    (SELECT COUNT(ID) FROM teams t2 where t2.WCWin =  "Y" and t2.teamID = t.teamID) AS WCWin, 
+    (SELECT COUNT(ID) FROM teams t2 where t2.LgWin =  "Y" and t2.teamID = t.teamID) AS LgWin, 
+    (SELECT COUNT(ID) FROM teams t2 where t2.WSWin =  "Y" and t2.teamID = t.teamID) AS WSWin, 
+    SUM(t.R)              AS R, 
+    SUM(t.AB)             AS AB, 
+    SUM(t.H)              AS H, 
+    SUM(t.2B)             AS 2B, 
+    SUM(t.3B)             AS 3B, 
+    SUM(t.HR)             AS HR, 
+    SUM(t.BB)             AS BB, 
+    SUM(t.SO)             AS SO, 
+    SUM(t.SB)             AS SB, 
+    SUM(t.CS)             AS CS, 
+    SUM(t.HBP)            AS HBP, 
+    SUM(t.SF)             AS SF, 
+    SUM(t.RA)             AS RA, 
+    SUM(t.ER)             AS ER, 
+    SUM(t.ERA)            AS ERA, 
+    SUM(t.CG)             AS CG, 
+    SUM(t.SHO)            AS SHO, 
+    SUM(t.SV)             AS SV, 
+    SUM(t.IPouts)         AS IPouts, 
+    SUM(t.HA)             AS HA, 
+    SUM(t.HRA)            AS HRA, 
+    SUM(t.BBA)            AS BBA, 
+    SUM(t.SOA)            AS SOA, 
+    SUM(t.E)              AS E, 
+    SUM(t.DP)             AS DP, 
+    SUM(t.FP)             AS FP, 
+    SUM(t.park)           AS park, 
+    SUM(t.attendance)     AS attendance, 
+    SUM(t.BPF)            AS BPF, 
+    SUM(t.PPF)            AS PPF 
+    FROM   teams t ';
+
+
+    $sql = DB::getSqlStmtTeams($stmt, 't', 'teamID', $teamID, $sort, $filters, $limit, $offset);
+    $sql->execute();
+
+    return $sql;
+
+  }
+
+  public static function getTeamsAggregateCount($teamID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+    $stmt = 'SELECT COUNT(*) as count FROM (
+    SELECT t.teamID       AS teamID, 
+    (SELECT name FROM teams t2 WHERE t2.teamID = t.teamID ORDER BY t2.yearID DESC LIMIT 1) as teamName,
+    (SELECT COUNT(DISTINCT yearID) FROM teams t2 WHERE t2.teamID = t.teamID) as years,
+    SUM(t.G)              AS G, 
+    SUM(t.Ghome)          AS Ghome, 
+    SUM(t.W)              AS W, 
+    SUM(t.L)              AS L, 
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.DivWin = "Y" and t2.teamID = t.teamID) AS DivWin, 
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.WCWin =  "Y" and t2.teamID = t.teamID) AS WCWin, 
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.LgWin =  "Y" and t2.teamID = t.teamID) AS LgWin, 
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.WSWin =  "Y" and t2.teamID = t.teamID) AS WSWin, 
+    SUM(t.R)              AS R, 
+    SUM(t.AB)             AS AB, 
+    SUM(t.H)              AS H, 
+    SUM(t.2B)             AS 2B, 
+    SUM(t.3B)             AS 3B, 
+    SUM(t.HR)             AS HR, 
+    SUM(t.BB)             AS BB, 
+    SUM(t.SO)             AS SO, 
+    SUM(t.SB)             AS SB, 
+    SUM(t.CS)             AS CS, 
+    SUM(t.HBP)            AS HBP, 
+    SUM(t.SF)             AS SF, 
+    SUM(t.RA)             AS RA, 
+    SUM(t.ER)             AS ER, 
+    SUM(t.ERA)            AS ERA, 
+    SUM(t.CG)             AS CG, 
+    SUM(t.SHO)            AS SHO, 
+    SUM(t.SV)             AS SV, 
+    SUM(t.IPouts)         AS IPouts, 
+    SUM(t.HA)             AS HA, 
+    SUM(t.HRA)            AS HRA, 
+    SUM(t.BBA)            AS BBA, 
+    SUM(t.SOA)            AS SOA, 
+    SUM(t.E)              AS E, 
+    SUM(t.DP)             AS DP, 
+    SUM(t.FP)             AS FP, 
+    SUM(t.park)           AS park, 
+    SUM(t.attendance)     AS attendance, 
+    SUM(t.BPF)            AS BPF, 
+    SUM(t.PPF)            AS PPF 
+    FROM   teams t ';
+
+    $sql = DB::getSqlStmtNoLimitTeams($stmt, 't', 'teamID', $teamID, $sort, $filters);
+    $sql->execute();
+    $results = $sql->fetch(); 
+    return $results['count'];
+  }
+
+
+  public static function getSqlStmtTeams($stmt, $table, $groupByColumn, $playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters'], $limit = Constants::Defaults['perPage'], $offset = Constants::Defaults['offset']) {
+
+
+    // playerID is included and only want data for that player
+    if ($playerID != null) 
+      $stmt .= " WHERE $table.teamID = :playerID ";
+
+    $stmt .= " GROUP  BY $table.$groupByColumn ";
+    $stmt .= DB::getFilterStmt($filters);
+    $stmt .= DB::getOrderStmt($sort);
+    $stmt .= " LIMIT  :limit OFFSET :offset ";
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+
+    // limit
+    $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    // offset
+    $offset = filter_var($offset, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+    return $sql;
+  }
+
+  public static function getSqlStmtNoLimitTeams($stmt, $table, $groupByColumn, $playerID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+    if ($playerID != null) 
+      $stmt .= " WHERE $table.teamID = :playerID ";
+
+    $stmt .= " GROUP  BY $table.$groupByColumn ";
+    $stmt .= DB::getFilterStmt($filters);
+    $stmt .= " ) table1 ";
+    $sql  = DB::dbConnect()->prepare($stmt);
+
+    // filter/bind playerID if it is set
+    if ($playerID != null) {
+      $playerID = filter_var($playerID, FILTER_SANITIZE_STRING);
+      $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
+    }
+    return $sql;
+  }
+
+
+   public static function getTeamYear($teamID, $year) {
+
+    $stmt = '
+    SELECT t.teamID         AS teamID,  
+           t.name           AS teamName, 
+           t.yearID         AS year, 
+           t.lgID           AS lgID, 
+           t.franchID       AS franchID, 
+           t.divID          AS divID, 
+           t.div_ID         AS div_ID, 
+           t.teamRank       AS teamRank, 
+           t.G              AS G, 
+           t.Ghome          AS Ghome, 
+           t.W              AS W, 
+           t.L              AS L, 
+           t.DivWin         AS DivWin, 
+           t.WCWin          AS WCWin, 
+           t.LgWin          AS LgWin, 
+           t.WSWin          AS WSWin, 
+           t.R              AS R, 
+           t.AB             AS AB, 
+           t.H              AS H, 
+           t.2B             AS 2B, 
+           t.3B             AS 3B, 
+           t.HR             AS HR, 
+           t.BB             AS BB, 
+           t.SO             AS SO, 
+           t.SB             AS SB, 
+           t.CS             AS CS, 
+           t.HBP            AS HBP, 
+           t.SF             AS SF, 
+           t.RA             AS RA, 
+           t.ER             AS ER, 
+           t.ERA            AS ERA, 
+           t.CG             AS CG, 
+           t.SHO            AS SHO, 
+           t.SV             AS SV, 
+           t.IPouts         AS IPouts, 
+           t.HA             AS HA, 
+           t.HRA            AS HRA, 
+           t.BBA            AS BBA, 
+           t.SOA            AS SOA, 
+           t.E              AS E, 
+           t.DP             AS DP, 
+           t.FP             AS FP, 
+           t.park           AS park, 
+           t.attendance     AS attendance, 
+           t.BPF            AS BPF, 
+           t.PPF            AS PPF, 
+           t.teamIDBR       AS teamIDBR, 
+           t.teamIDlahman45 AS teamIDlahman45, 
+           t.teamIDretro    AS teamIDretro 
+    FROM   teams t 
+    WHERE t.teamID = :teamID
+    AND   t.yearID = :yearID ';
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
+
+    $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':yearID', $year, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+   }
+
+  public static function getTeamYearPlayers($teamID, $year) {
+
+    $stmt = "
+    SELECT a.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           a.G_all     AS G_all,
+           a.GS        AS GS,
+           a.G_batting AS G_batting,
+           a.G_defense AS G_defense,
+           a.G_p       AS G_p,
+           a.G_c       AS G_c,
+           a.G_1b      AS G_1b,
+           a.G_2b      AS G_2b,
+           a.G_3b      AS G_3b,
+           a.G_ss      AS G_ss,
+           a.G_lf      AS G_lf,
+           a.G_cf      AS G_cf,
+           a.G_rf      AS G_rf,
+           a.G_of      AS G_of,
+           a.G_dh      AS G_dh,
+           a.G_ph      AS G_ph,
+           a.G_pr      AS G_pr
+    FROM   appearances a
+           LEFT JOIN people p
+                  ON a.playerID = p.playerID
+    WHERE  team_ID IN (SELECT ID AS team_id
+                       FROM   teams
+                       WHERE  yearID = :yearID
+                       AND    teamID = :teamID)
+    GROUP  BY a.ID
+    ORDER  BY nameLast ASC,
+              nameFirst ASC ";
+
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
+
+    $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':yearID', $year, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+  public static function getTeamYearPlayersCount($teamID, $year) {
+
+    $stmt = "SELECT COUNT(*) as count FROM (
+    SELECT a.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           a.G_all     AS G_all,
+           a.GS        AS GS,
+           a.G_batting AS G_batting,
+           a.G_defense AS G_defense,
+           a.G_p       AS G_p,
+           a.G_c       AS G_c,
+           a.G_1b      AS G_1b,
+           a.G_2b      AS G_2b,
+           a.G_3b      AS G_3b,
+           a.G_ss      AS G_ss,
+           a.G_lf      AS G_lf,
+           a.G_cf      AS G_cf,
+           a.G_rf      AS G_rf,
+           a.G_of      AS G_of,
+           a.G_dh      AS G_dh,
+           a.G_ph      AS G_ph,
+           a.G_pr      AS G_pr
+    FROM   appearances a
+           LEFT JOIN people p
+                  ON a.playerID = p.playerID
+    WHERE  team_ID IN (SELECT ID AS team_id
+                       FROM   teams
+                       WHERE  yearID = :yearID
+                       AND    teamID = :teamID)
+    GROUP  BY a.ID
+    ORDER  BY nameLast ASC,
+              nameFirst ASC) tbl2";
+
+
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
+
+    $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':yearID', $year, PDO::PARAM_INT);
+
+    $sql->execute();
+
+    $results = $sql->fetch(PDO::FETCH_ASSOC);
+
+    return $results['count'];
+  }
+
+
 }
 
 ?>

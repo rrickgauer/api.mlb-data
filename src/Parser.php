@@ -36,16 +36,16 @@ include_once ('API-Functions.php');
 
 class Parser {
 
-  private $module;
-  private $sorts;
-  private $request;         // array(column, type)
-  private $filters;         // list of arrays(column, conditional, qualifier)
-  private $filterColumns;
-  private $aggregate;
-  private $playerID;
-  private $perPage;
-  private $page;
-  private $currentUrl;
+  protected $module;
+  protected $request;
+  protected $sorts;           // array(column, type)
+  protected $filters;         // list of arrays(column, conditional, qualifier)
+  protected $filterColumns;
+  protected $aggregate;
+  protected $playerID;
+  protected $perPage;
+  protected $page;
+  protected $currentUrl;
 
   public function __construct() {
 
@@ -217,7 +217,7 @@ class Parser {
     $playerID = $this->request[1];
 
     // check if playerID exists
-    if (!DB::doesPlayerExist($playerID)) {
+    if ($this->module != Constants::Modules['Teams'] && !DB::doesPlayerExist($playerID)) {
       ApiFunctions::returnBadRequest('Error. playerID does not exist!');
       return;
     }
@@ -269,8 +269,6 @@ class Parser {
       $this->page = $_GET['page'];
     else
       $this->page = Constants::Defaults['page'];
-
-    // echo $this->page;
   }
 
   public function getPage() {
@@ -285,5 +283,58 @@ class Parser {
     return $this->currentUrl;
   }
 }
+
+
+class ParserTeams extends Parser {
+  protected $year;
+  protected $isPlayersRequested;
+
+
+  public function __construct() {
+    parent::__construct();
+    $this->setYear();
+    $this->setPlayers();
+  }
+
+  public function getYear() {
+    return $this->year;
+  }
+
+  public function returnPlayers() {
+    return $this->isPlayersRequested;
+  }
+
+  private function setYear() {
+    if (!isset($this->request[2])) {
+      $this->year = null;
+      return;
+    }
+
+    $this->year = $this->request[2];
+  }
+
+  private function setPlayers() {
+    if ($this->year == null) {
+      $this->isPlayersRequested = false;
+    }
+
+    // not set or not equal to 'players'
+    if (!isset($this->request[3]) || strtolower($this->request[3]) != 'players') {
+      $this->isPlayersRequested = false;
+    } else {
+      $this->isPlayersRequested = true;
+    }
+  }
+
+
+
+}
+
+
+
+
+
+
+
 
 ?>

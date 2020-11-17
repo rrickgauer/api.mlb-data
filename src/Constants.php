@@ -55,6 +55,7 @@ class Constants {
     "PitchingPost"    => "pitching-post",
     "FieldingPost"    => "fielding-post",
     "Colleges"        => "colleges",
+    "Teams"           => "teams",
   ];
 
   const Defaults = [
