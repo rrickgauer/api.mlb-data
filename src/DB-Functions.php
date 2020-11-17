@@ -183,7 +183,6 @@ class DB {
 
     // build order by statement
     $orderStmt  = '';
-    // $this->sortColumn = filter_var($this->sort['column'], FILTER_SANITIZE_STRING);
     $this->sortColumn = $this->sort['column'];
 
     // determine asc or desc
@@ -224,33 +223,35 @@ class DB {
 
   public function getBatting() {
     $stmt = "
-    SELECT      b.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                b.yearID as year,
-                t.name as teamName,
-                b.stint as stint,
-                b.lgID as lgID,
-                b.G as G,
-                b.AB as AB,
-                b.R as R,
-                b.H as H,
-                b.2B as 2B,
-                b.3B as 3B,
-                b.HR as HR,
-                b.RBI as RBI,
-                b.SB as SB,
-                b.CS as CS,
-                b.BB as BB,
-                b.SO as SO,
-                b.IBB as IBB,
-                b.HBP as HBP,
-                b.SH as SH,
-                b.SF as SF,
-                b.GIDP as GIDP
-    FROM        batting b
-    LEFT JOIN   people p ON b.playerID = p.playerID
-    LEFT JOIN   teams t on b.team_ID = t.ID";
+    SELECT    b.playerID  AS playerID, 
+              p.nameFirst AS nameFirst, 
+              p.nameLast  AS nameLast, 
+              b.yearID    AS year, 
+              t.name      AS teamName, 
+              b.stint     AS stint, 
+              b.lgID      AS lgID, 
+              b.G         AS G, 
+              b.AB        AS AB, 
+              b.R         AS R, 
+              b.H         AS H, 
+              b.2B        AS 2B, 
+              b.3B        AS 3B, 
+              b.HR        AS HR, 
+              b.RBI       AS RBI, 
+              b.SB        AS SB, 
+              b.CS        AS CS, 
+              b.BB        AS BB, 
+              b.SO        AS SO, 
+              b.IBB       AS IBB, 
+              b.HBP       AS HBP, 
+              b.SH        AS SH, 
+              b.SF        AS SF, 
+              b.GIDP      AS GIDP 
+    FROM      batting b 
+    LEFT JOIN people p 
+    ON        b.playerID = p.playerID 
+    LEFT JOIN teams t 
+    ON        b.team_ID = t.ID ";
 
     $sql = $this->getSqlStmt($stmt, 'b', 'ID');
     $sql->execute();
@@ -260,34 +261,37 @@ class DB {
 
   public function getBattingCount() {
     $stmt = "
-    SELECT count(*) as count FROM (
-      SELECT      b.playerID as playerID,
-                  p.nameFirst as nameFirst,
-                  p.nameLast as nameLast,
-                  b.yearID as year,
-                  t.name as teamName,
-                  b.stint as stint,
-                  b.lgID as lgID,
-                  b.G as G,
-                  b.AB as AB,
-                  b.R as R,
-                  b.H as H,
-                  b.2B as 2B,
-                  b.3B as 3B,
-                  b.HR as HR,
-                  b.RBI as RBI,
-                  b.SB as SB,
-                  b.CS as CS,
-                  b.BB as BB,
-                  b.SO as SO,
-                  b.IBB as IBB,
-                  b.HBP as HBP,
-                  b.SH as SH,
-                  b.SF as SF,
-                  b.GIDP as GIDP
-      FROM        batting b
-      LEFT JOIN   people p ON b.playerID = p.playerID
-      LEFT JOIN   teams t on b.team_ID = t.ID ";
+    SELECT COUNT(*) AS COUNT 
+    FROM   ( 
+             SELECT    b.playerID  AS playerID, 
+                       p.nameFirst AS nameFirst, 
+                       p.nameLast  AS nameLast, 
+                       b.yearID    AS year, 
+                       t.name      AS teamName, 
+                       b.stint     AS stint, 
+                       b.lgID      AS lgID, 
+                       b.G         AS G, 
+                       b.AB        AS AB, 
+                       b.R         AS R, 
+                       b.H         AS H, 
+                       b.2B        AS 2B, 
+                       b.3B        AS 3B, 
+                       b.HR        AS HR, 
+                       b.RBI       AS RBI, 
+                       b.SB        AS SB, 
+                       b.CS        AS CS, 
+                       b.BB        AS BB, 
+                       b.SO        AS SO, 
+                       b.IBB       AS IBB, 
+                       b.HBP       AS HBP, 
+                       b.SH        AS SH, 
+                       b.SF        AS SF, 
+                       b.GIDP      AS GIDP 
+             FROM      batting b 
+             LEFT JOIN people p 
+             ON        b.playerID = p.playerID 
+             LEFT JOIN teams t 
+             ON        b.team_ID = t.ID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'ID');
     $sql->execute();
@@ -297,30 +301,33 @@ class DB {
 
   public function getBattingAggregate() {
     $stmt = "
-    SELECT      b.playerID,
-                p.nameFirst,
-                p.nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM batting b2 where b2.playerID = b.playerID) as years,
-                SUM(b.G) AS G,
-                SUM(b.AB) AS AB,
-                SUM(b.R) AS R,
-                SUM(b.H) AS H,
-                SUM(b.2B) AS 2B,
-                SUM(b.3B) AS 3B,
-                SUM(b.HR) AS HR,
-                SUM(b.RBI) AS RBI,
-                SUM(b.SB) AS SB,
-                SUM(b.CS) AS CS,
-                SUM(b.BB) AS BB,
-                SUM(b.SO) AS SO,
-                SUM(b.IBB) AS IBB,
-                SUM(b.HBP) AS HBP,
-                SUM(b.SH) AS SH,
-                SUM(b.SF) AS SF,
-                SUM(b.GIDP) AS GIDP
-    FROM        batting b
-    LEFT JOIN   people p
-    ON          b.playerID = p.playerID";
+    SELECT    b.playerID,
+              p.nameFirst,
+              p.nameLast,
+              (
+                     SELECT COUNT(DISTINCT yearID)
+                     FROM   batting b2
+                     WHERE  b2.playerID = b.playerID) AS years,
+              SUM(b.G)                                AS G,
+              SUM(b.AB)                               AS AB,
+              SUM(b.R)                                AS R,
+              SUM(b.H)                                AS H,
+              SUM(b.2B)                               AS 2B,
+              SUM(b.3B)                               AS 3B,
+              SUM(b.HR)                               AS HR,
+              SUM(b.RBI)                              AS RBI,
+              SUM(b.SB)                               AS SB,
+              SUM(b.CS)                               AS CS,
+              SUM(b.BB)                               AS BB,
+              SUM(b.SO)                               AS SO,
+              SUM(b.IBB)                              AS IBB,
+              SUM(b.HBP)                              AS HBP,
+              SUM(b.SH)                               AS SH,
+              SUM(b.SF)                               AS SF,
+              SUM(b.GIDP)                             AS GIDP
+    FROM      batting b
+    LEFT JOIN people p
+    ON        b.playerID = p.playerID";
 
     $sql = $this->getSqlStmt($stmt, 'b', 'playerID');
     $sql->execute();
@@ -329,31 +336,36 @@ class DB {
 
   public function getBattingAggregateCount() {
 
-    $stmt = " SELECT COUNT(*) AS count FROM (
-    SELECT      b.playerID,
-                p.nameFirst,
-                p.nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM batting b2 where b2.playerID = b.playerID) as years,
-                SUM(b.G) AS G,
-                SUM(b.AB) AS AB,
-                SUM(b.R) AS R,
-                SUM(b.H) AS H,
-                SUM(b.2B) AS 2B,
-                SUM(b.3B) AS 3B,
-                SUM(b.HR) AS HR,
-                SUM(b.RBI) AS RBI,
-                SUM(b.SB) AS SB,
-                SUM(b.CS) AS CS,
-                SUM(b.BB) AS BB,
-                SUM(b.SO) AS SO,
-                SUM(b.IBB) AS IBB,
-                SUM(b.HBP) AS HBP,
-                SUM(b.SH) AS SH,
-                SUM(b.SF) AS SF,
-                SUM(b.GIDP) AS GIDP
-    FROM        batting b
-    LEFT JOIN   people p
-    ON          b.playerID = p.playerID ";
+    $stmt = " 
+    SELECT COUNT(*) AS COUNT
+    FROM   (
+           SELECT    b.playerID,
+                     p.nameFirst,
+                     p.nameLast,
+                     (
+                            SELECT COUNT(DISTINCT yearID)
+                            FROM   batting b2
+                            WHERE  b2.playerID = b.playerID) AS years,
+                     SUM(b.G)                                AS G,
+                     SUM(b.AB)                               AS AB,
+                     SUM(b.R)                                AS R,
+                     SUM(b.H)                                AS H,
+                     SUM(b.2B)                               AS 2B,
+                     SUM(b.3B)                               AS 3B,
+                     SUM(b.HR)                               AS HR,
+                     SUM(b.RBI)                              AS RBI,
+                     SUM(b.SB)                               AS SB,
+                     SUM(b.CS)                               AS CS,
+                     SUM(b.BB)                               AS BB,
+                     SUM(b.SO)                               AS SO,
+                     SUM(b.IBB)                              AS IBB,
+                     SUM(b.HBP)                              AS HBP,
+                     SUM(b.SH)                               AS SH,
+                     SUM(b.SF)                               AS SF,
+                     SUM(b.GIDP)                             AS GIDP
+           FROM      batting b
+           LEFT JOIN people p
+           ON        b.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'playerID');
     $sql->execute();
@@ -364,33 +376,35 @@ class DB {
 
   public function getBattingPost() {
     $stmt = "
-    SELECT      b.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                b.yearID as year,
-                t.name as teamName,
-                b.round as round,
-                b.lgID as lgID,
-                b.G as G,
-                b.AB as AB,
-                b.R as R,
-                b.H as H,
-                b.2B as 2B,
-                b.3B as 3B,
-                b.HR as HR,
-                b.RBI as RBI,
-                b.SB as SB,
-                b.CS as CS,
-                b.BB as BB,
-                b.SO as SO,
-                b.IBB as IBB,
-                b.HBP as HBP,
-                b.SH as SH,
-                b.SF as SF,
-                b.GIDP as GIDP
-    FROM        battingpost b
-    LEFT JOIN   people p ON b.playerID = p.playerID
-    LEFT JOIN   teams t on b.team_ID = t.ID";
+    SELECT    b.playerID  AS playerID,
+              p.nameFirst AS nameFirst,
+              p.nameLast  AS nameLast,
+              b.yearID    AS year,
+              t.name      AS teamName,
+              b.round     AS ROUND,
+              b.lgID      AS lgID,
+              b.G         AS G,
+              b.AB        AS AB,
+              b.R         AS R,
+              b.H         AS H,
+              b.2B        AS 2B,
+              b.3B        AS 3B,
+              b.HR        AS HR,
+              b.RBI       AS RBI,
+              b.SB        AS SB,
+              b.CS        AS CS,
+              b.BB        AS BB,
+              b.SO        AS SO,
+              b.IBB       AS IBB,
+              b.HBP       AS HBP,
+              b.SH        AS SH,
+              b.SF        AS SF,
+              b.GIDP      AS GIDP
+    FROM      battingpost b
+    LEFT JOIN people p
+    ON        b.playerID = p.playerID
+    LEFT JOIN teams t
+    ON        b.team_ID = t.ID ";
 
     $sql = $this->getSqlStmt($stmt, 'b', 'ID');
     $sql->execute();
@@ -399,34 +413,38 @@ class DB {
 
 
   public function getBattingPostCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
-    SELECT      b.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                b.yearID as year,
-                t.name as teamName,
-                b.round as round,
-                b.lgID as lgID,
-                b.G as G,
-                b.AB as AB,
-                b.R as R,
-                b.H as H,
-                b.2B as 2B,
-                b.3B as 3B,
-                b.HR as HR,
-                b.RBI as RBI,
-                b.SB as SB,
-                b.CS as CS,
-                b.BB as BB,
-                b.SO as SO,
-                b.IBB as IBB,
-                b.HBP as HBP,
-                b.SH as SH,
-                b.SF as SF,
-                b.GIDP as GIDP
-    FROM        battingpost b
-    LEFT JOIN   people p ON b.playerID = p.playerID
-    LEFT JOIN   teams t on b.team_ID = t.ID ";
+    $stmt = "
+    SELECT COUNT(*) AS COUNT
+    FROM   (
+             SELECT    b.playerID  AS playerID,
+                       p.nameFirst AS nameFirst,
+                       p.nameLast  AS nameLast,
+                       b.yearID    AS year,
+                       t.name      AS teamName,
+                       b.round     AS ROUND,
+                       b.lgID      AS lgID,
+                       b.G         AS G,
+                       b.AB        AS AB,
+                       b.R         AS R,
+                       b.H         AS H,
+                       b.2B        AS 2B,
+                       b.3B        AS 3B,
+                       b.HR        AS HR,
+                       b.RBI       AS RBI,
+                       b.SB        AS SB,
+                       b.CS        AS CS,
+                       b.BB        AS BB,
+                       b.SO        AS SO,
+                       b.IBB       AS IBB,
+                       b.HBP       AS HBP,
+                       b.SH        AS SH,
+                       b.SF        AS SF,
+                       b.GIDP      AS GIDP
+             FROM      battingpost b
+             LEFT JOIN people p
+             ON        b.playerID = p.playerID
+             LEFT JOIN teams t
+             ON        b.team_ID = t.ID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'ID');
     $sql->execute();
@@ -437,30 +455,33 @@ class DB {
 
   public function getBattingPostAggregate() {
     $stmt = "
-    SELECT      b.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM batting b2 where b2.playerID = b.playerID) as years,
-                SUM(b.G) AS G,
-                SUM(b.AB) AS AB,
-                SUM(b.R) AS R,
-                SUM(b.H) AS H,
-                SUM(b.2B) AS 2B,
-                SUM(b.3B) AS 3B,
-                SUM(b.HR) AS HR,
-                SUM(b.RBI) AS RBI,
-                SUM(b.SB) AS SB,
-                SUM(b.CS) AS CS,
-                SUM(b.BB) AS BB,
-                SUM(b.SO) AS SO,
-                SUM(b.IBB) AS IBB,
-                SUM(b.HBP) AS HBP,
-                SUM(b.SH) AS SH,
-                SUM(b.SF) AS SF,
-                SUM(b.GIDP) AS GIDP
-    FROM        battingpost b
-    LEFT JOIN   people p
-    ON          b.playerID = p.playerID";
+    SELECT    b.playerID  AS playerID,
+              p.nameFirst AS nameFirst,
+              p.nameLast  AS nameLast,
+              (
+                     SELECT COUNT(DISTINCT yearID)
+                     FROM   batting b2
+                     WHERE  b2.playerID = b.playerID) AS years,
+              SUM(b.G)                                AS G,
+              SUM(b.AB)                               AS AB,
+              SUM(b.R)                                AS R,
+              SUM(b.H)                                AS H,
+              SUM(b.2B)                               AS 2B,
+              SUM(b.3B)                               AS 3B,
+              SUM(b.HR)                               AS HR,
+              SUM(b.RBI)                              AS RBI,
+              SUM(b.SB)                               AS SB,
+              SUM(b.CS)                               AS CS,
+              SUM(b.BB)                               AS BB,
+              SUM(b.SO)                               AS SO,
+              SUM(b.IBB)                              AS IBB,
+              SUM(b.HBP)                              AS HBP,
+              SUM(b.SH)                               AS SH,
+              SUM(b.SF)                               AS SF,
+              SUM(b.GIDP)                             AS GIDP
+    FROM      battingpost b
+    LEFT JOIN people p
+    ON        b.playerID = p.playerID ";
 
     $sql = $this->getSqlStmt($stmt, 'b', 'playerID');
     $sql->execute();
@@ -468,31 +489,36 @@ class DB {
   }
 
   public function getBattingPostAggregateCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
-    SELECT      b.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM batting b2 where b2.playerID = b.playerID) as years,
-                SUM(b.G) AS G,
-                SUM(b.AB) AS AB,
-                SUM(b.R) AS R,
-                SUM(b.H) AS H,
-                SUM(b.2B) AS 2B,
-                SUM(b.3B) AS 3B,
-                SUM(b.HR) AS HR,
-                SUM(b.RBI) AS RBI,
-                SUM(b.SB) AS SB,
-                SUM(b.CS) AS CS,
-                SUM(b.BB) AS BB,
-                SUM(b.SO) AS SO,
-                SUM(b.IBB) AS IBB,
-                SUM(b.HBP) AS HBP,
-                SUM(b.SH) AS SH,
-                SUM(b.SF) AS SF,
-                SUM(b.GIDP) AS GIDP
-    FROM        battingpost b
-    LEFT JOIN   people p
-    ON          b.playerID = p.playerID";
+    $stmt = "
+    SELECT COUNT(*) AS COUNT
+    FROM   (
+             SELECT    b.playerID  AS playerID,
+                       p.nameFirst AS nameFirst,
+                       p.nameLast  AS nameLast,
+                       (
+                              SELECT COUNT(DISTINCT yearID)
+                              FROM   batting b2
+                              WHERE  b2.playerID = b.playerID) AS years,
+                       SUM(b.G)                                AS G,
+                       SUM(b.AB)                               AS AB,
+                       SUM(b.R)                                AS R,
+                       SUM(b.H)                                AS H,
+                       SUM(b.2B)                               AS 2B,
+                       SUM(b.3B)                               AS 3B,
+                       SUM(b.HR)                               AS HR,
+                       SUM(b.RBI)                              AS RBI,
+                       SUM(b.SB)                               AS SB,
+                       SUM(b.CS)                               AS CS,
+                       SUM(b.BB)                               AS BB,
+                       SUM(b.SO)                               AS SO,
+                       SUM(b.IBB)                              AS IBB,
+                       SUM(b.HBP)                              AS HBP,
+                       SUM(b.SH)                               AS SH,
+                       SUM(b.SF)                               AS SF,
+                       SUM(b.GIDP)                             AS GIDP
+             FROM      battingpost b
+             LEFT JOIN people p
+             ON        b.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'playerID');
     $sql->execute();
@@ -521,7 +547,7 @@ class DB {
                 p.H as H,
                 p.ER as ER,
                 p.HR as HR,
-                p.BB as 'BB',
+                p.BB as BB,
                 p.SO as SO,
                 p.BAOpp as BAOpp,
                 p.ERA as ERA,
@@ -836,29 +862,31 @@ class DB {
 
   public function getFielding() {
     $stmt = "
-    SELECT      f.playerID,
-                p.nameFirst,
-                p.nameLast,
-                f.yearID as year,
-                f.stint,
-                t.name as teamName,
-                f.lgID,
-                f.POS,
-                f.G,
-                f.GS,
-                f.InnOuts,
-                f.PO,
-                f.A,
-                f.E,
-                f.DP,
-                f.PB,
-                f.WP,
-                f.SB,
-                f.CS,
-                f.ZR
-    FROM        fielding f 
-    LEFT JOIN   people p ON f.playerID = p.playerID
-    LEFT JOIN   teams t on f.team_ID = t.ID ";
+    SELECT f.playerID,
+           p.nameFirst,
+           p.nameLast,
+           f.yearID AS year,
+           f.stint,
+           t.name   AS teamName,
+           f.lgID,
+           f.POS,
+           f.G,
+           f.GS,
+           f.InnOuts,
+           f.PO,
+           f.A,
+           f.E,
+           f.DP,
+           f.PB,
+           f.WP,
+           f.SB,
+           f.CS,
+           f.ZR
+    FROM   fielding f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID
+           LEFT JOIN teams t
+                  ON f.team_ID = t.ID ";
 
     $sql = $this->getSqlStmt($stmt, 'f', 'ID');
 
@@ -867,30 +895,34 @@ class DB {
   }
 
   public function getFieldingCount() {
-    $stmt = " SELECT count(*) as count from (
-    SELECT      f.playerID,
-                p.nameFirst,
-                p.nameLast,
-                f.yearID as year,
-                f.stint,
-                t.name as teamName,
-                f.lgID,
-                f.POS,
-                f.G,
-                f.GS,
-                f.InnOuts,
-                f.PO,
-                f.A,
-                f.E,
-                f.DP,
-                f.PB,
-                f.WP,
-                f.SB,
-                f.CS,
-                f.ZR
-    FROM        fielding f 
-    LEFT JOIN   people p ON f.playerID = p.playerID
-    LEFT JOIN   teams t on f.team_ID = t.ID ";
+    $stmt = "
+    SELECT COUNT(*) AS COUNT
+    FROM   (
+             SELECT    f.playerID,
+                       p.nameFirst,
+                       p.nameLast,
+                       f.yearID AS year,
+                       f.stint,
+                       t.name AS teamName,
+                       f.lgID,
+                       f.POS,
+                       f.G,
+                       f.GS,
+                       f.InnOuts,
+                       f.PO,
+                       f.A,
+                       f.E,
+                       f.DP,
+                       f.PB,
+                       f.WP,
+                       f.SB,
+                       f.CS,
+                       f.ZR
+             FROM      fielding f
+             LEFT JOIN people p
+             ON        f.playerID = p.playerID
+             LEFT JOIN teams t
+             ON        f.team_ID = t.ID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
@@ -900,24 +932,27 @@ class DB {
 
   public function getFieldingAggregate() {
     $stmt = "
-    SELECT      f.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM fielding f2 where f2.playerID = f.playerID) as years,
-                SUM(f.G) as G,
-                SUM(f.GS) as GS,
-                SUM(f.InnOuts) as InnOuts,
-                SUM(f.PO) as PO,
-                SUM(f.A) as A,
-                SUM(f.E) as E,
-                SUM(f.DP) as DP,
-                SUM(f.PB) as PB,
-                SUM(f.WP) as WP,
-                SUM(f.SB) as SB,
-                SUM(f.CS) as CS,
-                SUM(f.ZR) as ZR
-    FROM        fielding f 
-    LEFT JOIN   people p ON f.playerID = p.playerID";
+    SELECT f.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        AS nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   fielding f2
+            WHERE  f2.playerID = f.playerID) AS years,
+           SUM(f.G)                          AS G,
+           SUM(f.GS)                         AS GS,
+           SUM(f.InnOuts)                    AS InnOuts,
+           SUM(f.PO)                         AS PO,
+           SUM(f.A)                          AS A,
+           SUM(f.E)                          AS E,
+           SUM(f.DP)                         AS DP,
+           SUM(f.PB)                         AS PB,
+           SUM(f.WP)                         AS WP,
+           SUM(f.SB)                         AS SB,
+           SUM(f.CS)                         AS CS,
+           SUM(f.ZR)                         AS ZR
+    FROM   fielding f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmt($stmt, 'f', 'playerID');
     $sql->execute();
@@ -927,24 +962,27 @@ class DB {
   public function getFieldingAggregateCount() {
 
     $stmt = " SELECT COUNT(*) as count FROM (
-    SELECT      f.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM fielding f2 where f2.playerID = f.playerID) as years,
-                SUM(f.G) as G,
-                SUM(f.GS) as GS,
-                SUM(f.InnOuts) as InnOuts,
-                SUM(f.PO) as PO,
-                SUM(f.A) as A,
-                SUM(f.E) as E,
-                SUM(f.DP) as DP,
-                SUM(f.PB) as PB,
-                SUM(f.WP) as WP,
-                SUM(f.SB) as SB,
-                SUM(f.CS) as CS,
-                SUM(f.ZR) as ZR
-    FROM        fielding f 
-    LEFT JOIN   people p ON f.playerID = p.playerID";
+    SELECT f.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        AS nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   fielding f2
+            WHERE  f2.playerID = f.playerID) AS years,
+           SUM(f.G)                          AS G,
+           SUM(f.GS)                         AS GS,
+           SUM(f.InnOuts)                    AS InnOuts,
+           SUM(f.PO)                         AS PO,
+           SUM(f.A)                          AS A,
+           SUM(f.E)                          AS E,
+           SUM(f.DP)                         AS DP,
+           SUM(f.PB)                         AS PB,
+           SUM(f.WP)                         AS WP,
+           SUM(f.SB)                         AS SB,
+           SUM(f.CS)                         AS CS,
+           SUM(f.ZR)                         AS ZR
+    FROM   fielding f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
@@ -955,27 +993,29 @@ class DB {
 
   public function getFieldingPost() {
     $stmt = "
-    SELECT      f.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                f.yearID as year,
-                f.round as round,
-                t.name as teamName,
-                f.lgID as lgID,
-                f.POS as POS,
-                f.G as G,
-                f.GS as GS,
-                f.InnOuts as InnOuts,
-                f.PO as PO,
-                f.A as A,
-                f.E as E,
-                f.DP as DP,
-                f.PB as PB,
-                f.SB as SB,
-                f.CS as CS
-    FROM        fieldingpost f 
-    LEFT JOIN   people p ON f.playerID = p.playerID
-    LEFT JOIN   teams t on f.team_ID = t.ID ";
+    SELECT f.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           f.yearID    AS year,
+           f.round     AS round,
+           t.name      AS teamName,
+           f.lgID      AS lgID,
+           f.POS       AS POS,
+           f.G         AS G,
+           f.GS        AS GS,
+           f.InnOuts   AS InnOuts,
+           f.PO        AS PO,
+           f.A         AS A,
+           f.E         AS E,
+           f.DP        AS DP,
+           f.PB        AS PB,
+           f.SB        AS SB,
+           f.CS        AS CS
+    FROM   fieldingpost f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID
+           LEFT JOIN teams t
+                  ON f.team_ID = t.ID ";
 
     $sql = $this->getSqlStmt($stmt, 'f', 'ID');
     $sql->execute();
@@ -984,27 +1024,29 @@ class DB {
 
   public function getFieldingPostCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
-    SELECT      f.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                f.yearID as year,
-                f.round as round,
-                t.name as teamName,
-                f.lgID as lgID,
-                f.POS as POS,
-                f.G as G,
-                f.GS as GS,
-                f.InnOuts as InnOuts,
-                f.PO as PO,
-                f.A as A,
-                f.E as E,
-                f.DP as DP,
-                f.PB as PB,
-                f.SB as SB,
-                f.CS as CS
-    FROM        fieldingpost f 
-    LEFT JOIN   people p ON f.playerID = p.playerID
-    LEFT JOIN   teams t on f.team_ID = t.ID ";
+    SELECT f.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           f.yearID    AS year,
+           f.round     AS round,
+           t.name      AS teamName,
+           f.lgID      AS lgID,
+           f.POS       AS POS,
+           f.G         AS G,
+           f.GS        AS GS,
+           f.InnOuts   AS InnOuts,
+           f.PO        AS PO,
+           f.A         AS A,
+           f.E         AS E,
+           f.DP        AS DP,
+           f.PB        AS PB,
+           f.SB        AS SB,
+           f.CS        AS CS
+    FROM   fieldingpost f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID
+           LEFT JOIN teams t
+                  ON f.team_ID = t.ID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
@@ -1014,22 +1056,25 @@ class DB {
 
   public function getFieldingPostAggregate() {
     $stmt = "
-    SELECT      f.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM fielding f2 where f2.playerID = f.playerID) as years,
-                SUM(f.G) as G,
-                SUM(f.GS) as GS,
-                SUM(f.InnOuts) as InnOuts,
-                SUM(f.PO) as PO,
-                SUM(f.A) as A,
-                SUM(f.E) as E,
-                SUM(f.DP) as DP,
-                SUM(f.PB) as PB,
-                SUM(f.SB) as SB,
-                SUM(f.CS) as CS
-    FROM        fieldingpost f 
-    LEFT JOIN   people p ON f.playerID = p.playerID";
+    SELECT f.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        AS nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   fielding f2
+            WHERE  f2.playerID = f.playerID) AS years,
+           SUM(f.G)                          AS G,
+           SUM(f.GS)                         AS GS,
+           SUM(f.InnOuts)                    AS InnOuts,
+           SUM(f.PO)                         AS PO,
+           SUM(f.A)                          AS A,
+           SUM(f.E)                          AS E,
+           SUM(f.DP)                         AS DP,
+           SUM(f.PB)                         AS PB,
+           SUM(f.SB)                         AS SB,
+           SUM(f.CS)                         AS CS
+    FROM   fieldingpost f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmt($stmt, 'f', 'playerID');
     $sql->execute();
@@ -1038,22 +1083,25 @@ class DB {
 
   public function getFieldingPostAggregateCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
-    SELECT      f.playerID as playerID,
-                p.nameFirst as nameFirst,
-                p.nameLast as nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM fielding f2 where f2.playerID = f.playerID) as years,
-                SUM(f.G) as G,
-                SUM(f.GS) as GS,
-                SUM(f.InnOuts) as InnOuts,
-                SUM(f.PO) as PO,
-                SUM(f.A) as A,
-                SUM(f.E) as E,
-                SUM(f.DP) as DP,
-                SUM(f.PB) as PB,
-                SUM(f.SB) as SB,
-                SUM(f.CS) as CS
-    FROM        fieldingpost f 
-    LEFT JOIN   people p ON f.playerID = p.playerID ";
+    SELECT f.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        AS nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   fielding f2
+            WHERE  f2.playerID = f.playerID) AS years,
+           SUM(f.G)                          AS G,
+           SUM(f.GS)                         AS GS,
+           SUM(f.InnOuts)                    AS InnOuts,
+           SUM(f.PO)                         AS PO,
+           SUM(f.A)                          AS A,
+           SUM(f.E)                          AS E,
+           SUM(f.DP)                         AS DP,
+           SUM(f.PB)                         AS PB,
+           SUM(f.SB)                         AS SB,
+           SUM(f.CS)                         AS CS
+    FROM   fieldingpost f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
@@ -1064,32 +1112,34 @@ class DB {
 
   public function getAppearances() {
     $stmt = "
-    SELECT      a.yearID as year,
-                t.name as teamName,
-                a.lgID,
-                a.playerID,
-                p.nameFirst,
-                p.nameLast,
-                a.G_all,
-                a.GS,
-                a.G_batting,
-                a.G_defense,
-                a.G_p,
-                a.G_c,
-                a.G_1b,
-                a.G_2b,
-                a.G_3b,
-                a.G_ss,
-                a.G_lf,
-                a.G_cf,
-                a.G_rf,
-                a.G_of,
-                a.G_dh,
-                a.G_ph,
-                a.G_pr
-    FROM        appearances a 
-    LEFT JOIN   people p ON a.playerID = p.playerID
-    LEFT JOIN   teams t on a.team_ID = t.ID ";
+    SELECT a.yearID    AS year,
+           t.name      AS teamName,
+           a.lgID      AS lgID,
+           a.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           a.G_all     AS G_all,
+           a.GS        AS GS,
+           a.G_batting AS G_batting,
+           a.G_defense AS G_defense,
+           a.G_p       AS G_p,
+           a.G_c       AS G_c,
+           a.G_1b      AS G_1b,
+           a.G_2b      AS G_2b,
+           a.G_3b      AS G_3b,
+           a.G_ss      AS G_ss,
+           a.G_lf      AS G_lf,
+           a.G_cf      AS G_cf,
+           a.G_rf      AS G_rf,
+           a.G_of      AS G_of,
+           a.G_dh      AS G_dh,
+           a.G_ph      AS G_ph,
+           a.G_pr      AS G_pr
+    FROM   appearances a
+           LEFT JOIN people p
+                  ON a.playerID = p.playerID
+           LEFT JOIN teams t
+                  ON a.team_ID = t.ID ";
 
     $sql = $this->getSqlStmt($stmt, 'a', 'ID');
     $sql->execute();
@@ -1098,32 +1148,34 @@ class DB {
 
   public function getAppearancesCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
-    SELECT      a.yearID as year,
-                t.name as teamName,
-                a.lgID,
-                a.playerID,
-                p.nameFirst,
-                p.nameLast,
-                a.G_all,
-                a.GS,
-                a.G_batting,
-                a.G_defense,
-                a.G_p,
-                a.G_c,
-                a.G_1b,
-                a.G_2b,
-                a.G_3b,
-                a.G_ss,
-                a.G_lf,
-                a.G_cf,
-                a.G_rf,
-                a.G_of,
-                a.G_dh,
-                a.G_ph,
-                a.G_pr
-    FROM        appearances a 
-    LEFT JOIN   people p ON a.playerID = p.playerID
-    LEFT JOIN   teams t on a.team_ID = t.ID ";
+    SELECT a.yearID AS year,
+           t.name   AS teamName,
+           a.lgID,
+           a.playerID,
+           p.nameFirst,
+           p.nameLast,
+           a.G_all,
+           a.GS,
+           a.G_batting,
+           a.G_defense,
+           a.G_p,
+           a.G_c,
+           a.G_1b,
+           a.G_2b,
+           a.G_3b,
+           a.G_ss,
+           a.G_lf,
+           a.G_cf,
+           a.G_rf,
+           a.G_of,
+           a.G_dh,
+           a.G_ph,
+           a.G_pr
+    FROM   appearances a
+           LEFT JOIN people p
+                  ON a.playerID = p.playerID
+           LEFT JOIN teams t
+                  ON a.team_ID = t.ID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'a', 'ID');
     $sql->execute();
@@ -1133,29 +1185,32 @@ class DB {
 
   public function getAppearancesAggregate() {
     $stmt = "
-    SELECT      a.playerID,
-                p.nameFirst,
-                p.nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM appearances a2 where a2.playerID = a.playerID) as years,
-                SUM(a.G_all) AS G_all,
-                SUM(a.GS) AS GS,
-                SUM(a.G_batting) AS G_batting,
-                SUM(a.G_defense) AS G_defense,
-                SUM(a.G_p) AS G_p,
-                SUM(a.G_c) AS G_c,
-                SUM(a.G_1b) AS G_1b,
-                SUM(a.G_2b) AS G_2b,
-                SUM(a.G_3b) AS G_3b,
-                SUM(a.G_ss) AS G_ss,
-                SUM(a.G_lf) AS G_lf,
-                SUM(a.G_cf) AS G_cf,
-                SUM(a.G_rf) AS G_rf,
-                SUM(a.G_of) AS G_of,
-                SUM(a.G_dh) AS G_dh,
-                SUM(a.G_ph) AS G_ph,
-                SUM(a.G_pr) AS G_pr
-    FROM        appearances a 
-    LEFT JOIN   people p ON a.playerID = p.playerID ";
+    SELECT a.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        AS nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   appearances a2
+            WHERE  a2.playerID = a.playerID) AS years,
+           SUM(a.G_all)                      AS G_all,
+           SUM(a.GS)                         AS GS,
+           SUM(a.G_batting)                  AS G_batting,
+           SUM(a.G_defense)                  AS G_defense,
+           SUM(a.G_p)                        AS G_p,
+           SUM(a.G_c)                        AS G_c,
+           SUM(a.G_1b)                       AS G_1b,
+           SUM(a.G_2b)                       AS G_2b,
+           SUM(a.G_3b)                       AS G_3b,
+           SUM(a.G_ss)                       AS G_ss,
+           SUM(a.G_lf)                       AS G_lf,
+           SUM(a.G_cf)                       AS G_cf,
+           SUM(a.G_rf)                       AS G_rf,
+           SUM(a.G_of)                       AS G_of,
+           SUM(a.G_dh)                       AS G_dh,
+           SUM(a.G_ph)                       AS G_ph,
+           SUM(a.G_pr)                       AS G_pr
+    FROM   appearances a
+           LEFT JOIN people p
+                  ON a.playerID = p.playerID ";
 
     $sql = $this->getSqlStmt($stmt, 'a', 'playerID');
     $sql->execute();
@@ -1164,29 +1219,32 @@ class DB {
 
   public function getAppearancesAggregateCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
-    SELECT      a.playerID,
-                p.nameFirst,
-                p.nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM appearances a2 where a2.playerID = a.playerID) as years,
-                SUM(a.G_all) AS G_all,
-                SUM(a.GS) AS GS,
-                SUM(a.G_batting) AS G_batting,
-                SUM(a.G_defense) AS G_defense,
-                SUM(a.G_p) AS G_p,
-                SUM(a.G_c) AS G_c,
-                SUM(a.G_1b) AS G_1b,
-                SUM(a.G_2b) AS G_2b,
-                SUM(a.G_3b) AS G_3b,
-                SUM(a.G_ss) AS G_ss,
-                SUM(a.G_lf) AS G_lf,
-                SUM(a.G_cf) AS G_cf,
-                SUM(a.G_rf) AS G_rf,
-                SUM(a.G_of) AS G_of,
-                SUM(a.G_dh) AS G_dh,
-                SUM(a.G_ph) AS G_ph,
-                SUM(a.G_pr) AS G_pr
-    FROM        appearances a 
-    LEFT JOIN   people p ON a.playerID = p.playerID ";
+    SELECT a.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   appearances a2
+            WHERE  a2.playerID = a.playerID) AS years,
+           SUM(a.G_all)                      AS G_all,
+           SUM(a.GS)                         AS GS,
+           SUM(a.G_batting)                  AS G_batting,
+           SUM(a.G_defense)                  AS G_defense,
+           SUM(a.G_p)                        AS G_p,
+           SUM(a.G_c)                        AS G_c,
+           SUM(a.G_1b)                       AS G_1b,
+           SUM(a.G_2b)                       AS G_2b,
+           SUM(a.G_3b)                       AS G_3b,
+           SUM(a.G_ss)                       AS G_ss,
+           SUM(a.G_lf)                       AS G_lf,
+           SUM(a.G_cf)                       AS G_cf,
+           SUM(a.G_rf)                       AS G_rf,
+           SUM(a.G_of)                       AS G_of,
+           SUM(a.G_dh)                       AS G_dh,
+           SUM(a.G_ph)                       AS G_ph,
+           SUM(a.G_pr)                       AS G_pr
+    FROM   appearances a
+           LEFT JOIN people p
+                  ON a.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'a', 'playerID');
     $sql->execute();
@@ -1196,16 +1254,17 @@ class DB {
 
   public function getFieldingOF() {
     $stmt = "
-    SELECT      f.playerID,
-                p.nameFirst,
-                p.nameLast,
-                f.yearID as year,
-                f.stint,
-                f.Glf,
-                f.Gcf,
-                f.Grf
-    FROM        fieldingof f 
-    LEFT JOIN   people p ON f.playerID = p.playerID ";
+    SELECT f.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           f.yearID    AS year,
+           f.stint     AS stint,
+           f.Glf       AS Glf,
+           f.Gcf       AS Gcf,
+           f.Grf       AS Grf
+    FROM   fieldingof f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmt($stmt, 'f', 'ID');
     $sql->execute();
@@ -1214,16 +1273,17 @@ class DB {
 
   public function getFieldingOFCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
-    SELECT      f.playerID,
-                p.nameFirst,
-                p.nameLast,
-                f.yearID as year,
-                f.stint,
-                f.Glf,
-                f.Gcf,
-                f.Grf
-    FROM        fieldingof f 
-    LEFT JOIN   people p ON f.playerID = p.playerID ";
+    SELECT f.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           f.yearID    AS year,
+           f.stint     AS stint,
+           f.Glf       AS Glf,
+           f.Gcf       AS Gcf,
+           f.Grf       AS Grf
+    FROM   fieldingof f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
@@ -1234,15 +1294,18 @@ class DB {
 
   public function getFieldingOFAggregate() {
     $stmt = "
-    SELECT    f.playerID,
-              p.nameFirst,
-              p.nameLast,
-              (SELECT COUNT(DISTINCT yearID) FROM fieldingof f2 where f2.playerID = f.playerID) as years,
-              SUM(f.Glf) AS Glf,
-              SUM(f.Gcf) AS Gcf,
-              SUM(f.Grf) AS Grf
-    FROM      fieldingof f 
-    LEFT JOIN people p ON f.playerID = p.playerID ";
+    SELECT f.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        AS nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   fieldingof f2
+            WHERE  f2.playerID = f.playerID) AS years,
+           SUM(f.Glf)                        AS Glf,
+           SUM(f.Gcf)                        AS Gcf,
+           SUM(f.Grf)                        AS Grf
+    FROM   fieldingof f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmt($stmt, 'f', 'playerID');
     $sql->execute();
@@ -1269,29 +1332,31 @@ class DB {
 
   public function getFieldingOFSplit() {
     $stmt = "
-    SELECT      f.playerID,
-                p.nameFirst,
-                p.nameLast,
-                f.yearID as year,
-                f.stint,
-                t.name as teamName,
-                f.lgID,
-                f.POS,
-                f.G,
-                f.GS,
-                f.InnOuts,
-                f.PO,
-                f.A,
-                f.E,
-                f.DP,
-                f.PB,
-                f.WP,
-                f.SB,
-                f.CS,
-                f.ZR
-    FROM        fieldingofsplit f 
-    LEFT JOIN   people p ON f.playerID = p.playerID
-    LEFT JOIN   teams t on f.team_ID = t.ID ";
+    SELECT f.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           f.yearID    AS year,
+           f.stint     AS stint,
+           t.name      AS teamName,
+           f.lgID      AS lgID,
+           f.POS       AS POS,
+           f.G         AS G,
+           f.GS        AS GS,
+           f.InnOuts   AS InnOuts,
+           f.PO        AS PO,
+           f.A         AS A,
+           f.E         AS E,
+           f.DP        AS DP,
+           f.PB        AS PB,
+           f.WP        AS WP,
+           f.SB        AS SB,
+           f.CS        AS CS,
+           f.ZR        AS ZR
+    FROM   fieldingofsplit f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID
+           LEFT JOIN teams t
+                  ON f.team_ID = t.ID ";
 
     $sql = $this->getSqlStmt($stmt, 'f', 'ID');
     $sql->execute();
@@ -1300,29 +1365,31 @@ class DB {
 
   public function getFieldingOFSplitCount() {
     $stmt = " SELECT COUNT(*) as count FROM (
-    SELECT      f.playerID,
-                p.nameFirst,
-                p.nameLast,
-                f.yearID as year,
-                f.stint,
-                t.name as teamName,
-                f.lgID,
-                f.POS,
-                f.G,
-                f.GS,
-                f.InnOuts,
-                f.PO,
-                f.A,
-                f.E,
-                f.DP,
-                f.PB,
-                f.WP,
-                f.SB,
-                f.CS,
-                f.ZR
-    FROM        fieldingofsplit f 
-    LEFT JOIN   people p ON f.playerID = p.playerID
-    LEFT JOIN   teams t on f.team_ID = t.ID ";
+    SELECT f.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           f.yearID    AS year,
+           f.stint     AS stint,
+           t.name      AS teamName,
+           f.lgID      AS lgID,
+           f.POS       AS POS,
+           f.G         AS G,
+           f.GS        AS GS,
+           f.InnOuts   AS InnOuts,
+           f.PO        AS PO,
+           f.A         AS A,
+           f.E         AS E,
+           f.DP        AS DP,
+           f.PB        AS PB,
+           f.WP        AS WP,
+           f.SB        AS SB,
+           f.CS        AS CS,
+           f.ZR        AS ZR
+    FROM   fieldingofsplit f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID
+           LEFT JOIN teams t
+                  ON f.team_ID = t.ID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
@@ -1333,24 +1400,27 @@ class DB {
 
   public function getFieldingOFSplitAggregate() {
     $stmt = "
-    SELECT      f.playerID,
-                p.nameFirst,
-                p.nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM fieldingofsplit f2 where f2.playerID = f.playerID) as years,
-                SUM(f.G) AS G,
-                SUM(f.GS) AS GS,
-                SUM(f.InnOuts) AS InnOuts,
-                SUM(f.PO) AS PO,
-                SUM(f.A) AS A,
-                SUM(f.E) AS E,
-                SUM(f.DP) AS DP,
-                SUM(f.PB) AS PB,
-                SUM(f.WP) AS WP,
-                SUM(f.SB) AS SB,
-                SUM(f.CS) AS CS,
-                SUM(f.ZR) AS ZR
-    FROM        fieldingofsplit f 
-    LEFT JOIN   people p ON f.playerID = p.playerID ";
+    SELECT f.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        AS nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   fieldingofsplit f2
+            WHERE  f2.playerID = f.playerID) AS years,
+           SUM(f.G)                          AS G,
+           SUM(f.GS)                         AS GS,
+           SUM(f.InnOuts)                    AS InnOuts,
+           SUM(f.PO)                         AS PO,
+           SUM(f.A)                          AS A,
+           SUM(f.E)                          AS E,
+           SUM(f.DP)                         AS DP,
+           SUM(f.PB)                         AS PB,
+           SUM(f.WP)                         AS WP,
+           SUM(f.SB)                         AS SB,
+           SUM(f.CS)                         AS CS,
+           SUM(f.ZR)                         AS ZR
+    FROM   fieldingofsplit f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmt($stmt, 'f', 'playerID');
     $sql->execute();
@@ -1359,24 +1429,27 @@ class DB {
 
   public function getFieldingOFSplitAggregateCount() {
     $stmt = "SELECT COUNT(*) as count FROM (
-    SELECT      f.playerID,
-                p.nameFirst,
-                p.nameLast,
-                (SELECT COUNT(DISTINCT yearID) FROM fieldingofsplit f2 where f2.playerID = f.playerID) as years,
-                SUM(f.G) AS G,
-                SUM(f.GS) AS GS,
-                SUM(f.InnOuts) AS InnOuts,
-                SUM(f.PO) AS PO,
-                SUM(f.A) AS A,
-                SUM(f.E) AS E,
-                SUM(f.DP) AS DP,
-                SUM(f.PB) AS PB,
-                SUM(f.WP) AS WP,
-                SUM(f.SB) AS SB,
-                SUM(f.CS) AS CS,
-                SUM(f.ZR) AS ZR
-    FROM        fieldingofsplit f 
-    LEFT JOIN   people p ON f.playerID = p.playerID ";
+    SELECT f.playerID                        AS playerID,
+           p.nameFirst                       AS nameFirst,
+           p.nameLast                        AS nameLast,
+           (SELECT COUNT(DISTINCT yearID)
+            FROM   fieldingofsplit f2
+            WHERE  f2.playerID = f.playerID) AS years,
+           SUM(f.G)                          AS G,
+           SUM(f.GS)                         AS GS,
+           SUM(f.InnOuts)                    AS InnOuts,
+           SUM(f.PO)                         AS PO,
+           SUM(f.A)                          AS A,
+           SUM(f.E)                          AS E,
+           SUM(f.DP)                         AS DP,
+           SUM(f.PB)                         AS PB,
+           SUM(f.WP)                         AS WP,
+           SUM(f.SB)                         AS SB,
+           SUM(f.CS)                         AS CS,
+           SUM(f.ZR)                         AS ZR
+    FROM   fieldingofsplit f
+           LEFT JOIN people p
+                  ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
@@ -1386,16 +1459,18 @@ class DB {
 
   public function getSalaries() {
     $stmt = "
-    SELECT      s.playerID,
-                p.nameFirst,
-                p.nameLast,
-                s.yearID as year,
-                t.name as teamName,
-                s.lgID,
-                s.salary
-    FROM        salaries s 
-    LEFT JOIN   people p ON s.playerID = p.playerID
-    LEFT JOIN   teams t on s.team_ID = t.ID ";
+    SELECT s.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           s.yearID    AS year,
+           t.name      AS teamName,
+           s.lgID      AS lgID,
+           s.salary    AS salary
+    FROM   salaries s
+           LEFT JOIN people p
+                  ON s.playerID = p.playerID
+           LEFT JOIN teams t
+                  ON s.team_ID = t.ID ";
 
     $sql = $this->getSqlStmt($stmt, 's', 'ID');
     $sql->execute();
@@ -1454,30 +1529,43 @@ class DB {
 
   public function getPeople() {
     $stmt = "
-    SELECT  p.playerID,
-            p.nameFirst,
-            p.nameLast,
-            p.nameGiven,
-            p.birthCountry,
-            p.birthState,
-            p.birthCity,
-            p.deathCountry,
-            p.deathState,
-            p.deathCity,
-            p.weight,
-            p.height,
-            p.bats,
-            p.throws,
-            p.retroID,
-            CONCAT('https://www.baseball-reference.com/players/', SUBSTR(p.bbrefID, 1, 1), '/', p.bbrefID, '.shtml') as bbrefLink,
-            p.birth_date as birthDate,
-            p.debut_date as debuteDate,
-            p.finalgame_date as finalGameDate,
-            p.death_date as deathDate,
-            (select t.name from appearances a left join teams t on a.team_ID = t.ID where a.playerID = p.playerID group by a.ID order by a.yearID desc limit 1) as team,
-            (select i.source from images i where i.playerID = p.playerID limit 1) as image,
-            if ((select h.inducted from halloffame h where h.playerID = p.playerID limit 1) = 'Y', 'y', 'n') as hallOfFame
-    FROM    people p ";
+    SELECT p.playerID                      AS playerID,
+           p.nameFirst                     AS nameFirst,
+           p.nameLast                      AS nameLast,
+           p.nameGiven                     AS nameGiven,
+           p.birthCountry                  AS birthCountry,
+           p.birthState                    AS birthState,
+           p.birthCity                     AS birthCity,
+           p.deathCountry                  AS deathCountry,
+           p.deathState                    AS deathState,
+           p.deathCity                     AS deathCity,
+           p.weight                        AS weight,
+           p.height                        AS height,
+           p.bats                          AS bats,
+           p.throws                        AS throws,
+           p.retroID                       AS retroID,
+           CONCAT('https://www.baseball-reference.com/players/', SUBSTR(p.bbrefID, 1, 1), '/', p.bbrefID, '.shtml')                       AS bbrefLink,
+           p.birth_date                    AS birthDate,
+           p.debut_date                    AS debuteDate,
+           p.finalgame_date                AS finalGameDate,
+           p.death_date                    AS deathDate,
+           (SELECT t.name
+            FROM   appearances a
+                   LEFT JOIN teams t
+                          ON a.team_ID = t.ID
+            WHERE  a.playerID = p.playerID
+            GROUP  BY a.ID
+            ORDER  BY a.yearID DESC
+            LIMIT  1)                      AS team,
+           (SELECT i.source
+            FROM   images i
+            WHERE  i.playerID = p.playerID
+            LIMIT  1)                      AS image,
+           IF ((SELECT h.inducted
+                FROM   halloffame h
+                WHERE  h.playerID = p.playerID
+                LIMIT  1) = 'Y', 'y', 'n') AS hallOfFame
+    FROM   people p ";
 
     $sql = $this->getSqlStmt($stmt, 'p', 'playerID');
     $sql->execute();
