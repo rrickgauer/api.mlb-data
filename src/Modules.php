@@ -127,9 +127,9 @@ class Module {
 
   public function setDataSetSize($functionAggregate, $function) {
     if ($this->aggregate)
-      $this->dataSetSize = call_user_func($functionAggregate, $this->playerID, $this->sorts, $this->filters);
+      $this->dataSetSize = call_user_func(array($this->db, $functionAggregate));
     else
-      $this->dataSetSize = call_user_func($function, $this->playerID, $this->sorts, $this->filters);
+      $this->dataSetSize = call_user_func(array($this->db, $function));
   }
 
   public function getPagination() {
@@ -157,10 +157,21 @@ class Module {
     // else 
     //   $dataset = call_user_func($function, $this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset);
 
-    if ($this->aggregate == true)
-      $dataset = call_user_func($aggregateFunction);
-    else 
-      $dataset = call_user_func($function);
+
+    if ($this->aggregate == true) {
+      $dataset = call_user_func(array($this->db, $aggregateFunction));
+    } else {
+      $dataset = call_user_func(array($this->db, $function));
+    }
+
+
+
+
+
+    // if ($this->aggregate == true)
+    //   $dataset = call_user_func($aggregateFunction);
+    // else 
+    //   $dataset = call_user_func($function);
     
     $parser = new Parser(); // need this to get the module
 
@@ -175,17 +186,17 @@ class Module {
 class People extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getPeople', '$this->db->getPeople');
-    $this->setDataSetSize('$this->db->getPeopleCount', '$this->db->getPeopleCount');
+    $this->retrieveData('getPeople', 'getPeople');
+    $this->setDataSetSize('getPeopleCount', 'getPeopleCount');
 
     // add additional info if playerID is specified
     if ($this->playerID != null) {
       // teams played for
-      $teams = $this->db->getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
+      $teams = getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
       $this->dataSet['teamsPlayedFor'] = array_column($teams, 'name');
 
       // images
-      $images = $this->db->getImagesPlayer($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
+      $images = getImagesPlayer($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
       $this->dataSet['images'] = array_column($images, 'source');
     }
 
@@ -195,96 +206,96 @@ class People extends Module {
 class Pitching extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getPitchingAggregate', '$this->db->getPitching');
-    $this->setDataSetSize('$this->db->getPitchingAggregateCount', '$this->db->getPitchingCount');
+    $this->retrieveData('getPitchingAggregate', 'getPitching');
+    $this->setDataSetSize('getPitchingAggregateCount', 'getPitchingCount');
   }
 }
 
 class PitchingPost extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getPitchingPostAggregate', '$this->db->getPitchingPost');
-    $this->setDataSetSize('$this->db->getPitchingPostAggregateCount', '$this->db->getPitchingPostCount');
+    $this->retrieveData('getPitchingPostAggregate', 'getPitchingPost');
+    $this->setDataSetSize('getPitchingPostAggregateCount', 'getPitchingPostCount');
   }
 }
 
 class Batting extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getBattingAggregate', '$this->db->getBatting');
-    $this->setDataSetSize('$this->db->getBattingAggregateCount', '$this->db->getBattingCount');
+    $this->retrieveData('getBattingAggregate', 'getBatting');
+    $this->setDataSetSize('getBattingAggregateCount', 'getBattingCount');
   }
 }
 
 class BattingPost extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getBattingPostAggregate', '$this->db->getBattingPost');
-    $this->setDataSetSize('$this->db->getBattingPostAggregateCount', '$this->db->getBattingPostCount');
+    $this->retrieveData('getBattingPostAggregate', 'getBattingPost');
+    $this->setDataSetSize('getBattingPostAggregateCount', 'getBattingPostCount');
   }
 }
 
 class Fielding extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getFieldingAggregate', '$this->db->getFielding');
-    $this->setDataSetSize('$this->db->getFieldingAggregateCount', '$this->db->getFieldingCount');
+    $this->retrieveData('getFieldingAggregate', 'getFielding');
+    $this->setDataSetSize('getFieldingAggregateCount', 'getFieldingCount');
   }
 }
 
 class FieldingPost extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getFieldingPostAggregate', '$this->db->getFieldingPost');
-    $this->setDataSetSize('$this->db->getFieldingPostAggregateCount', '$this->db->getFieldingPostCount');
+    $this->retrieveData('getFieldingPostAggregate', 'getFieldingPost');
+    $this->setDataSetSize('getFieldingPostAggregateCount', 'getFieldingPostCount');
   }
 }
 
 class FieldingOF extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getFieldingOFAggregate', '$this->db->getFieldingOF');
-    $this->setDataSetSize('$this->db->getFieldingOFAggregateCount', '$this->db->getFieldingOFCount');
+    $this->retrieveData('getFieldingOFAggregate', 'getFieldingOF');
+    $this->setDataSetSize('getFieldingOFAggregateCount', 'getFieldingOFCount');
   }
 }
 
 class FieldingOFSplit extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getFieldingOFSplitAggregate', '$this->db->getFieldingOFSplit');
-    $this->setDataSetSize('$this->db->getFieldingOFSplitAggregateCount', '$this->db->getFieldingOFSplitCount');
+    $this->retrieveData('getFieldingOFSplitAggregate', 'getFieldingOFSplit');
+    $this->setDataSetSize('getFieldingOFSplitAggregateCount', 'getFieldingOFSplitCount');
   }
 }
 
 class Appearances extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getAppearancesAggregate', '$this->db->getAppearances');
-    $this->setDataSetSize('$this->db->getAppearancesAggregateCount', '$this->db->getAppearancesCount');
+    $this->retrieveData('getAppearancesAggregate', 'getAppearances');
+    $this->setDataSetSize('getAppearancesAggregateCount', 'getAppearancesCount');
   }
 }
 
 class Salaries extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getSalariesAggregate', '$this->db->getSalaries');
-    $this->setDataSetSize('$this->db->getSalariesAggregateCount', '$this->db->getSalariesCount');
+    $this->retrieveData('getSalariesAggregate', 'getSalaries');
+    $this->setDataSetSize('getSalariesAggregateCount', 'getSalariesCount');
   }
 }
 
 class Images extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getImages', '$this->db->getImages');
-    $this->setDataSetSize('$this->db->getImagesCount', '$this->db->getImagesCount');
+    $this->retrieveData('getImages', 'getImages');
+    $this->setDataSetSize('getImagesCount', 'getImagesCount');
   }
 }
 
 Class Colleges extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('$this->db->getColleges', '$this->db->getColleges');
-    $this->setDataSetSize('$this->db->getCollegesCount', '$this->db->getCollegesCount');
+    $this->retrieveData('getColleges', 'getColleges');
+    $this->setDataSetSize('getCollegesCount', 'getCollegesCount');
   }
 }
 
@@ -297,22 +308,22 @@ Class Teams extends Module {
 
     // normal teams
     if ($parserTeams->getYear() == null) {
-      $this->retrieveData('$this->db->getTeamsAggregate', '$this->db->getTeams');
-      $this->setDataSetSize('$this->db->getTeamsAggregateCount', '$this->db->getTeamsCount');
+      $this->retrieveData('getTeamsAggregate', 'getTeams');
+      $this->setDataSetSize('getTeamsAggregateCount', 'getTeamsCount');
     }
 
     // teams/year
     else if ($parserTeams->returnPlayers() == false) {
-      $data = $this->db->getTeamYear($parserTeams->getYear());
+      $data = getTeamYear($parserTeams->getYear());
       $this->dataSet = $data->fetch(PDO::FETCH_ASSOC);
       $this->dataSetSize = 1;
     }
 
     // teams/year/players
     else {
-      $data = $this->db->getTeamYearPlayers($parserTeams->getYear());
+      $data = getTeamYearPlayers($parserTeams->getYear());
       $this->dataSet = $data->fetchAll(PDO::FETCH_ASSOC);
-      $this->dataSetSize = $this->db->getTeamYearPlayersCount($parserTeams->getYear());
+      $this->dataSetSize = getTeamYearPlayersCount($parserTeams->getYear());
     }
 
   }
@@ -356,7 +367,7 @@ class Search {
   }
 
   private function retrieveData() {
-    $data = $this->db->getPeopleSearch($this->query)->fetchAll(PDO::FETCH_ASSOC);
+    $data = getPeopleSearch($this->query)->fetchAll(PDO::FETCH_ASSOC);
 
     // generate the player urls
     for ($count = 0; $count < count($data); $count++) {
@@ -367,7 +378,7 @@ class Search {
   }
 
   private function setDataSetSize() {
-    $this->dataSetSize = $this->db->getPeopleSearchCount($this->query);
+    $this->dataSetSize = getPeopleSearchCount($this->query);
   }
 
   public function returnData() {
