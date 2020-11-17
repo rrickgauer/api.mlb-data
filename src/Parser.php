@@ -217,10 +217,10 @@ class Parser {
     $playerID = $this->request[1];
 
     // check if playerID exists
-    // if (!DB::doesPlayerExist($playerID)) {
-    //   ApiFunctions::returnBadRequest('Error. playerID does not exist!');
-    //   return;
-    // }
+    if ($this->module != Constants::Modules['Teams'] && !DB::doesPlayerExist($playerID)) {
+      ApiFunctions::returnBadRequest('Error. playerID does not exist!');
+      return;
+    }
 
 
     $this->playerID = $playerID;
@@ -269,8 +269,6 @@ class Parser {
       $this->page = $_GET['page'];
     else
       $this->page = Constants::Defaults['page'];
-
-    // echo $this->page;
   }
 
   public function getPage() {

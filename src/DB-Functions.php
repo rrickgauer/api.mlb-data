@@ -2010,6 +2010,103 @@ class DB {
     return $sql;
    }
 
+  public static function getTeamYearPlayers($teamID, $year) {
+
+    $stmt = "
+    SELECT a.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           a.G_all     AS G_all,
+           a.GS        AS GS,
+           a.G_batting AS G_batting,
+           a.G_defense AS G_defense,
+           a.G_p       AS G_p,
+           a.G_c       AS G_c,
+           a.G_1b      AS G_1b,
+           a.G_2b      AS G_2b,
+           a.G_3b      AS G_3b,
+           a.G_ss      AS G_ss,
+           a.G_lf      AS G_lf,
+           a.G_cf      AS G_cf,
+           a.G_rf      AS G_rf,
+           a.G_of      AS G_of,
+           a.G_dh      AS G_dh,
+           a.G_ph      AS G_ph,
+           a.G_pr      AS G_pr
+    FROM   appearances a
+           LEFT JOIN people p
+                  ON a.playerID = p.playerID
+    WHERE  team_ID IN (SELECT ID AS team_id
+                       FROM   teams
+                       WHERE  yearID = :yearID
+                       AND    teamID = :teamID)
+    GROUP  BY a.ID
+    ORDER  BY nameLast ASC,
+              nameFirst ASC ";
+
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
+
+    $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':yearID', $year, PDO::PARAM_INT);
+
+    $sql->execute();
+    return $sql;
+  }
+
+  public static function getTeamYearPlayersCount($teamID, $year) {
+
+    $stmt = "SELECT COUNT(*) as count FROM (
+    SELECT a.playerID  AS playerID,
+           p.nameFirst AS nameFirst,
+           p.nameLast  AS nameLast,
+           a.G_all     AS G_all,
+           a.GS        AS GS,
+           a.G_batting AS G_batting,
+           a.G_defense AS G_defense,
+           a.G_p       AS G_p,
+           a.G_c       AS G_c,
+           a.G_1b      AS G_1b,
+           a.G_2b      AS G_2b,
+           a.G_3b      AS G_3b,
+           a.G_ss      AS G_ss,
+           a.G_lf      AS G_lf,
+           a.G_cf      AS G_cf,
+           a.G_rf      AS G_rf,
+           a.G_of      AS G_of,
+           a.G_dh      AS G_dh,
+           a.G_ph      AS G_ph,
+           a.G_pr      AS G_pr
+    FROM   appearances a
+           LEFT JOIN people p
+                  ON a.playerID = p.playerID
+    WHERE  team_ID IN (SELECT ID AS team_id
+                       FROM   teams
+                       WHERE  yearID = :yearID
+                       AND    teamID = :teamID)
+    GROUP  BY a.ID
+    ORDER  BY nameLast ASC,
+              nameFirst ASC) tbl2";
+
+
+
+    $sql = DB::dbConnect()->prepare($stmt);
+
+    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
+    $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
+
+    $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
+    $sql->bindParam(':yearID', $year, PDO::PARAM_INT);
+
+    $sql->execute();
+
+    $results = $sql->fetch(PDO::FETCH_ASSOC);
+
+    return $results['count'];
+  }
 
 
 }

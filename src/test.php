@@ -14,15 +14,21 @@ require_once('Pagination.php');
 // $p1 = new Parser();
 
 
-$results = new Teams();
+// $results = new Teams();
 
 $teamParser = new ParserTeams();
 
+// $results = DB::getTeamYearPlayers('CHN', 1997)->fetchAll(PDO::FETCH_ASSOC);
 
+$results = DB::getTeamYearPlayersCount('CHN', 1997);
+
+echo $results;
+
+// ApiFunctions::printJson($results);
 
 
 // return the results
-$results->returnData();
+// $results->returnData();
 
 exit;
 
