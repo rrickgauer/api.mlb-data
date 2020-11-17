@@ -107,9 +107,7 @@ class DB {
     }
   }
 
-  public function getSqlStmt($stmt, $table, $groupByColumn) {
-
-
+  private function getSqlStmt($stmt, $table, $groupByColumn) {
     // playerID is included and only want data for that player
     if ($this->playerID != null) 
       $stmt .= " WHERE $table.playerID = :playerID ";
@@ -138,7 +136,7 @@ class DB {
     return $sql;
   }
 
-  public function getSqlStmtNoLimit($stmt, $table, $groupByColumn) {
+  private function getSqlStmtNoLimit($stmt, $table, $groupByColumn) {
     if ($this->playerID != null) 
       $stmt .= " WHERE $table.playerID = :playerID ";
 
@@ -155,7 +153,7 @@ class DB {
     return $sql;
   }
 
-  public function getFilterStmt($tableName = '') {
+  private function getFilterStmt($tableName = '') {
     //return empty string if null
     if ($this->filters == null) {
       return '';
@@ -179,7 +177,7 @@ class DB {
     return $stmt;
   }
 
-  public function getOrderStmt() {
+  private function getOrderStmt() {
     if ($this->sort == null) 
       return '';
 
@@ -1906,9 +1904,7 @@ class DB {
   }
 
 
-  public function getSqlStmtTeams($stmt, $table, $groupByColumn) {
-
-
+  private function getSqlStmtTeams($stmt, $table, $groupByColumn) {
     // playerID is included and only want data for that player
     if ($this->playerID != null) 
       $stmt .= " WHERE $table.teamID = :playerID ";
@@ -1937,7 +1933,7 @@ class DB {
     return $sql;
   }
 
-  public function getSqlStmtNoLimitTeams($stmt, $table, $groupByColumn) {
+  private function getSqlStmtNoLimitTeams($stmt, $table, $groupByColumn) {
     if ($this->playerID != null) 
       $stmt .= " WHERE $table.teamID = :playerID ";
 
