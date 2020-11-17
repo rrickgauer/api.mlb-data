@@ -279,6 +279,24 @@ Class Colleges extends Module {
   }
 }
 
+
+Class Teams extends Module {
+  public function __construct() {
+    parent::__construct();
+    $this->retrieveData('DB::getTeams', 'DB::getTeams');
+    $this->setDataSetSize('DB::getTeamsCount', 'DB::getTeamsCount');
+  }
+
+
+
+
+
+
+}
+
+
+
+
 class Search {
   private $query;
   private $perPage;

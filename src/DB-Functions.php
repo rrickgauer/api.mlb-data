@@ -1651,6 +1651,136 @@ class DB {
     $results = $sql->fetch(); 
     return $results['count'];
   }
+
+  public static function getTeams(
+    $teamID  = Constants::Defaults['playerID'], 
+    $sort    = Constants::Defaults['sort'], 
+    $filters = Constants::Defaults['filters'], 
+    $limit   = Constants::Defaults['perPage'], 
+    $offset  = Constants::Defaults['offset']) 
+  {
+
+    $stmt = '
+    SELECT t.name           AS teamName, 
+           t.yearID         AS year, 
+           t.lgID           AS lgID, 
+           t.teamID         AS teamID, 
+           t.franchID       AS franchID, 
+           t.divID          AS divID, 
+           t.div_ID         AS div_ID, 
+           t.teamRank       AS teamRank, 
+           t.G              AS G, 
+           t.Ghome          AS Ghome, 
+           t.W              AS W, 
+           t.L              AS L, 
+           t.DivWin         AS DivWin, 
+           t.WCWin          AS WCWin, 
+           t.LgWin          AS LgWin, 
+           t.WSWin          AS WSWin, 
+           t.R              AS R, 
+           t.AB             AS AB, 
+           t.H              AS H, 
+           t.2B             AS 2B, 
+           t.3B             AS 3B, 
+           t.HR             AS HR, 
+           t.BB             AS BB, 
+           t.SO             AS SO, 
+           t.SB             AS SB, 
+           t.CS             AS CS, 
+           t.HBP            AS HBP, 
+           t.SF             AS SF, 
+           t.RA             AS RA, 
+           t.ER             AS ER, 
+           t.ERA            AS ERA, 
+           t.CG             AS CG, 
+           t.SHO            AS SHO, 
+           t.SV             AS SV, 
+           t.IPouts         AS IPouts, 
+           t.HA             AS HA, 
+           t.HRA            AS HRA, 
+           t.BBA            AS BBA, 
+           t.SOA            AS SOA, 
+           t.E              AS E, 
+           t.DP             AS DP, 
+           t.FP             AS FP, 
+           t.park           AS park, 
+           t.attendance     AS attendance, 
+           t.BPF            AS BPF, 
+           t.PPF            AS PPF, 
+           t.teamIDBR       AS teamIDBR, 
+           t.teamIDlahman45 AS teamIDlahman45, 
+           t.teamIDretro    AS teamIDretro 
+    FROM   teams t ';
+
+
+    $sql = DB::getSqlStmt($stmt, 't', 'ID', $teamID, $sort, $filters, $limit, $offset);
+    $sql->execute();
+
+    return $sql;
+
+  }
+
+
+  public static function getTeamsCount($teamID = Constants::Defaults['playerID'], $sort = Constants::Defaults['sort'], $filters = Constants::Defaults['filters']) {
+    $stmt = 'SELECT COUNT(*) as count FROM (
+    SELECT t.name           AS teamName, 
+           t.yearID         AS year, 
+           t.lgID           AS lgID, 
+           t.teamID         AS teamID, 
+           t.franchID       AS franchID, 
+           t.divID          AS divID, 
+           t.div_ID         AS div_ID, 
+           t.teamRank       AS teamRank, 
+           t.G              AS G, 
+           t.Ghome          AS Ghome, 
+           t.W              AS W, 
+           t.L              AS L, 
+           t.DivWin         AS DivWin, 
+           t.WCWin          AS WCWin, 
+           t.LgWin          AS LgWin, 
+           t.WSWin          AS WSWin, 
+           t.R              AS R, 
+           t.AB             AS AB, 
+           t.H              AS H, 
+           t.2B             AS 2B, 
+           t.3B             AS 3B, 
+           t.HR             AS HR, 
+           t.BB             AS BB, 
+           t.SO             AS SO, 
+           t.SB             AS SB, 
+           t.CS             AS CS, 
+           t.HBP            AS HBP, 
+           t.SF             AS SF, 
+           t.RA             AS RA, 
+           t.ER             AS ER, 
+           t.ERA            AS ERA, 
+           t.CG             AS CG, 
+           t.SHO            AS SHO, 
+           t.SV             AS SV, 
+           t.IPouts         AS IPouts, 
+           t.HA             AS HA, 
+           t.HRA            AS HRA, 
+           t.BBA            AS BBA, 
+           t.SOA            AS SOA, 
+           t.E              AS E, 
+           t.DP             AS DP, 
+           t.FP             AS FP, 
+           t.park           AS park, 
+           t.attendance     AS attendance, 
+           t.BPF            AS BPF, 
+           t.PPF            AS PPF, 
+           t.teamIDBR       AS teamIDBR, 
+           t.teamIDlahman45 AS teamIDlahman45, 
+           t.teamIDretro    AS teamIDretro 
+    FROM   teams t ';
+
+    $sql = DB::getSqlStmtNoLimit($stmt, 't', 'ID', $teamID, $sort, $filters);
+    $sql->execute();
+    $results = $sql->fetch(); 
+    return $results['count'];
+  }
+
+
 }
 
 ?>
