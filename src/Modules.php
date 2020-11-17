@@ -90,7 +90,7 @@ class Module {
     $this->playerID       = $this->parser->getPlayerID();
     $this->setOffset();
     $this->dataSet        = null;
-    $this->setDataSetSize = 1;    // this will get changed later in each of the sub modules
+    $this->dataSetSize = 1;    // this will get changed later in each of the sub modules
   }
 
   public function getFilters() {
@@ -283,8 +283,22 @@ Class Colleges extends Module {
 Class Teams extends Module {
   public function __construct() {
     parent::__construct();
-    $this->retrieveData('DB::getTeamsAggregate', 'DB::getTeams');
-    $this->setDataSetSize('DB::getTeamsAggregateCount', 'DB::getTeamsCount');
+
+    $parserTeams = new ParserTeams();
+
+    if ($parserTeams->getYear() == null) {
+      $this->retrieveData('DB::getTeamsAggregate', 'DB::getTeams');
+      $this->setDataSetSize('DB::getTeamsAggregateCount', 'DB::getTeamsCount');
+    }
+
+    else if ($parserTeams->returnPlayers() == false) {
+      $data = DB::getTeamYear($parserTeams->getPlayerID(), $parserTeams->getYear());
+      $this->dataSet = $data->fetch(PDO::FETCH_ASSOC);
+      $this->dataSetSize = 1;
+    }
+
+    
+
   }
 
 

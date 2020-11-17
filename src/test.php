@@ -16,6 +16,10 @@ require_once('Pagination.php');
 
 $results = new Teams();
 
+$teamParser = new ParserTeams();
+
+
+
 
 // return the results
 $results->returnData();
