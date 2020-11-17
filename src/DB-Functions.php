@@ -227,7 +227,8 @@ class DB {
               p.nameFirst AS nameFirst, 
               p.nameLast  AS nameLast, 
               b.yearID    AS year, 
-              t.name      AS teamName, 
+              t.name      AS teamName,
+              t.teamID    AS teamID,
               b.stint     AS stint, 
               b.lgID      AS lgID, 
               b.G         AS G, 
@@ -261,13 +262,14 @@ class DB {
 
   public function getBattingCount() {
     $stmt = "
-    SELECT COUNT(*) AS COUNT 
+    SELECT COUNT(*) AS count 
     FROM   ( 
              SELECT    b.playerID  AS playerID, 
                        p.nameFirst AS nameFirst, 
                        p.nameLast  AS nameLast, 
                        b.yearID    AS year, 
                        t.name      AS teamName, 
+                       t.teamID    AS teamID,
                        b.stint     AS stint, 
                        b.lgID      AS lgID, 
                        b.G         AS G, 
@@ -337,7 +339,7 @@ class DB {
   public function getBattingAggregateCount() {
 
     $stmt = " 
-    SELECT COUNT(*) AS COUNT
+    SELECT COUNT(*) AS count
     FROM   (
            SELECT    b.playerID,
                      p.nameFirst,
@@ -381,6 +383,7 @@ class DB {
               p.nameLast  AS nameLast,
               b.yearID    AS year,
               t.name      AS teamName,
+              t.teamID    AS teamID,
               b.round     AS ROUND,
               b.lgID      AS lgID,
               b.G         AS G,
@@ -414,13 +417,14 @@ class DB {
 
   public function getBattingPostCount() {
     $stmt = "
-    SELECT COUNT(*) AS COUNT
+    SELECT COUNT(*) AS count
     FROM   (
              SELECT    b.playerID  AS playerID,
                        p.nameFirst AS nameFirst,
                        p.nameLast  AS nameLast,
                        b.yearID    AS year,
                        t.name      AS teamName,
+                       t.teamID    AS teamID,
                        b.round     AS ROUND,
                        b.lgID      AS lgID,
                        b.G         AS G,
@@ -490,7 +494,7 @@ class DB {
 
   public function getBattingPostAggregateCount() {
     $stmt = "
-    SELECT COUNT(*) AS COUNT
+    SELECT COUNT(*) AS count
     FROM   (
              SELECT    b.playerID  AS playerID,
                        p.nameFirst AS nameFirst,
@@ -571,7 +575,7 @@ class DB {
   }
 
   public function getPitchingCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT      p.playerID as playerID,
                 people.nameFirst as nameFirst,
                 people.nameLast as nameLast,
@@ -654,7 +658,7 @@ class DB {
   }
 
   public function getPitchingAggregateCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT      p.playerID,
                 people.nameFirst,
                 people.nameLast,
@@ -738,7 +742,7 @@ class DB {
   }
 
   public function getPitchingPostCount() {
-    $stmt = " SELECT count(*) as count from (
+    $stmt = " SELECT COUNT(*) AS count from (
     SELECT      p.playerID as playerID,
                 people.nameFirst as nameFirst,
                 people.nameLast as nameLast,
@@ -821,7 +825,7 @@ class DB {
   }
 
   public function getPitchingPostAggregateCount() {
-    $stmt = " SELECT count(*) as count from (
+    $stmt = " SELECT COUNT(*) AS count from (
     SELECT      p.playerID,
                 people.nameFirst,
                 people.nameLast,
@@ -896,7 +900,7 @@ class DB {
 
   public function getFieldingCount() {
     $stmt = "
-    SELECT COUNT(*) AS COUNT
+    SELECT COUNT(*) AS count
     FROM   (
              SELECT    f.playerID,
                        p.nameFirst,
@@ -961,7 +965,7 @@ class DB {
 
   public function getFieldingAggregateCount() {
 
-    $stmt = " SELECT COUNT(*) as count FROM (
+    $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT f.playerID                        AS playerID,
            p.nameFirst                       AS nameFirst,
            p.nameLast                        AS nameLast,
@@ -999,6 +1003,7 @@ class DB {
            f.yearID    AS year,
            f.round     AS round,
            t.name      AS teamName,
+           t.teamID    AS teamID,
            f.lgID      AS lgID,
            f.POS       AS POS,
            f.G         AS G,
@@ -1023,13 +1028,14 @@ class DB {
   }
 
   public function getFieldingPostCount() {
-    $stmt = " SELECT COUNT(*) as count FROM (
+    $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT f.playerID  AS playerID,
            p.nameFirst AS nameFirst,
            p.nameLast  AS nameLast,
            f.yearID    AS year,
            f.round     AS round,
            t.name      AS teamName,
+           t.teamID    AS teamID,
            f.lgID      AS lgID,
            f.POS       AS POS,
            f.G         AS G,
@@ -1082,7 +1088,7 @@ class DB {
   }
 
   public function getFieldingPostAggregateCount() {
-    $stmt = " SELECT COUNT(*) as count FROM (
+    $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT f.playerID                        AS playerID,
            p.nameFirst                       AS nameFirst,
            p.nameLast                        AS nameLast,
@@ -1112,12 +1118,13 @@ class DB {
 
   public function getAppearances() {
     $stmt = "
-    SELECT a.yearID    AS year,
-           t.name      AS teamName,
-           a.lgID      AS lgID,
-           a.playerID  AS playerID,
+    SELECT a.playerID  AS playerID,
            p.nameFirst AS nameFirst,
            p.nameLast  AS nameLast,
+           a.yearID    AS year,
+           t.name      AS teamName,
+           t.teamID    AS teamID,
+           a.lgID      AS lgID,
            a.G_all     AS G_all,
            a.GS        AS GS,
            a.G_batting AS G_batting,
@@ -1147,7 +1154,7 @@ class DB {
   }
 
   public function getAppearancesCount() {
-    $stmt = " SELECT COUNT(*) as count FROM (
+    $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT a.yearID AS year,
            t.name   AS teamName,
            a.lgID,
@@ -1218,7 +1225,7 @@ class DB {
   }
 
   public function getAppearancesAggregateCount() {
-    $stmt = " SELECT COUNT(*) as count FROM (
+    $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT a.playerID                        AS playerID,
            p.nameFirst                       AS nameFirst,
            p.nameLast                        nameLast,
@@ -1272,7 +1279,7 @@ class DB {
   }
 
   public function getFieldingOFCount() {
-    $stmt = " SELECT COUNT(*) as count FROM (
+    $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT f.playerID  AS playerID,
            p.nameFirst AS nameFirst,
            p.nameLast  AS nameLast,
@@ -1313,7 +1320,7 @@ class DB {
   }
 
   public function getFieldingOFAggregateCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT    f.playerID,
               p.nameFirst,
               p.nameLast,
@@ -1338,6 +1345,7 @@ class DB {
            f.yearID    AS year,
            f.stint     AS stint,
            t.name      AS teamName,
+           t.teamID    AS teamID,
            f.lgID      AS lgID,
            f.POS       AS POS,
            f.G         AS G,
@@ -1364,13 +1372,14 @@ class DB {
   }
 
   public function getFieldingOFSplitCount() {
-    $stmt = " SELECT COUNT(*) as count FROM (
+    $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT f.playerID  AS playerID,
            p.nameFirst AS nameFirst,
            p.nameLast  AS nameLast,
            f.yearID    AS year,
            f.stint     AS stint,
            t.name      AS teamName,
+           t.teamID    AS teamID,
            f.lgID      AS lgID,
            f.POS       AS POS,
            f.G         AS G,
@@ -1428,7 +1437,7 @@ class DB {
   }
 
   public function getFieldingOFSplitAggregateCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT f.playerID                        AS playerID,
            p.nameFirst                       AS nameFirst,
            p.nameLast                        AS nameLast,
@@ -1464,6 +1473,7 @@ class DB {
            p.nameLast  AS nameLast,
            s.yearID    AS year,
            t.name      AS teamName,
+           t.teamID    AS teamID,
            s.lgID      AS lgID,
            s.salary    AS salary
     FROM   salaries s
@@ -1478,12 +1488,13 @@ class DB {
   }
 
   public function getSalariesCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT      s.playerID,
                 p.nameFirst,
                 p.nameLast,
                 s.yearID as year,
                 t.name as teamName,
+                t.teamID    AS teamID,
                 s.lgID,
                 s.salary
     FROM        salaries s 
@@ -1512,7 +1523,7 @@ class DB {
   }
 
   public function getSalariesAggregateCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT      s.playerID,
                 p.nameFirst,
                 p.nameLast,
@@ -1573,7 +1584,7 @@ class DB {
   }
 
   public function getPeopleCount() {
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT  p.playerID,
             p.nameFirst,
             p.nameLast,
@@ -1645,7 +1656,7 @@ class DB {
   }
 
   public function getPeopleSearchCount($query = '') {
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT    p.playerID as playerID
     FROM      people p 
     WHERE     MATCH(nameFirst, nameLast) against(:query IN boolean mode) > 0
@@ -1691,7 +1702,7 @@ class DB {
   }
 
   public function getImagesCount() {
-    $stmt = 'SELECT COUNT(*) as count FROM (
+    $stmt = 'SELECT COUNT(*) AS count FROM (
     SELECT      i.playerID as playerID,
                 p.nameFirst as nameFirst,
                 p.nameLast as nameLast,
@@ -1744,7 +1755,7 @@ class DB {
   }
 
   public function getCollegesCount() {
-    $stmt = 'SELECT COUNT(*) as count FROM (
+    $stmt = 'SELECT COUNT(*) AS count FROM (
     SELECT      cp.playerID as playerID,
                 p.nameFirst as nameFirst,
                 p.nameLast as nameLast,
@@ -1827,7 +1838,7 @@ class DB {
 
 
   public function getTeamsCount() {
-    $stmt = 'SELECT COUNT(*) as count FROM (
+    $stmt = 'SELECT COUNT(*) AS count FROM (
     SELECT t.name           AS teamName, 
            t.yearID         AS year, 
            t.lgID           AS lgID, 
@@ -1941,7 +1952,7 @@ class DB {
   }
 
   public function getTeamsAggregateCount() {
-    $stmt = 'SELECT COUNT(*) as count FROM (
+    $stmt = 'SELECT COUNT(*) AS count FROM (
     SELECT t.teamID       AS teamID, 
     (SELECT name FROM teams t2 WHERE t2.teamID = t.teamID ORDER BY t2.yearID DESC LIMIT 1) as teamName,
     (SELECT COUNT(DISTINCT yearID) FROM teams t2 WHERE t2.teamID = t.teamID) as years,
@@ -2156,7 +2167,7 @@ class DB {
 
   public function getTeamYearPlayersCount($year) {
 
-    $stmt = "SELECT COUNT(*) as count FROM (
+    $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT a.playerID  AS playerID,
            p.nameFirst AS nameFirst,
            p.nameLast  AS nameLast,
