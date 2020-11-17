@@ -91,9 +91,8 @@ class Module {
     $this->playerID       = $this->parser->getPlayerID();
     $this->setOffset();
 
-    $this->db = new DB($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset);
-
-    $this->dataSet        = null;
+    $this->db          = new DB($this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset);
+    $this->dataSet     = null;
     $this->dataSetSize = 1;    // this will get changed later in each of the sub modules
   }
 
@@ -152,26 +151,11 @@ class Module {
   }
 
   protected function retrieveData($aggregateFunction, $function) {
-    // if ($this->aggregate == true)
-    //   $dataset = call_user_func($aggregateFunction, $this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset);
-    // else 
-    //   $dataset = call_user_func($function, $this->playerID, $this->sorts, $this->filters, $this->perPage, $this->offset);
-
-
-    if ($this->aggregate == true) {
+    // determine if I should use aggregate function or not
+    if ($this->aggregate == true)
       $dataset = call_user_func(array($this->db, $aggregateFunction));
-    } else {
+    else 
       $dataset = call_user_func(array($this->db, $function));
-    }
-
-
-
-
-
-    // if ($this->aggregate == true)
-    //   $dataset = call_user_func($aggregateFunction);
-    // else 
-    //   $dataset = call_user_func($function);
     
     $parser = new Parser(); // need this to get the module
 
@@ -367,7 +351,7 @@ class Search {
   }
 
   private function retrieveData() {
-    $data = getPeopleSearch($this->query)->fetchAll(PDO::FETCH_ASSOC);
+    $data = $this->db->getPeopleSearch($this->query)->fetchAll(PDO::FETCH_ASSOC);
 
     // generate the player urls
     for ($count = 0; $count < count($data); $count++) {
@@ -378,7 +362,7 @@ class Search {
   }
 
   private function setDataSetSize() {
-    $this->dataSetSize = getPeopleSearchCount($this->query);
+    $this->dataSetSize = $this->db->getPeopleSearchCount($this->query);
   }
 
   public function returnData() {
