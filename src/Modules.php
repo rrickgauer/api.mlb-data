@@ -80,11 +80,19 @@ class Module {
   protected $dataSetSize;
   protected $parser;
   protected $db;
+  protected $filterColumns;
 
   public function __construct() {
-    $this->parser         = new Parser();
-    $this->filters        = $this->parser->getFilters();
-    $this->sorts          = $this->parser->getSorts();
+    $this->parser = new Parser();
+
+    $this->setFilterColumns();
+
+    $this->filters = $this->parser->getFilters();
+    $this->verifyFilters();
+
+    $this->sorts = $this->parser->getSorts();
+    $this->verifySorts();
+
     $this->perPage        = $this->parser->getPerPage();
     $this->page           = $this->parser->getPage();
     $this->aggregate      = $this->parser->getAggregate();
@@ -95,6 +103,75 @@ class Module {
     $this->dataSet     = null;
     $this->dataSetSize = 1;    // this will get changed later in each of the sub modules
   }
+
+
+  protected function setFilterColumns() {
+
+    switch ($this->parser->getModule()) {
+      case Constants::Modules['Batting']:
+        $this->filterColumns = Constants::Batting; break;
+      case Constants::Modules['Pitching']:
+        $this->filterColumns = Constants::Pitching; break;
+      case Constants::Modules['Appearances']:
+        $this->filterColumns = Constants::Appearances; break;
+      case Constants::Modules['Fielding']:
+        $this->filterColumns = Constants::Fielding; break;
+      case Constants::Modules['People']:
+        $this->filterColumns = Constants::People; break;
+      case Constants::Modules['FieldingOF']:
+        $this->filterColumns = Constants::FieldingOF; break;
+      case Constants::Modules['FieldingOFSplit']:
+        $this->filterColumns = Constants::FieldingOFSplit; break;
+      case Constants::Modules['Salaries']:
+        $this->filterColumns = Constants::Salaries; break;
+      case Constants::Modules['Colleges']:
+        $this->filterColumns = Constants::Colleges; break;
+      case Constants::Modules['Images']:
+        $this->filterColumns = Constants::Images; break;
+      case Constants::Modules['BattingPost']:
+        $this->filterColumns = Constants::BattingPost; break;
+      case Constants::Modules['PitchingPost']:
+        $this->filterColumns = Constants::PitchingPost; break;
+      case Constants::Modules['FieldingPost']:
+        $this->filterColumns = Constants::FieldingPost; break;
+      case Constants::Modules['Teams']:
+        $parserTeams = new ParserTeams();
+        if ($parserTeams->returnPlayers()) $this->filterColumns = Constants::TeamPlayers;
+        else $this->filterColumns = Constants::Teams;
+        break;
+      default:
+        $this->filterColumns = null; break;
+    }
+
+  }
+
+
+  private function verifySorts() {
+    // verify that the sort is included in the columns
+    if (!in_array($this->sorts['column'], $this->filterColumns)) {
+      ApiFunctions::returnBadRequest('Unrecognized sort column!');
+      exit;
+    }
+  }
+
+  private function verifyFilters() {
+    for ($count = 0; $count < count($this->filters); $count++) {
+      $filter = $this->filters[$count];
+
+      // verify that the column is valid
+      if (!in_array($filter['column'], $this->filterColumns)) {
+        ApiFunctions::returnBadRequest('Error. Unrecognized filter column.');
+        exit;
+      }
+
+      // verify that the filter conditional is valid
+      if (!in_array($filter['conditional'], Constants::FilterConditionals)) {
+        ApiFunctions::returnBadRequest('Unrecognized filter conditional');
+        exit;
+      }
+    }
+  }
+
 
   public function getFilters() {
     return $this->filters;
