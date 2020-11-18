@@ -298,16 +298,16 @@ Class Teams extends Module {
 
     // teams/year
     else if ($parserTeams->returnPlayers() == false) {
-      $data = getTeamYear($parserTeams->getYear());
+      $data = $this->db->getTeamYear($parserTeams->getYear());
       $this->dataSet = $data->fetch(PDO::FETCH_ASSOC);
       $this->dataSetSize = 1;
     }
 
     // teams/year/players
     else {
-      $data = getTeamYearPlayers($parserTeams->getYear());
+      $data = $this->db->getTeamYearPlayers($parserTeams->getYear());
       $this->dataSet = $data->fetchAll(PDO::FETCH_ASSOC);
-      $this->dataSetSize = getTeamYearPlayersCount($parserTeams->getYear());
+      $this->dataSetSize = $this->db->getTeamYearPlayersCount($parserTeams->getYear());
     }
 
   }
