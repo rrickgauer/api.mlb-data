@@ -62,6 +62,7 @@
  * 
 ******************************************************************************/
 
+include_once('Common-Structures.php');
 include_once ('Constants.php');
 require_once('Pagination.php');
 require_once('API-Functions.php');
