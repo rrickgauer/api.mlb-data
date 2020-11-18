@@ -1,0 +1,606 @@
+[
+    {
+        "teamID": "ALT",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ALT.png"
+    },
+    {
+        "teamID": "ANA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ANA.png"
+    },
+    {
+        "teamID": "ARI",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ARI.png"
+    },
+    {
+        "teamID": "ATL",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ATL.png"
+    },
+    {
+        "teamID": "BAL",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BAL.png"
+    },
+    {
+        "teamID": "BFN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BUF.png"
+    },
+    {
+        "teamID": "BFP",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BUF.png"
+    },
+    {
+        "teamID": "BL1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BAL.png"
+    },
+    {
+        "teamID": "BL2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BAL.png"
+    },
+    {
+        "teamID": "BL3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BAL.png"
+    },
+    {
+        "teamID": "BL4",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MAR.png"
+    },
+    {
+        "teamID": "BLA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BLA.png"
+    },
+    {
+        "teamID": "BLF",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BAL.png"
+    },
+    {
+        "teamID": "BLN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BLO.png"
+    },
+    {
+        "teamID": "BLU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BLU.png"
+    },
+    {
+        "teamID": "BOS",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BOS.png"
+    },
+    {
+        "teamID": "BR1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ECK.png"
+    },
+    {
+        "teamID": "BR2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BRA.png"
+    },
+    {
+        "teamID": "BR3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/LAD.png"
+    },
+    {
+        "teamID": "BR4",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BRG.png"
+    },
+    {
+        "teamID": "BRF",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BTT.png"
+    },
+    {
+        "teamID": "BRO",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/LAD.png"
+    },
+    {
+        "teamID": "BRP",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BWW.png"
+    },
+    {
+        "teamID": "BS1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BOS.png"
+    },
+    {
+        "teamID": "BS2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BOS.png"
+    },
+    {
+        "teamID": "BSN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ATL.png"
+    },
+    {
+        "teamID": "BSP",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BOS.png"
+    },
+    {
+        "teamID": "BSU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BOS.png"
+    },
+    {
+        "teamID": "BUF",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BUF.png"
+    },
+    {
+        "teamID": "CAL",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ANA.png"
+    },
+    {
+        "teamID": "CH1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CHH.png"
+    },
+    {
+        "teamID": "CH2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CHH.png"
+    },
+    {
+        "teamID": "CHA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CHW.png"
+    },
+    {
+        "teamID": "CHF",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CHH.png"
+    },
+    {
+        "teamID": "CHN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CHC.png"
+    },
+    {
+        "teamID": "CHP",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CHH.png"
+    },
+    {
+        "teamID": "CHU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CPI.png"
+    },
+    {
+        "teamID": "CIN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CIN.png"
+    },
+    {
+        "teamID": "CL1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CLE.png"
+    },
+    {
+        "teamID": "CL2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CLV.png"
+    },
+    {
+        "teamID": "CL3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CLE.png"
+    },
+    {
+        "teamID": "CL4",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CLV.png"
+    },
+    {
+        "teamID": "CL5",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/COL.png"
+    },
+    {
+        "teamID": "CL6",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/COL.png"
+    },
+    {
+        "teamID": "CLE",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CLE.png"
+    },
+    {
+        "teamID": "CLP",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CLE.png"
+    },
+    {
+        "teamID": "CN1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CIN.png"
+    },
+    {
+        "teamID": "CN2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CIN.png"
+    },
+    {
+        "teamID": "CN3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CKK.png"
+    },
+    {
+        "teamID": "CNU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/COR.png"
+    },
+    {
+        "teamID": "COL",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/COL.png"
+    },
+    {
+        "teamID": "DET",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/DET.png"
+    },
+    {
+        "teamID": "DTN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/DTN.png"
+    },
+    {
+        "teamID": "ELI",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/RES.png"
+    },
+    {
+        "teamID": "FLO",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/FLA.png"
+    },
+    {
+        "teamID": "FW1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/KEK.png"
+    },
+    {
+        "teamID": "HAR",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/HAR.png"
+    },
+    {
+        "teamID": "HOU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/HOU.png"
+    },
+    {
+        "teamID": "HR1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/HAR.png"
+    },
+    {
+        "teamID": "IN1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/IND.png"
+    },
+    {
+        "teamID": "IN2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/IND.png"
+    },
+    {
+        "teamID": "IN3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/IND.png"
+    },
+    {
+        "teamID": "IND",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/IND.png"
+    },
+    {
+        "teamID": "KC1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/OAK.png"
+    },
+    {
+        "teamID": "KC2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/KCC.png"
+    },
+    {
+        "teamID": "KCA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/KCR.png"
+    },
+    {
+        "teamID": "KCF",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/KCP.png"
+    },
+    {
+        "teamID": "KCN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/KCN.png"
+    },
+    {
+        "teamID": "KCU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/KCC.png"
+    },
+    {
+        "teamID": "KEO",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WES.png"
+    },
+    {
+        "teamID": "LAA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ANA.png"
+    },
+    {
+        "teamID": "LAN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/LAD.png"
+    },
+    {
+        "teamID": "LS1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/LOU.png"
+    },
+    {
+        "teamID": "LS2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/LOU.png"
+    },
+    {
+        "teamID": "LS3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/LOU.png"
+    },
+    {
+        "teamID": "MIA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/FLA.png"
+    },
+    {
+        "teamID": "MID",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MAN.png"
+    },
+    {
+        "teamID": "MIL",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MIL.png"
+    },
+    {
+        "teamID": "MIN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MIN.png"
+    },
+    {
+        "teamID": "ML1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ATL.png"
+    },
+    {
+        "teamID": "ML2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MLG.png"
+    },
+    {
+        "teamID": "ML3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MIL.png"
+    },
+    {
+        "teamID": "ML4",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MIL.png"
+    },
+    {
+        "teamID": "MLA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MLA.png"
+    },
+    {
+        "teamID": "MLU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MIL.png"
+    },
+    {
+        "teamID": "MON",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WSN.png"
+    },
+    {
+        "teamID": "NEW",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NEW.png"
+    },
+    {
+        "teamID": "NH1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NHV.png"
+    },
+    {
+        "teamID": "NY1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SFG.png"
+    },
+    {
+        "teamID": "NY2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NYU.png"
+    },
+    {
+        "teamID": "NY3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NYU.png"
+    },
+    {
+        "teamID": "NY4",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NYP.png"
+    },
+    {
+        "teamID": "NYA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NYY.png"
+    },
+    {
+        "teamID": "NYN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NYM.png"
+    },
+    {
+        "teamID": "NYP",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NYI.png"
+    },
+    {
+        "teamID": "OAK",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/OAK.png"
+    },
+    {
+        "teamID": "PH1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ATH.png"
+    },
+    {
+        "teamID": "PH2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PHI.png"
+    },
+    {
+        "teamID": "PH3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/CEN.png"
+    },
+    {
+        "teamID": "PH4",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PHA.png"
+    },
+    {
+        "teamID": "PHA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PHA.png"
+    },
+    {
+        "teamID": "PHI",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PHI.png"
+    },
+    {
+        "teamID": "PHN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ATH.png"
+    },
+    {
+        "teamID": "PHP",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PHQ.png"
+    },
+    {
+        "teamID": "PHU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PHK.png"
+    },
+    {
+        "teamID": "PIT",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PIT.png"
+    },
+    {
+        "teamID": "PRO",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PRO.png"
+    },
+    {
+        "teamID": "PT1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PIT.png"
+    },
+    {
+        "teamID": "PTF",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PBS.png"
+    },
+    {
+        "teamID": "PTP",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/PBB.png"
+    },
+    {
+        "teamID": "RC1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ROK.png"
+    },
+    {
+        "teamID": "RC2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/ROC.png"
+    },
+    {
+        "teamID": "RIC",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/RIC.png"
+    },
+    {
+        "teamID": "SDN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SDP.png"
+    },
+    {
+        "teamID": "SE1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MIL.png"
+    },
+    {
+        "teamID": "SEA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SEA.png"
+    },
+    {
+        "teamID": "SFN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SFG.png"
+    },
+    {
+        "teamID": "SL1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SLR.png"
+    },
+    {
+        "teamID": "SL2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/STL.png"
+    },
+    {
+        "teamID": "SL3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/STL.png"
+    },
+    {
+        "teamID": "SL4",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/STL.png"
+    },
+    {
+        "teamID": "SL5",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SLM.png"
+    },
+    {
+        "teamID": "SLA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/BAL.png"
+    },
+    {
+        "teamID": "SLF",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SLM.png"
+    },
+    {
+        "teamID": "SLN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/STL.png"
+    },
+    {
+        "teamID": "SLU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SLM.png"
+    },
+    {
+        "teamID": "SPU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/STP.png"
+    },
+    {
+        "teamID": "SR1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SYR.png"
+    },
+    {
+        "teamID": "SR2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/SYR.png"
+    },
+    {
+        "teamID": "TBA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TBD.png"
+    },
+    {
+        "teamID": "TBA",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TBD.png"
+    },
+    {
+        "teamID": "TEX",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TEX.png"
+    },
+    {
+        "teamID": "TL1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TOL.png"
+    },
+    {
+        "teamID": "TL2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TOL.png"
+    },
+    {
+        "teamID": "TOR",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TOR.png"
+    },
+    {
+        "teamID": "TRN",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TRO.png"
+    },
+    {
+        "teamID": "TRO",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TRO.png"
+    },
+    {
+        "teamID": "WAS",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WAS.png"
+    },
+    {
+        "teamID": "WAS",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WSN.png"
+    },
+    {
+        "teamID": "WIL",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WIL.png"
+    },
+    {
+        "teamID": "WOR",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WOR.png"
+    },
+    {
+        "teamID": "WS1",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/MIN.png"
+    },
+    {
+        "teamID": "WS2",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/TEX.png"
+    },
+    {
+        "teamID": "WS3",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/OLY.png"
+    },
+    {
+        "teamID": "WS4",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/NAT.png"
+    },
+    {
+        "teamID": "WS5",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WAS.png"
+    },
+    {
+        "teamID": "WS6",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WAS.png"
+    },
+    {
+        "teamID": "WS7",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WAS.png"
+    },
+    {
+        "teamID": "WS8",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WAS.png"
+    },
+    {
+        "teamID": "WS9",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WAS.png"
+    },
+    {
+        "teamID": "WSU",
+        "imgLink": "https://d2p3bygnnzw9w3.cloudfront.net/req/202011111/tlogo/br/WAS.png"
+    }
+]
