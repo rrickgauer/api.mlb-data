@@ -681,6 +681,31 @@ class Constants {
     "PPF"        => "PPF",
   ];
 
+  const TeamPlayers = [
+    "playerID"  => "playerID",
+    "nameFirst" => "nameFirst",
+    "nameLast"  => "nameLast",
+    "teamID"    => "teamID",
+    "teamName"  => "teamName",
+    "G_all"     => "G_all",
+    "GS"        => "GS",
+    "G_batting" => "G_batting",
+    "G_defense" => "G_defense",
+    "G_p"       => "G_p",
+    "G_c"       => "G_c",
+    "G_1b"      => "G_1b",
+    "G_2b"      => "G_2b",
+    "G_3b"      => "G_3b",
+    "G_ss"      => "G_ss",
+    "G_lf"      => "G_lf",
+    "G_cf"      => "G_cf",
+    "G_rf"      => "G_rf",
+    "G_of"      => "G_of",
+    "G_dh"      => "G_dh",
+    "G_ph"      => "G_ph",
+    "G_pr"      => "G_pr",
+  ];
+
   const FilterConditionals = [
     "E"  => "=",    // equal to
     "NE" => "!=",   // not equal to

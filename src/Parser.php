@@ -40,7 +40,6 @@ class Parser {
   protected $request;
   protected $sorts;           // array(column, type)
   protected $filters;         // list of arrays(column, conditional, qualifier)
-  protected $filterColumns;
   protected $aggregate;
   protected $playerID;
   protected $perPage;
@@ -57,7 +56,7 @@ class Parser {
     $this->request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 
     $this->setModule();
-    $this->retrieveFilterColumns();
+    // $this->retrieveFilterColumns();
     $this->setFilters();
     $this->setSorts();
     $this->setAggregate();
@@ -100,12 +99,6 @@ class Parser {
 
     $this->sorts['column'] = $sorts[0];
 
-    // check if sort is in the constants array
-    if (!in_array($sorts[0], $this->filterColumns)) {
-      ApiFunctions::returnBadRequest('Error. Unrecognized sort column.');
-      exit;
-    }
-
     if (isset($sorts[1]) && strtoupper($sorts[1]) == 'ASC') {
       $this->sorts['type'] = 'ASC';
     } else {
@@ -137,18 +130,6 @@ class Parser {
   // column_name:conditional:qualifier
   private function parseFilter($rawFilter) {
     $filter = explode(':', $rawFilter);
-
-    // verify that the conditional is valid
-    if (!in_array($filter[1], Constants::FilterConditionals)) {
-      ApiFunctions::returnBadRequest('Unrecognized filter conditional');
-      exit;
-    }
-
-    // verify that the column is valid
-    if (!in_array($filter[0], $this->filterColumns)) {
-      ApiFunctions::returnBadRequest('Error. Unrecognized filter column.');
-      exit;
-    }
 
     // eventually, need to check if the column is in the constants
     $parsedFilter = [];
@@ -217,14 +198,6 @@ class Parser {
     }
 
     $playerID = $this->request[1];
-
-    // check if playerID exists
-    if ($this->module != Constants::Modules['Teams'] && !DB::doesPlayerExist($playerID)) {
-      ApiFunctions::returnBadRequest('Error. playerID does not exist!');
-      return;
-    }
-
-
     $this->playerID = $playerID;
   } 
 

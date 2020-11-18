@@ -2124,6 +2124,9 @@ class DB {
     SELECT a.playerID  AS playerID,
            p.nameFirst AS nameFirst,
            p.nameLast  AS nameLast,
+           t.teamID    AS teamID,
+           t.name      AS teamName,
+           a.yearID    AS year,
            a.G_all     AS G_all,
            a.GS        AS GS,
            a.G_batting AS G_batting,
@@ -2144,18 +2147,23 @@ class DB {
     FROM   appearances a
            LEFT JOIN people p
                   ON a.playerID = p.playerID
+           LEFT JOIN teams t 
+                  ON a.team_ID = t.ID 
     WHERE  team_ID IN (SELECT ID AS team_id
                        FROM   teams
                        WHERE  yearID = :yearID
                        AND    teamID = :teamID)
-    GROUP  BY a.ID
-    ORDER  BY nameLast ASC,
-              nameFirst ASC ";
+    GROUP  BY a.ID ";
+
+    $stmt .= $this->getFilterStmt();
+    $stmt .= $this->getOrderStmt();
 
 
     $sql = $this->dbConnect()->prepare($stmt);
 
-    $teamID = filter_var($this->$playerID, FILTER_SANITIZE_STRING);
+    $teamID = $this->playerID;
+
+    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
 
     $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
@@ -2195,9 +2203,12 @@ class DB {
                        FROM   teams
                        WHERE  yearID = :yearID
                        AND    teamID = :teamID)
-    GROUP  BY a.ID
-    ORDER  BY nameLast ASC,
-              nameFirst ASC) tbl2";
+    GROUP  BY a.ID ";
+
+    $stmt .= $this->getFilterStmt();
+    $stmt .= $this->getOrderStmt();
+
+    $stmt .= ") tbl2";
 
     $sql = $this->dbConnect()->prepare($stmt);
 
