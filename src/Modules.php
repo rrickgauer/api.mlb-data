@@ -148,6 +148,10 @@ class Module {
 
 
   private function verifySorts() {
+
+    if ($this->sorts == null)
+      return;
+
     // verify that the sort is included in the columns
     if (!in_array($this->sorts['column'], $this->filterColumns)) {
       ApiFunctions::returnBadRequest('Unrecognized sort column!');
@@ -156,6 +160,10 @@ class Module {
   }
 
   private function verifyFilters() {
+
+    if ($this->filters == null)
+      return;
+
     for ($count = 0; $count < count($this->filters); $count++) {
       $filter = $this->filters[$count];
 
