@@ -2155,7 +2155,9 @@ class DB {
 
     $sql = $this->dbConnect()->prepare($stmt);
 
-    $teamID = filter_var($this->$playerID, FILTER_SANITIZE_STRING);
+    $teamID = $this->playerID;
+
+    $teamID = filter_var($teamID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':teamID', $teamID, PDO::PARAM_STR);
 
     $year = filter_var($year, FILTER_SANITIZE_NUMBER_INT);
