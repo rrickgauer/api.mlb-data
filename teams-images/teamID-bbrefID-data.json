@@ -1,0 +1,606 @@
+[
+    {
+        "teamID": "ALT",
+        "bbrefID": "ALT"
+    },
+    {
+        "teamID": "ANA",
+        "bbrefID": "ANA"
+    },
+    {
+        "teamID": "ARI",
+        "bbrefID": "ARI"
+    },
+    {
+        "teamID": "ATL",
+        "bbrefID": "ATL"
+    },
+    {
+        "teamID": "BAL",
+        "bbrefID": "BAL"
+    },
+    {
+        "teamID": "BFN",
+        "bbrefID": "BUF"
+    },
+    {
+        "teamID": "BFP",
+        "bbrefID": "BUF"
+    },
+    {
+        "teamID": "BL1",
+        "bbrefID": "BAL"
+    },
+    {
+        "teamID": "BL2",
+        "bbrefID": "BAL"
+    },
+    {
+        "teamID": "BL3",
+        "bbrefID": "BAL"
+    },
+    {
+        "teamID": "BL4",
+        "bbrefID": "MAR"
+    },
+    {
+        "teamID": "BLA",
+        "bbrefID": "BLA"
+    },
+    {
+        "teamID": "BLF",
+        "bbrefID": "BAL"
+    },
+    {
+        "teamID": "BLN",
+        "bbrefID": "BLN"
+    },
+    {
+        "teamID": "BLU",
+        "bbrefID": "BLU"
+    },
+    {
+        "teamID": "BOS",
+        "bbrefID": "BOS"
+    },
+    {
+        "teamID": "BR1",
+        "bbrefID": "ECK"
+    },
+    {
+        "teamID": "BR2",
+        "bbrefID": "BRA"
+    },
+    {
+        "teamID": "BR3",
+        "bbrefID": "BRO"
+    },
+    {
+        "teamID": "BR4",
+        "bbrefID": "BRG"
+    },
+    {
+        "teamID": "BRF",
+        "bbrefID": "BTT"
+    },
+    {
+        "teamID": "BRO",
+        "bbrefID": "BRO"
+    },
+    {
+        "teamID": "BRP",
+        "bbrefID": "BWW"
+    },
+    {
+        "teamID": "BS1",
+        "bbrefID": "BOS"
+    },
+    {
+        "teamID": "BS2",
+        "bbrefID": "BOS"
+    },
+    {
+        "teamID": "BSN",
+        "bbrefID": "BSN"
+    },
+    {
+        "teamID": "BSP",
+        "bbrefID": "BOS"
+    },
+    {
+        "teamID": "BSU",
+        "bbrefID": "BOS"
+    },
+    {
+        "teamID": "BUF",
+        "bbrefID": "BUF"
+    },
+    {
+        "teamID": "CAL",
+        "bbrefID": "CAL"
+    },
+    {
+        "teamID": "CH1",
+        "bbrefID": "CHI"
+    },
+    {
+        "teamID": "CH2",
+        "bbrefID": "CHI"
+    },
+    {
+        "teamID": "CHA",
+        "bbrefID": "CHW"
+    },
+    {
+        "teamID": "CHF",
+        "bbrefID": "CHI"
+    },
+    {
+        "teamID": "CHN",
+        "bbrefID": "CHC"
+    },
+    {
+        "teamID": "CHP",
+        "bbrefID": "CHI"
+    },
+    {
+        "teamID": "CHU",
+        "bbrefID": "CPI"
+    },
+    {
+        "teamID": "CIN",
+        "bbrefID": "CIN"
+    },
+    {
+        "teamID": "CL1",
+        "bbrefID": "CLE"
+    },
+    {
+        "teamID": "CL2",
+        "bbrefID": "CLV"
+    },
+    {
+        "teamID": "CL3",
+        "bbrefID": "CLE"
+    },
+    {
+        "teamID": "CL4",
+        "bbrefID": "CLV"
+    },
+    {
+        "teamID": "CL5",
+        "bbrefID": "COL"
+    },
+    {
+        "teamID": "CL6",
+        "bbrefID": "COL"
+    },
+    {
+        "teamID": "CLE",
+        "bbrefID": "CLE"
+    },
+    {
+        "teamID": "CLP",
+        "bbrefID": "CLE"
+    },
+    {
+        "teamID": "CN1",
+        "bbrefID": "CIN"
+    },
+    {
+        "teamID": "CN2",
+        "bbrefID": "CIN"
+    },
+    {
+        "teamID": "CN3",
+        "bbrefID": "CKK"
+    },
+    {
+        "teamID": "CNU",
+        "bbrefID": "COR"
+    },
+    {
+        "teamID": "COL",
+        "bbrefID": "COL"
+    },
+    {
+        "teamID": "DET",
+        "bbrefID": "DET"
+    },
+    {
+        "teamID": "DTN",
+        "bbrefID": "DTN"
+    },
+    {
+        "teamID": "ELI",
+        "bbrefID": "RES"
+    },
+    {
+        "teamID": "FLO",
+        "bbrefID": "FLA"
+    },
+    {
+        "teamID": "FW1",
+        "bbrefID": "KEK"
+    },
+    {
+        "teamID": "HAR",
+        "bbrefID": "HAR"
+    },
+    {
+        "teamID": "HOU",
+        "bbrefID": "HOU"
+    },
+    {
+        "teamID": "HR1",
+        "bbrefID": "HAR"
+    },
+    {
+        "teamID": "IN1",
+        "bbrefID": "IND"
+    },
+    {
+        "teamID": "IN2",
+        "bbrefID": "IND"
+    },
+    {
+        "teamID": "IN3",
+        "bbrefID": "IND"
+    },
+    {
+        "teamID": "IND",
+        "bbrefID": "IND"
+    },
+    {
+        "teamID": "KC1",
+        "bbrefID": "KCA"
+    },
+    {
+        "teamID": "KC2",
+        "bbrefID": "KCC"
+    },
+    {
+        "teamID": "KCA",
+        "bbrefID": "KCR"
+    },
+    {
+        "teamID": "KCF",
+        "bbrefID": "KCP"
+    },
+    {
+        "teamID": "KCN",
+        "bbrefID": "KCN"
+    },
+    {
+        "teamID": "KCU",
+        "bbrefID": "KCC"
+    },
+    {
+        "teamID": "KEO",
+        "bbrefID": "WES"
+    },
+    {
+        "teamID": "LAA",
+        "bbrefID": "LAA"
+    },
+    {
+        "teamID": "LAN",
+        "bbrefID": "LAD"
+    },
+    {
+        "teamID": "LS1",
+        "bbrefID": "LOU"
+    },
+    {
+        "teamID": "LS2",
+        "bbrefID": "LOU"
+    },
+    {
+        "teamID": "LS3",
+        "bbrefID": "LOU"
+    },
+    {
+        "teamID": "MIA",
+        "bbrefID": "MIA"
+    },
+    {
+        "teamID": "MID",
+        "bbrefID": "MAN"
+    },
+    {
+        "teamID": "MIL",
+        "bbrefID": "MIL"
+    },
+    {
+        "teamID": "MIN",
+        "bbrefID": "MIN"
+    },
+    {
+        "teamID": "ML1",
+        "bbrefID": "MLN"
+    },
+    {
+        "teamID": "ML2",
+        "bbrefID": "MLG"
+    },
+    {
+        "teamID": "ML3",
+        "bbrefID": "MIL"
+    },
+    {
+        "teamID": "ML4",
+        "bbrefID": "MIL"
+    },
+    {
+        "teamID": "MLA",
+        "bbrefID": "MLA"
+    },
+    {
+        "teamID": "MLU",
+        "bbrefID": "MIL"
+    },
+    {
+        "teamID": "MON",
+        "bbrefID": "MON"
+    },
+    {
+        "teamID": "NEW",
+        "bbrefID": "NEW"
+    },
+    {
+        "teamID": "NH1",
+        "bbrefID": "NHV"
+    },
+    {
+        "teamID": "NY1",
+        "bbrefID": "NYG"
+    },
+    {
+        "teamID": "NY2",
+        "bbrefID": "NYU"
+    },
+    {
+        "teamID": "NY3",
+        "bbrefID": "NYU"
+    },
+    {
+        "teamID": "NY4",
+        "bbrefID": "NYP"
+    },
+    {
+        "teamID": "NYA",
+        "bbrefID": "NYY"
+    },
+    {
+        "teamID": "NYN",
+        "bbrefID": "NYM"
+    },
+    {
+        "teamID": "NYP",
+        "bbrefID": "NYI"
+    },
+    {
+        "teamID": "OAK",
+        "bbrefID": "OAK"
+    },
+    {
+        "teamID": "PH1",
+        "bbrefID": "ATH"
+    },
+    {
+        "teamID": "PH2",
+        "bbrefID": "PHI"
+    },
+    {
+        "teamID": "PH3",
+        "bbrefID": "CEN"
+    },
+    {
+        "teamID": "PH4",
+        "bbrefID": "PHA"
+    },
+    {
+        "teamID": "PHA",
+        "bbrefID": "PHA"
+    },
+    {
+        "teamID": "PHI",
+        "bbrefID": "PHI"
+    },
+    {
+        "teamID": "PHN",
+        "bbrefID": "ATH"
+    },
+    {
+        "teamID": "PHP",
+        "bbrefID": "PHQ"
+    },
+    {
+        "teamID": "PHU",
+        "bbrefID": "PHK"
+    },
+    {
+        "teamID": "PIT",
+        "bbrefID": "PIT"
+    },
+    {
+        "teamID": "PRO",
+        "bbrefID": "PRO"
+    },
+    {
+        "teamID": "PT1",
+        "bbrefID": "PIT"
+    },
+    {
+        "teamID": "PTF",
+        "bbrefID": "PBS"
+    },
+    {
+        "teamID": "PTP",
+        "bbrefID": "PBB"
+    },
+    {
+        "teamID": "RC1",
+        "bbrefID": "ROK"
+    },
+    {
+        "teamID": "RC2",
+        "bbrefID": "ROC"
+    },
+    {
+        "teamID": "RIC",
+        "bbrefID": "RIC"
+    },
+    {
+        "teamID": "SDN",
+        "bbrefID": "SDP"
+    },
+    {
+        "teamID": "SE1",
+        "bbrefID": "SEP"
+    },
+    {
+        "teamID": "SEA",
+        "bbrefID": "SEA"
+    },
+    {
+        "teamID": "SFN",
+        "bbrefID": "SFG"
+    },
+    {
+        "teamID": "SL1",
+        "bbrefID": "SLR"
+    },
+    {
+        "teamID": "SL2",
+        "bbrefID": "STL"
+    },
+    {
+        "teamID": "SL3",
+        "bbrefID": "STL"
+    },
+    {
+        "teamID": "SL4",
+        "bbrefID": "STL"
+    },
+    {
+        "teamID": "SL5",
+        "bbrefID": "SLM"
+    },
+    {
+        "teamID": "SLA",
+        "bbrefID": "SLB"
+    },
+    {
+        "teamID": "SLF",
+        "bbrefID": "SLM"
+    },
+    {
+        "teamID": "SLN",
+        "bbrefID": "STL"
+    },
+    {
+        "teamID": "SLU",
+        "bbrefID": "SLM"
+    },
+    {
+        "teamID": "SPU",
+        "bbrefID": "STP"
+    },
+    {
+        "teamID": "SR1",
+        "bbrefID": "SYR"
+    },
+    {
+        "teamID": "SR2",
+        "bbrefID": "SYR"
+    },
+    {
+        "teamID": "TBA",
+        "bbrefID": "TBD"
+    },
+    {
+        "teamID": "TBA",
+        "bbrefID": "TBR"
+    },
+    {
+        "teamID": "TEX",
+        "bbrefID": "TEX"
+    },
+    {
+        "teamID": "TL1",
+        "bbrefID": "TOL"
+    },
+    {
+        "teamID": "TL2",
+        "bbrefID": "TOL"
+    },
+    {
+        "teamID": "TOR",
+        "bbrefID": "TOR"
+    },
+    {
+        "teamID": "TRN",
+        "bbrefID": "TRO"
+    },
+    {
+        "teamID": "TRO",
+        "bbrefID": "TRO"
+    },
+    {
+        "teamID": "WAS",
+        "bbrefID": "WHS"
+    },
+    {
+        "teamID": "WAS",
+        "bbrefID": "WSN"
+    },
+    {
+        "teamID": "WIL",
+        "bbrefID": "WIL"
+    },
+    {
+        "teamID": "WOR",
+        "bbrefID": "WOR"
+    },
+    {
+        "teamID": "WS1",
+        "bbrefID": "WSH"
+    },
+    {
+        "teamID": "WS2",
+        "bbrefID": "WSA"
+    },
+    {
+        "teamID": "WS3",
+        "bbrefID": "OLY"
+    },
+    {
+        "teamID": "WS4",
+        "bbrefID": "NAT"
+    },
+    {
+        "teamID": "WS5",
+        "bbrefID": "WAS"
+    },
+    {
+        "teamID": "WS6",
+        "bbrefID": "WAS"
+    },
+    {
+        "teamID": "WS7",
+        "bbrefID": "WAS"
+    },
+    {
+        "teamID": "WS8",
+        "bbrefID": "WHS"
+    },
+    {
+        "teamID": "WS9",
+        "bbrefID": "WAS"
+    },
+    {
+        "teamID": "WSU",
+        "bbrefID": "WHS"
+    }
+]
