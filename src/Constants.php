@@ -643,6 +643,7 @@ class Constants {
     "teamIDBR"       => "teamIDBR",
     "teamIDlahman45" => "teamIDlahman45",
     "teamIDretro"    => "teamIDretro",
+    "image"          => "image",
   ];
 
 
@@ -688,6 +689,7 @@ class Constants {
     "attendance" => "attendance",
     "BPF"        => "BPF",
     "PPF"        => "PPF",
+    "image"      => "image",
   ];
 
   const TeamPlayers = [

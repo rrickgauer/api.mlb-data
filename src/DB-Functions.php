@@ -1824,10 +1824,12 @@ class DB {
            t.attendance     AS attendance, 
            t.BPF            AS BPF, 
            t.PPF            AS PPF, 
-           t.teamIDBR       AS teamIDBR, 
+           t.teamIDBR       AS teamIDBR,
+           i.source         as image, 
            t.teamIDlahman45 AS teamIDlahman45, 
            t.teamIDretro    AS teamIDretro 
-    FROM   teams t ';
+    FROM   teams t 
+    LEFT JOIN imagesteams i on t.teamID = i.teamID ';
 
 
     $sql = $this->getSqlStmtTeams($stmt, 't', 'ID');
@@ -1941,8 +1943,10 @@ class DB {
     SUM(t.park)           AS park, 
     SUM(t.attendance)     AS attendance, 
     SUM(t.BPF)            AS BPF, 
-    SUM(t.PPF)            AS PPF 
-    FROM   teams t ';
+    SUM(t.PPF)            AS PPF,
+    i.source              AS image 
+    FROM   teams t 
+    LEFT JOIN imagesteams i on t.teamID = i.teamID ';
 
 
     $sql = $this->getSqlStmtTeams($stmt, 't', 'teamID');
