@@ -65,6 +65,7 @@
  * - getColleges()
  * - getCollegesCount()
 *******************************************************************************/
+include_once('Common-Structures.php');
 include_once ('Constants.php');
 
 class DB {

@@ -20,7 +20,7 @@
  * Classes list:
  * - Pagination
 ******************************************************************************/
-
+include_once('Common-Structures.php');
 require_once('Parser.php');
 require_once('Constants.php');
 
