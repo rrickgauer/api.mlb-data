@@ -399,6 +399,29 @@ Class Teams extends Module {
   }
 }
 
+class Describe extends Module {
+
+
+  public function __construct() {
+
+    $this->dataSetSize = 1;
+    $dataSet = [];
+
+    $modules = array_values(Constants::Modules);
+    sort($modules);
+
+    $dataSet['modules'] = $modules;
+
+
+    $this->dataSet = $dataSet;
+  }
+
+
+
+
+
+
+}
 
 
 
