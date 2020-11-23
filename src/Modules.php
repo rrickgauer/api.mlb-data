@@ -262,11 +262,11 @@ class People extends Module {
     // add additional info if playerID is specified
     if ($this->playerID != null) {
       // teams played for
-      $teams = getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
+      $teams = $this->db->getTeamsPlayedFor($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
       $this->dataSet['teamsPlayedFor'] = array_column($teams, 'name');
 
       // images
-      $images = getImagesPlayer($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
+      $images = $this->db->getImagesPlayer($this->playerID)->fetchAll(PDO::FETCH_ASSOC);
       $this->dataSet['images'] = array_column($images, 'source');
     }
 
