@@ -1,9 +1,9 @@
 <?php
 /******************************************************************************************
  * This class contains all the functions that interact with the database.
- * 
+ *
  * All the functions are static.
- * 
+ *
  * Eventually, I would like to turn it into a non-static class so I dont have to pass in
  * the same parms every time
  *
@@ -77,11 +77,11 @@ class DB {
   private $offset;
 
   public function __construct(
-    $playerID = Constants::Defaults['playerID'], 
-    $sort     = Constants::Defaults['sort'], 
-    $filters  = Constants::Defaults['filters'], 
-    $limit    = Constants::Defaults['perPage'], 
-    $offset   = Constants::Defaults['offset']) 
+    $playerID = Constants::Defaults['playerID'],
+    $sort     = Constants::Defaults['sort'],
+    $filters  = Constants::Defaults['filters'],
+    $limit    = Constants::Defaults['perPage'],
+    $offset   = Constants::Defaults['offset'])
   {
     $this->playerID = $playerID;
     $this->sort     = $sort;
@@ -110,7 +110,7 @@ class DB {
 
   private function getSqlStmt($stmt, $table, $groupByColumn) {
     // playerID is included and only want data for that player
-    if ($this->playerID != null) 
+    if ($this->playerID != null)
       $stmt .= " WHERE $table.playerID = :playerID ";
 
     $stmt .= " GROUP  BY $table.$groupByColumn ";
@@ -138,7 +138,7 @@ class DB {
   }
 
   private function getSqlStmtNoLimit($stmt, $table, $groupByColumn) {
-    if ($this->playerID != null) 
+    if ($this->playerID != null)
       $stmt .= " WHERE $table.playerID = :playerID ";
 
     $stmt .= " GROUP  BY $table.$groupByColumn ";
@@ -169,9 +169,9 @@ class DB {
       $qualifier   = $filter['qualifier'];
 
       // if there is more than 1 filter, add an AND
-      if ($count > 0) 
+      if ($count > 0)
         $stmt .= ' AND';
-     
+
       $stmt = $stmt . " $tableName$column $conditional $qualifier";
     }
 
@@ -179,7 +179,7 @@ class DB {
   }
 
   private function getOrderStmt() {
-    if ($this->sort == null) 
+    if ($this->sort == null)
       return '';
 
     // build order by statement
@@ -188,7 +188,7 @@ class DB {
 
     // determine asc or desc
     $this->sortType = strtoupper($this->sort['type']);
-    if ($this->sortType != 'ASC') 
+    if ($this->sortType != 'ASC')
       $this->sortType = 'DESC';
 
     // clean it
@@ -216,43 +216,43 @@ class DB {
 
     $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-    if (count($result) == 1) 
+    if (count($result) == 1)
       return true;
-    else 
+    else
       return false;
   }
 
   public function getBatting() {
     $stmt = "
-    SELECT    b.playerID  AS playerID, 
-              p.nameFirst AS nameFirst, 
-              p.nameLast  AS nameLast, 
-              b.yearID    AS year, 
+    SELECT    b.playerID  AS playerID,
+              p.nameFirst AS nameFirst,
+              p.nameLast  AS nameLast,
+              b.yearID    AS year,
               t.name      AS teamName,
               t.teamID    AS teamID,
-              b.stint     AS stint, 
-              b.lgID      AS lgID, 
-              b.G         AS G, 
-              b.AB        AS AB, 
-              b.R         AS R, 
-              b.H         AS H, 
-              b.2B        AS 2B, 
-              b.3B        AS 3B, 
-              b.HR        AS HR, 
-              b.RBI       AS RBI, 
-              b.SB        AS SB, 
-              b.CS        AS CS, 
-              b.BB        AS BB, 
-              b.SO        AS SO, 
-              b.IBB       AS IBB, 
-              b.HBP       AS HBP, 
-              b.SH        AS SH, 
-              b.SF        AS SF, 
-              b.GIDP      AS GIDP 
-    FROM      batting b 
-    LEFT JOIN people p 
-    ON        b.playerID = p.playerID 
-    LEFT JOIN teams t 
+              b.stint     AS stint,
+              b.lgID      AS lgID,
+              b.G         AS G,
+              b.AB        AS AB,
+              b.R         AS R,
+              b.H         AS H,
+              b.2B        AS 2B,
+              b.3B        AS 3B,
+              b.HR        AS HR,
+              b.RBI       AS RBI,
+              b.SB        AS SB,
+              b.CS        AS CS,
+              b.BB        AS BB,
+              b.SO        AS SO,
+              b.IBB       AS IBB,
+              b.HBP       AS HBP,
+              b.SH        AS SH,
+              b.SF        AS SF,
+              b.GIDP      AS GIDP
+    FROM      batting b
+    LEFT JOIN people p
+    ON        b.playerID = p.playerID
+    LEFT JOIN teams t
     ON        b.team_ID = t.ID ";
 
     $sql = $this->getSqlStmt($stmt, 'b', 'ID');
@@ -263,42 +263,42 @@ class DB {
 
   public function getBattingCount() {
     $stmt = "
-    SELECT COUNT(*) AS count 
-    FROM   ( 
-             SELECT    b.playerID  AS playerID, 
-                       p.nameFirst AS nameFirst, 
-                       p.nameLast  AS nameLast, 
-                       b.yearID    AS year, 
-                       t.name      AS teamName, 
+    SELECT COUNT(*) AS count
+    FROM   (
+             SELECT    b.playerID  AS playerID,
+                       p.nameFirst AS nameFirst,
+                       p.nameLast  AS nameLast,
+                       b.yearID    AS year,
+                       t.name      AS teamName,
                        t.teamID    AS teamID,
-                       b.stint     AS stint, 
-                       b.lgID      AS lgID, 
-                       b.G         AS G, 
-                       b.AB        AS AB, 
-                       b.R         AS R, 
-                       b.H         AS H, 
-                       b.2B        AS 2B, 
-                       b.3B        AS 3B, 
-                       b.HR        AS HR, 
-                       b.RBI       AS RBI, 
-                       b.SB        AS SB, 
-                       b.CS        AS CS, 
-                       b.BB        AS BB, 
-                       b.SO        AS SO, 
-                       b.IBB       AS IBB, 
-                       b.HBP       AS HBP, 
-                       b.SH        AS SH, 
-                       b.SF        AS SF, 
-                       b.GIDP      AS GIDP 
-             FROM      batting b 
-             LEFT JOIN people p 
-             ON        b.playerID = p.playerID 
-             LEFT JOIN teams t 
+                       b.stint     AS stint,
+                       b.lgID      AS lgID,
+                       b.G         AS G,
+                       b.AB        AS AB,
+                       b.R         AS R,
+                       b.H         AS H,
+                       b.2B        AS 2B,
+                       b.3B        AS 3B,
+                       b.HR        AS HR,
+                       b.RBI       AS RBI,
+                       b.SB        AS SB,
+                       b.CS        AS CS,
+                       b.BB        AS BB,
+                       b.SO        AS SO,
+                       b.IBB       AS IBB,
+                       b.HBP       AS HBP,
+                       b.SH        AS SH,
+                       b.SF        AS SF,
+                       b.GIDP      AS GIDP
+             FROM      batting b
+             LEFT JOIN people p
+             ON        b.playerID = p.playerID
+             LEFT JOIN teams t
              ON        b.team_ID = t.ID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -339,7 +339,7 @@ class DB {
 
   public function getBattingAggregateCount() {
 
-    $stmt = " 
+    $stmt = "
     SELECT COUNT(*) AS count
     FROM   (
            SELECT    b.playerID,
@@ -372,7 +372,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -453,7 +453,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -527,7 +527,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'b', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
 
   }
@@ -615,7 +615,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -639,7 +639,7 @@ class DB {
                 SUM(p.BB) AS BB,
                 SUM(p.SO) AS SO,
                 SUM(p.BAOpp) AS BAOpp,
-                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA, 
+                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA,
                 SUM(p.IBB) AS IBB,
                 SUM(p.WP) AS WP,
                 SUM(p.HBP) AS HBP,
@@ -678,7 +678,7 @@ class DB {
                 SUM(p.BB) AS BB,
                 SUM(p.SO) AS SO,
                 SUM(p.BAOpp) AS BAOpp,
-                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA, 
+                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA,
                 SUM(p.IBB) AS IBB,
                 SUM(p.WP) AS WP,
                 SUM(p.HBP) AS HBP,
@@ -694,7 +694,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -782,7 +782,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -806,7 +806,7 @@ class DB {
                 SUM(p.BB) AS BB,
                 SUM(p.SO) AS SO,
                 SUM(p.BAOpp) AS BAOpp,
-                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA, 
+                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA,
                 SUM(p.IBB) AS IBB,
                 SUM(p.WP) AS WP,
                 SUM(p.HBP) AS HBP,
@@ -845,7 +845,7 @@ class DB {
                 SUM(p.BB) AS BB,
                 SUM(p.SO) AS SO,
                 SUM(p.BAOpp) AS BAOpp,
-                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA, 
+                ((SUM(p.ER) * 9) / (SUM(p.IPouts) / 3)) as ERA,
                 SUM(p.IBB) AS IBB,
                 SUM(p.WP) AS WP,
                 SUM(p.HBP) AS HBP,
@@ -861,7 +861,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -931,7 +931,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -991,7 +991,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
 
   }
@@ -1057,7 +1057,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1112,7 +1112,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1158,27 +1158,28 @@ class DB {
     $stmt = " SELECT COUNT(*) AS count FROM (
     SELECT a.yearID AS year,
            t.name   AS teamName,
-           a.lgID,
-           a.playerID,
-           p.nameFirst,
-           p.nameLast,
-           a.G_all,
-           a.GS,
-           a.G_batting,
-           a.G_defense,
-           a.G_p,
-           a.G_c,
-           a.G_1b,
-           a.G_2b,
-           a.G_3b,
-           a.G_ss,
-           a.G_lf,
-           a.G_cf,
-           a.G_rf,
-           a.G_of,
-           a.G_dh,
-           a.G_ph,
-           a.G_pr
+           t.teamID AS teamID,
+           a.lgID as lgID,
+           a.playerID as playerID,
+           p.nameFirst as nameFirst,
+           p.nameLast as nameLast,
+           a.G_all as G_all,
+           a.GS as GS,
+           a.G_batting as G_batting,
+           a.G_defense as G_defense,
+           a.G_p as G_p,
+           a.G_c as G_c,
+           a.G_1b as G_1b,
+           a.G_2b as G_2b,
+           a.G_3b as G_3b,
+           a.G_ss as G_ss,
+           a.G_lf as G_lf,
+           a.G_cf as G_cf,
+           a.G_rf as G_rf,
+           a.G_of as G_of,
+           a.G_dh as G_dh,
+           a.G_ph as G_ph,
+           a.G_pr as G_pr
     FROM   appearances a
            LEFT JOIN people p
                   ON a.playerID = p.playerID
@@ -1187,7 +1188,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'a', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1256,7 +1257,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'a', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1295,7 +1296,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
 
   }
@@ -1329,12 +1330,12 @@ class DB {
               SUM(f.Glf) AS Glf,
               SUM(f.Gcf) AS Gcf,
               SUM(f.Grf) AS Grf
-    FROM      fieldingof f 
+    FROM      fieldingof f
     LEFT JOIN people p ON f.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1403,7 +1404,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
 
   }
@@ -1463,7 +1464,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'f', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1498,13 +1499,13 @@ class DB {
                 t.teamID    AS teamID,
                 s.lgID,
                 s.salary
-    FROM        salaries s 
+    FROM        salaries s
     LEFT JOIN   people p ON s.playerID = p.playerID
     LEFT JOIN   teams t on s.team_ID = t.ID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 's', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1515,7 +1516,7 @@ class DB {
                 p.nameLast,
                 (SELECT COUNT(DISTINCT yearID) FROM salaries s2 where s2.playerID = s.playerID) as years,
                 SUM(s.salary) AS salary
-    FROM        salaries s 
+    FROM        salaries s
     LEFT JOIN   people p ON s.playerID = p.playerID ";
 
     $sql = $this->getSqlStmt($stmt, 's', 'playerID');
@@ -1530,12 +1531,12 @@ class DB {
                 p.nameLast,
                 (SELECT COUNT(DISTINCT yearID) FROM salaries s2 where s2.playerID = s.playerID) as years,
                 SUM(s.salary) AS salary
-    FROM        salaries s 
+    FROM        salaries s
     LEFT JOIN   people p ON s.playerID = p.playerID ";
 
     $sql = $this->getSqlStmtNoLimit($stmt, 's', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1613,7 +1614,7 @@ class DB {
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'p', 'playerID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
@@ -1628,7 +1629,7 @@ class DB {
               p.debut_date as debutDate,
               p.finalgame_date as finalGameDate,
               p.death_date as deathDate
-    FROM      people p 
+    FROM      people p
     WHERE     MATCH(nameFirst, nameLast) against(:query IN boolean mode) > 0
     GROUP BY  playerID
     HAVING    score > 0
@@ -1659,7 +1660,7 @@ class DB {
   public function getPeopleSearchCount($query = '') {
     $stmt = "SELECT COUNT(*) AS count FROM (
     SELECT    p.playerID as playerID
-    FROM      people p 
+    FROM      people p
     WHERE     MATCH(nameFirst, nameLast) against(:query IN boolean mode) > 0
     GROUP BY  playerID) table1";
 
@@ -1694,7 +1695,7 @@ class DB {
                 p.nameFirst as nameFirst,
                 p.nameLast as nameLast,
                 i.source as source
-    FROM        images i 
+    FROM        images i
     LEFT JOIN   people p on i.playerID = p.playerID ';
 
     $sql = $this->getSqlStmt($stmt, 'i', 'ID');
@@ -1708,20 +1709,20 @@ class DB {
                 p.nameFirst as nameFirst,
                 p.nameLast as nameLast,
                 i.source as source
-    FROM        images i 
+    FROM        images i
     LEFT JOIN   people p on i.playerID = p.playerID ';
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'i', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
   public function getImagesPlayer() {
 
     $stmt = '
-    SELECT    i.source 
-    FROM      images i 
+    SELECT    i.source
+    FROM      images i
     WHERE     i.playerID = :playerID
     GROUP BY  i.ID';
 
@@ -1730,7 +1731,7 @@ class DB {
     // filter and bind player ID
     $playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
     $sql->bindParam(':playerID', $playerID, PDO::PARAM_STR);
-    
+
     $sql->execute();
     return $sql;
   }
@@ -1747,7 +1748,7 @@ class DB {
                 s.state as schoolState,
                 s.country as schoolCountry
     from        collegeplaying cp
-    LEFT JOIN   people p on cp.playerID = p.playerID 
+    LEFT JOIN   people p on cp.playerID = p.playerID
     LEFT JOIN   schools s on cp.schoolID = s.schoolID';
 
     $sql = $this->getSqlStmt($stmt, 'cp', 'ID');
@@ -1766,69 +1767,69 @@ class DB {
                 s.state as schoolState,
                 s.country as schoolCountry
     from        collegeplaying cp
-    LEFT JOIN   people p on cp.playerID = p.playerID 
+    LEFT JOIN   people p on cp.playerID = p.playerID
     LEFT JOIN   schools s on cp.schoolID = s.schoolID ';
 
     $sql = $this->getSqlStmtNoLimit($stmt, 'cp', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
   public function getTeams() {
 
     $stmt = '
-    SELECT t.teamID         AS teamID,  
-           t.name           AS teamName, 
-           t.yearID         AS year, 
-           t.lgID           AS lgID, 
-           t.franchID       AS franchID, 
-           t.divID          AS divID, 
-           t.div_ID         AS div_ID, 
-           t.teamRank       AS teamRank, 
-           t.G              AS G, 
-           t.Ghome          AS Ghome, 
-           t.W              AS W, 
-           t.L              AS L, 
-           t.DivWin         AS DivWin, 
-           t.WCWin          AS WCWin, 
-           t.LgWin          AS LgWin, 
-           t.WSWin          AS WSWin, 
-           t.R              AS R, 
-           t.AB             AS AB, 
-           t.H              AS H, 
-           t.2B             AS 2B, 
-           t.3B             AS 3B, 
-           t.HR             AS HR, 
-           t.BB             AS BB, 
-           t.SO             AS SO, 
-           t.SB             AS SB, 
-           t.CS             AS CS, 
-           t.HBP            AS HBP, 
-           t.SF             AS SF, 
-           t.RA             AS RA, 
-           t.ER             AS ER, 
-           t.ERA            AS ERA, 
-           t.CG             AS CG, 
-           t.SHO            AS SHO, 
-           t.SV             AS SV, 
-           t.IPouts         AS IPouts, 
-           t.HA             AS HA, 
-           t.HRA            AS HRA, 
-           t.BBA            AS BBA, 
-           t.SOA            AS SOA, 
-           t.E              AS E, 
-           t.DP             AS DP, 
-           t.FP             AS FP, 
-           t.park           AS park, 
-           t.attendance     AS attendance, 
-           t.BPF            AS BPF, 
-           t.PPF            AS PPF, 
+    SELECT t.teamID         AS teamID,
+           t.name           AS teamName,
+           t.yearID         AS year,
+           t.lgID           AS lgID,
+           t.franchID       AS franchID,
+           t.divID          AS divID,
+           t.div_ID         AS div_ID,
+           t.teamRank       AS teamRank,
+           t.G              AS G,
+           t.Ghome          AS Ghome,
+           t.W              AS W,
+           t.L              AS L,
+           t.DivWin         AS DivWin,
+           t.WCWin          AS WCWin,
+           t.LgWin          AS LgWin,
+           t.WSWin          AS WSWin,
+           t.R              AS R,
+           t.AB             AS AB,
+           t.H              AS H,
+           t.2B             AS 2B,
+           t.3B             AS 3B,
+           t.HR             AS HR,
+           t.BB             AS BB,
+           t.SO             AS SO,
+           t.SB             AS SB,
+           t.CS             AS CS,
+           t.HBP            AS HBP,
+           t.SF             AS SF,
+           t.RA             AS RA,
+           t.ER             AS ER,
+           t.ERA            AS ERA,
+           t.CG             AS CG,
+           t.SHO            AS SHO,
+           t.SV             AS SV,
+           t.IPouts         AS IPouts,
+           t.HA             AS HA,
+           t.HRA            AS HRA,
+           t.BBA            AS BBA,
+           t.SOA            AS SOA,
+           t.E              AS E,
+           t.DP             AS DP,
+           t.FP             AS FP,
+           t.park           AS park,
+           t.attendance     AS attendance,
+           t.BPF            AS BPF,
+           t.PPF            AS PPF,
            t.teamIDBR       AS teamIDBR,
-           i.source         as image, 
-           t.teamIDlahman45 AS teamIDlahman45, 
-           t.teamIDretro    AS teamIDretro 
-    FROM   teams t 
+           i.source         as image,
+           t.teamIDlahman45 AS teamIDlahman45,
+           t.teamIDretro    AS teamIDretro
+    FROM   teams t
     LEFT JOIN imagesteams i on t.teamID = i.teamID ';
 
 
@@ -1842,110 +1843,110 @@ class DB {
 
   public function getTeamsCount() {
     $stmt = 'SELECT COUNT(*) AS count FROM (
-    SELECT t.name           AS teamName, 
-           t.yearID         AS year, 
-           t.lgID           AS lgID, 
-           t.teamID         AS teamID, 
-           t.franchID       AS franchID, 
-           t.divID          AS divID, 
-           t.div_ID         AS div_ID, 
-           t.teamRank       AS teamRank, 
-           t.G              AS G, 
-           t.Ghome          AS Ghome, 
-           t.W              AS W, 
-           t.L              AS L, 
-           t.DivWin         AS DivWin, 
-           t.WCWin          AS WCWin, 
-           t.LgWin          AS LgWin, 
-           t.WSWin          AS WSWin, 
-           t.R              AS R, 
-           t.AB             AS AB, 
-           t.H              AS H, 
-           t.2B             AS 2B, 
-           t.3B             AS 3B, 
-           t.HR             AS HR, 
-           t.BB             AS BB, 
-           t.SO             AS SO, 
-           t.SB             AS SB, 
-           t.CS             AS CS, 
-           t.HBP            AS HBP, 
-           t.SF             AS SF, 
-           t.RA             AS RA, 
-           t.ER             AS ER, 
-           t.ERA            AS ERA, 
-           t.CG             AS CG, 
-           t.SHO            AS SHO, 
-           t.SV             AS SV, 
-           t.IPouts         AS IPouts, 
-           t.HA             AS HA, 
-           t.HRA            AS HRA, 
-           t.BBA            AS BBA, 
-           t.SOA            AS SOA, 
-           t.E              AS E, 
-           t.DP             AS DP, 
-           t.FP             AS FP, 
-           t.park           AS park, 
-           t.attendance     AS attendance, 
-           t.BPF            AS BPF, 
-           t.PPF            AS PPF, 
-           t.teamIDBR       AS teamIDBR, 
-           t.teamIDlahman45 AS teamIDlahman45, 
-           t.teamIDretro    AS teamIDretro 
+    SELECT t.name           AS teamName,
+           t.yearID         AS year,
+           t.lgID           AS lgID,
+           t.teamID         AS teamID,
+           t.franchID       AS franchID,
+           t.divID          AS divID,
+           t.div_ID         AS div_ID,
+           t.teamRank       AS teamRank,
+           t.G              AS G,
+           t.Ghome          AS Ghome,
+           t.W              AS W,
+           t.L              AS L,
+           t.DivWin         AS DivWin,
+           t.WCWin          AS WCWin,
+           t.LgWin          AS LgWin,
+           t.WSWin          AS WSWin,
+           t.R              AS R,
+           t.AB             AS AB,
+           t.H              AS H,
+           t.2B             AS 2B,
+           t.3B             AS 3B,
+           t.HR             AS HR,
+           t.BB             AS BB,
+           t.SO             AS SO,
+           t.SB             AS SB,
+           t.CS             AS CS,
+           t.HBP            AS HBP,
+           t.SF             AS SF,
+           t.RA             AS RA,
+           t.ER             AS ER,
+           t.ERA            AS ERA,
+           t.CG             AS CG,
+           t.SHO            AS SHO,
+           t.SV             AS SV,
+           t.IPouts         AS IPouts,
+           t.HA             AS HA,
+           t.HRA            AS HRA,
+           t.BBA            AS BBA,
+           t.SOA            AS SOA,
+           t.E              AS E,
+           t.DP             AS DP,
+           t.FP             AS FP,
+           t.park           AS park,
+           t.attendance     AS attendance,
+           t.BPF            AS BPF,
+           t.PPF            AS PPF,
+           t.teamIDBR       AS teamIDBR,
+           t.teamIDlahman45 AS teamIDlahman45,
+           t.teamIDretro    AS teamIDretro
     FROM   teams t ';
 
     $sql = $this->getSqlStmtNoLimitTeams($stmt, 't', 'ID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
 
-  public function getTeamsAggregate() { 
+  public function getTeamsAggregate() {
 
     $stmt = '
-    SELECT t.teamID              AS teamID, 
+    SELECT t.teamID              AS teamID,
     (SELECT name FROM teams t2 WHERE t2.teamID = t.teamID ORDER BY t2.yearID DESC LIMIT 1) as teamName,
     (SELECT COUNT(DISTINCT yearID) FROM teams t2 where t2.teamID = t.teamID) as years,
-    SUM(t.G)              AS G, 
-    SUM(t.Ghome)          AS Ghome, 
-    SUM(t.W)              AS W, 
-    SUM(t.L)              AS L, 
-    (SELECT COUNT(ID) FROM teams t2 where t2.DivWin = "Y" and t2.teamID = t.teamID) AS DivWin, 
-    (SELECT COUNT(ID) FROM teams t2 where t2.WCWin =  "Y" and t2.teamID = t.teamID) AS WCWin, 
-    (SELECT COUNT(ID) FROM teams t2 where t2.LgWin =  "Y" and t2.teamID = t.teamID) AS LgWin, 
-    (SELECT COUNT(ID) FROM teams t2 where t2.WSWin =  "Y" and t2.teamID = t.teamID) AS WSWin, 
-    SUM(t.R)              AS R, 
-    SUM(t.AB)             AS AB, 
-    SUM(t.H)              AS H, 
-    SUM(t.2B)             AS 2B, 
-    SUM(t.3B)             AS 3B, 
-    SUM(t.HR)             AS HR, 
-    SUM(t.BB)             AS BB, 
-    SUM(t.SO)             AS SO, 
-    SUM(t.SB)             AS SB, 
-    SUM(t.CS)             AS CS, 
-    SUM(t.HBP)            AS HBP, 
-    SUM(t.SF)             AS SF, 
-    SUM(t.RA)             AS RA, 
-    SUM(t.ER)             AS ER, 
-    SUM(t.ERA)            AS ERA, 
-    SUM(t.CG)             AS CG, 
-    SUM(t.SHO)            AS SHO, 
-    SUM(t.SV)             AS SV, 
-    SUM(t.IPouts)         AS IPouts, 
-    SUM(t.HA)             AS HA, 
-    SUM(t.HRA)            AS HRA, 
-    SUM(t.BBA)            AS BBA, 
-    SUM(t.SOA)            AS SOA, 
-    SUM(t.E)              AS E, 
-    SUM(t.DP)             AS DP, 
-    SUM(t.FP)             AS FP, 
-    SUM(t.park)           AS park, 
-    SUM(t.attendance)     AS attendance, 
-    SUM(t.BPF)            AS BPF, 
+    SUM(t.G)              AS G,
+    SUM(t.Ghome)          AS Ghome,
+    SUM(t.W)              AS W,
+    SUM(t.L)              AS L,
+    (SELECT COUNT(ID) FROM teams t2 where t2.DivWin = "Y" and t2.teamID = t.teamID) AS DivWin,
+    (SELECT COUNT(ID) FROM teams t2 where t2.WCWin =  "Y" and t2.teamID = t.teamID) AS WCWin,
+    (SELECT COUNT(ID) FROM teams t2 where t2.LgWin =  "Y" and t2.teamID = t.teamID) AS LgWin,
+    (SELECT COUNT(ID) FROM teams t2 where t2.WSWin =  "Y" and t2.teamID = t.teamID) AS WSWin,
+    SUM(t.R)              AS R,
+    SUM(t.AB)             AS AB,
+    SUM(t.H)              AS H,
+    SUM(t.2B)             AS 2B,
+    SUM(t.3B)             AS 3B,
+    SUM(t.HR)             AS HR,
+    SUM(t.BB)             AS BB,
+    SUM(t.SO)             AS SO,
+    SUM(t.SB)             AS SB,
+    SUM(t.CS)             AS CS,
+    SUM(t.HBP)            AS HBP,
+    SUM(t.SF)             AS SF,
+    SUM(t.RA)             AS RA,
+    SUM(t.ER)             AS ER,
+    SUM(t.ERA)            AS ERA,
+    SUM(t.CG)             AS CG,
+    SUM(t.SHO)            AS SHO,
+    SUM(t.SV)             AS SV,
+    SUM(t.IPouts)         AS IPouts,
+    SUM(t.HA)             AS HA,
+    SUM(t.HRA)            AS HRA,
+    SUM(t.BBA)            AS BBA,
+    SUM(t.SOA)            AS SOA,
+    SUM(t.E)              AS E,
+    SUM(t.DP)             AS DP,
+    SUM(t.FP)             AS FP,
+    SUM(t.park)           AS park,
+    SUM(t.attendance)     AS attendance,
+    SUM(t.BPF)            AS BPF,
     SUM(t.PPF)            AS PPF,
-    i.source              AS image 
-    FROM   teams t 
+    i.source              AS image
+    FROM   teams t
     LEFT JOIN imagesteams i on t.teamID = i.teamID ';
 
 
@@ -1958,59 +1959,59 @@ class DB {
 
   public function getTeamsAggregateCount() {
     $stmt = 'SELECT COUNT(*) AS count FROM (
-    SELECT t.teamID       AS teamID, 
+    SELECT t.teamID       AS teamID,
     (SELECT name FROM teams t2 WHERE t2.teamID = t.teamID ORDER BY t2.yearID DESC LIMIT 1) as teamName,
     (SELECT COUNT(DISTINCT yearID) FROM teams t2 WHERE t2.teamID = t.teamID) as years,
-    SUM(t.G)              AS G, 
-    SUM(t.Ghome)          AS Ghome, 
-    SUM(t.W)              AS W, 
-    SUM(t.L)              AS L, 
-    (SELECT COUNT(ID) FROM teams t2 WHERE t2.DivWin = "Y" and t2.teamID = t.teamID) AS DivWin, 
-    (SELECT COUNT(ID) FROM teams t2 WHERE t2.WCWin =  "Y" and t2.teamID = t.teamID) AS WCWin, 
-    (SELECT COUNT(ID) FROM teams t2 WHERE t2.LgWin =  "Y" and t2.teamID = t.teamID) AS LgWin, 
-    (SELECT COUNT(ID) FROM teams t2 WHERE t2.WSWin =  "Y" and t2.teamID = t.teamID) AS WSWin, 
-    SUM(t.R)              AS R, 
-    SUM(t.AB)             AS AB, 
-    SUM(t.H)              AS H, 
-    SUM(t.2B)             AS 2B, 
-    SUM(t.3B)             AS 3B, 
-    SUM(t.HR)             AS HR, 
-    SUM(t.BB)             AS BB, 
-    SUM(t.SO)             AS SO, 
-    SUM(t.SB)             AS SB, 
-    SUM(t.CS)             AS CS, 
-    SUM(t.HBP)            AS HBP, 
-    SUM(t.SF)             AS SF, 
-    SUM(t.RA)             AS RA, 
-    SUM(t.ER)             AS ER, 
-    SUM(t.ERA)            AS ERA, 
-    SUM(t.CG)             AS CG, 
-    SUM(t.SHO)            AS SHO, 
-    SUM(t.SV)             AS SV, 
-    SUM(t.IPouts)         AS IPouts, 
-    SUM(t.HA)             AS HA, 
-    SUM(t.HRA)            AS HRA, 
-    SUM(t.BBA)            AS BBA, 
-    SUM(t.SOA)            AS SOA, 
-    SUM(t.E)              AS E, 
-    SUM(t.DP)             AS DP, 
-    SUM(t.FP)             AS FP, 
-    SUM(t.park)           AS park, 
-    SUM(t.attendance)     AS attendance, 
-    SUM(t.BPF)            AS BPF, 
-    SUM(t.PPF)            AS PPF 
+    SUM(t.G)              AS G,
+    SUM(t.Ghome)          AS Ghome,
+    SUM(t.W)              AS W,
+    SUM(t.L)              AS L,
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.DivWin = "Y" and t2.teamID = t.teamID) AS DivWin,
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.WCWin =  "Y" and t2.teamID = t.teamID) AS WCWin,
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.LgWin =  "Y" and t2.teamID = t.teamID) AS LgWin,
+    (SELECT COUNT(ID) FROM teams t2 WHERE t2.WSWin =  "Y" and t2.teamID = t.teamID) AS WSWin,
+    SUM(t.R)              AS R,
+    SUM(t.AB)             AS AB,
+    SUM(t.H)              AS H,
+    SUM(t.2B)             AS 2B,
+    SUM(t.3B)             AS 3B,
+    SUM(t.HR)             AS HR,
+    SUM(t.BB)             AS BB,
+    SUM(t.SO)             AS SO,
+    SUM(t.SB)             AS SB,
+    SUM(t.CS)             AS CS,
+    SUM(t.HBP)            AS HBP,
+    SUM(t.SF)             AS SF,
+    SUM(t.RA)             AS RA,
+    SUM(t.ER)             AS ER,
+    SUM(t.ERA)            AS ERA,
+    SUM(t.CG)             AS CG,
+    SUM(t.SHO)            AS SHO,
+    SUM(t.SV)             AS SV,
+    SUM(t.IPouts)         AS IPouts,
+    SUM(t.HA)             AS HA,
+    SUM(t.HRA)            AS HRA,
+    SUM(t.BBA)            AS BBA,
+    SUM(t.SOA)            AS SOA,
+    SUM(t.E)              AS E,
+    SUM(t.DP)             AS DP,
+    SUM(t.FP)             AS FP,
+    SUM(t.park)           AS park,
+    SUM(t.attendance)     AS attendance,
+    SUM(t.BPF)            AS BPF,
+    SUM(t.PPF)            AS PPF
     FROM   teams t ';
 
     $sql = $this->getSqlStmtNoLimitTeams($stmt, 't', 'teamID');
     $sql->execute();
-    $results = $sql->fetch(); 
+    $results = $sql->fetch();
     return $results['count'];
   }
 
 
   private function getSqlStmtTeams($stmt, $table, $groupByColumn) {
     // playerID is included and only want data for that player
-    if ($this->playerID != null) 
+    if ($this->playerID != null)
       $stmt .= " WHERE $table.teamID = :playerID ";
 
     $stmt .= " GROUP  BY $table.$groupByColumn ";
@@ -2038,7 +2039,7 @@ class DB {
   }
 
   private function getSqlStmtNoLimitTeams($stmt, $table, $groupByColumn) {
-    if ($this->playerID != null) 
+    if ($this->playerID != null)
       $stmt .= " WHERE $table.teamID = :playerID ";
 
     $stmt .= " GROUP  BY $table.$groupByColumn ";
@@ -2058,56 +2059,56 @@ class DB {
    public function getTeamYear($year) {
 
     $stmt = '
-    SELECT t.teamID         AS teamID,  
-           t.name           AS teamName, 
-           t.yearID         AS year, 
-           t.lgID           AS lgID, 
-           t.franchID       AS franchID, 
-           t.divID          AS divID, 
-           t.div_ID         AS div_ID, 
-           t.teamRank       AS teamRank, 
-           t.G              AS G, 
-           t.Ghome          AS Ghome, 
-           t.W              AS W, 
-           t.L              AS L, 
-           t.DivWin         AS DivWin, 
-           t.WCWin          AS WCWin, 
-           t.LgWin          AS LgWin, 
-           t.WSWin          AS WSWin, 
-           t.R              AS R, 
-           t.AB             AS AB, 
-           t.H              AS H, 
-           t.2B             AS 2B, 
-           t.3B             AS 3B, 
-           t.HR             AS HR, 
-           t.BB             AS BB, 
-           t.SO             AS SO, 
-           t.SB             AS SB, 
-           t.CS             AS CS, 
-           t.HBP            AS HBP, 
-           t.SF             AS SF, 
-           t.RA             AS RA, 
-           t.ER             AS ER, 
-           t.ERA            AS ERA, 
-           t.CG             AS CG, 
-           t.SHO            AS SHO, 
-           t.SV             AS SV, 
-           t.IPouts         AS IPouts, 
-           t.HA             AS HA, 
-           t.HRA            AS HRA, 
-           t.BBA            AS BBA, 
-           t.SOA            AS SOA, 
-           t.E              AS E, 
-           t.DP             AS DP, 
-           t.FP             AS FP, 
-           t.park           AS park, 
-           t.attendance     AS attendance, 
-           t.BPF            AS BPF, 
-           t.PPF            AS PPF, 
-           t.teamIDBR       AS teamIDBR, 
-           t.teamIDlahman45 AS teamIDlahman45, 
-           t.teamIDretro    AS teamIDretro 
-    FROM   teams t 
+    SELECT t.teamID         AS teamID,
+           t.name           AS teamName,
+           t.yearID         AS year,
+           t.lgID           AS lgID,
+           t.franchID       AS franchID,
+           t.divID          AS divID,
+           t.div_ID         AS div_ID,
+           t.teamRank       AS teamRank,
+           t.G              AS G,
+           t.Ghome          AS Ghome,
+           t.W              AS W,
+           t.L              AS L,
+           t.DivWin         AS DivWin,
+           t.WCWin          AS WCWin,
+           t.LgWin          AS LgWin,
+           t.WSWin          AS WSWin,
+           t.R              AS R,
+           t.AB             AS AB,
+           t.H              AS H,
+           t.2B             AS 2B,
+           t.3B             AS 3B,
+           t.HR             AS HR,
+           t.BB             AS BB,
+           t.SO             AS SO,
+           t.SB             AS SB,
+           t.CS             AS CS,
+           t.HBP            AS HBP,
+           t.SF             AS SF,
+           t.RA             AS RA,
+           t.ER             AS ER,
+           t.ERA            AS ERA,
+           t.CG             AS CG,
+           t.SHO            AS SHO,
+           t.SV             AS SV,
+           t.IPouts         AS IPouts,
+           t.HA             AS HA,
+           t.HRA            AS HRA,
+           t.BBA            AS BBA,
+           t.SOA            AS SOA,
+           t.E              AS E,
+           t.DP             AS DP,
+           t.FP             AS FP,
+           t.park           AS park,
+           t.attendance     AS attendance,
+           t.BPF            AS BPF,
+           t.PPF            AS PPF,
+           t.teamIDBR       AS teamIDBR,
+           t.teamIDlahman45 AS teamIDlahman45,
+           t.teamIDretro    AS teamIDretro
+    FROM   teams t
     WHERE t.teamID = :teamID
     AND   t.yearID = :yearID ';
 
@@ -2152,8 +2153,8 @@ class DB {
     FROM   appearances a
            LEFT JOIN people p
                   ON a.playerID = p.playerID
-           LEFT JOIN teams t 
-                  ON a.team_ID = t.ID 
+           LEFT JOIN teams t
+                  ON a.team_ID = t.ID
     WHERE  team_ID IN (SELECT ID AS team_id
                        FROM   teams
                        WHERE  yearID = :yearID
