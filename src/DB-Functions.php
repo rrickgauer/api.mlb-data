@@ -707,6 +707,7 @@ class DB {
                 p.yearID as year,
                 p.round as round,
                 t.name as teamName,
+                t.teamID as teamID,
                 p.lgID as lgID,
                 p.W as W,
                 p.L as L,
