@@ -116,7 +116,7 @@ class DB {
     $stmt .= " GROUP  BY $table.$groupByColumn ";
     $stmt .= $this->getFilterStmt();
     $stmt .= $this->getOrderStmt();
-    $stmt .= " LIMIT  :limit OFFSET :offset ";
+    $stmt .= " LIMIT  $this->limit OFFSET $this->offset ";
 
     $sql = $this->dbConnect()->prepare($stmt);
 
@@ -125,14 +125,6 @@ class DB {
       $this->playerID = filter_var($this->playerID, FILTER_SANITIZE_STRING);
       $sql->bindParam(':playerID', $this->playerID, PDO::PARAM_STR);
     }
-
-    // limit
-    $this->limit = filter_var($this->limit, FILTER_SANITIZE_NUMBER_INT);
-    $sql->bindParam(':limit', $this->limit, PDO::PARAM_INT);
-
-    // offset
-    $this->offset = filter_var($this->offset, FILTER_SANITIZE_NUMBER_INT);
-    $sql->bindParam(':offset', $this->offset, PDO::PARAM_INT);
 
     return $sql;
   }
