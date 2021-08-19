@@ -5,7 +5,7 @@ Restful API for historical MLB data.
 
 ## Overview
 
-* The root url for the API is **`https://api.mlb-data.ryanrickgauer.com/main.php`**
+* The root url for the API is **https://api.mlb-data.ryanrickgauer.com/main.php**
 * All of the data used in the database was obtained [here](https://github.com/WebucatorTraining/lahman-baseball-mysql)
 * Checkout the [demo page](https://mlb-data.ryanrickgauer.com/home.php)
 
